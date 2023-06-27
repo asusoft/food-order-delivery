@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 import FormInput from '../components/FormInput';
 import Header from '../components/Header';
-import { validateEmail, validatePassword } from '../utils/Utils'
+import { validateEmail, validatePassword, validatePhoneNumber, comparePassword } from '../utils/Utils'
 
 
 // create a component
@@ -13,6 +13,11 @@ const SignUp = () => {
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [phoneNumberError, setPhoneNumberError] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
 
     function RenderHeader() {
         return (
@@ -90,6 +95,27 @@ const SignUp = () => {
                             inputContainerStyle={{
                                 borderColor: COLORS.grey
                             }}
+                            onChange={value => {
+                                validatePhoneNumber(value, setPhoneNumberError);
+                                setPhoneNumber(value);
+                            }}
+                            errorMsg={phoneNumberError}
+                            appendComponent={
+                                <View style={styles.appendComponentPassword}>
+                                    <Text style={{
+                                        color: phoneNumber == ''
+                                            ? COLORS.gray
+                                            : phoneNumber != '' && phoneNumberError == ''
+                                                ? COLORS.green
+                                                : COLORS.red,
+                                    }}> {
+                                            phoneNumber == '' || (phoneNumber != '' && phoneNumberError == '')
+                                                ? "correct"
+                                                : "cancel"
+                                        }
+                                    </Text>
+                                </View>
+                            }
                             maxLength={10}
                         />
 
@@ -134,6 +160,27 @@ const SignUp = () => {
                         inputContainerStyle={{
                             borderColor: COLORS.grey
                         }}
+                        onChange={value => {
+                            comparePassword(value, password, setConfirmPasswordError);
+                            setConfirmPassword(value);
+                        }}
+                        errorMsg={confirmPasswordError}
+                        appendComponent={
+                            <View style={styles.appendComponentPassword}>
+                                <Text style={{
+                                    color: confirmPassword == ''
+                                        ? COLORS.gray
+                                        : confirmPassword != '' && confirmPasswordError == ''
+                                            ? COLORS.green
+                                            : COLORS.red,
+                                }}> {
+                                        confirmPassword == '' || (confirmPassword != '' && confirmPasswordError == '')
+                                            ? "correct"
+                                            : "cancel"
+                                    }
+                                </Text>
+                            </View>
+                        }
                     />
                 </View>
             </View>

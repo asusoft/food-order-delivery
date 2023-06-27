@@ -11,6 +11,16 @@ const isValidPassword = value => {
     return re.test(value);
 }
 
+const isValidPhoneNumber = value => {
+    const re =
+        /^\d{10}$/;
+    return re.test(value);
+}
+
+const isPasswordConfirmed = (value, password) => {
+    return value == password
+}
+
 
 export const validateEmail = (value, setEmailError) => {
     if (value == '') {
@@ -32,10 +42,23 @@ export const validatePassword = (value, setPasswordError) => {
     }
 };
 
-
-const utils = {
-    isValidEmail,
-    validateEmail,
+export const validatePhoneNumber = (value, setPhoneNumberError) => {
+    if (value == '') {
+        setPhoneNumberError('');
+    } else if (isValidPhoneNumber(value)) {
+        setPhoneNumberError('');
+    } else {
+        setPhoneNumberError('Enter Phone Number without the first 0');
+    }
 };
 
-export default utils;
+export const comparePassword = (value, password, setConfirmPasswordError) => {
+    if (value == '') {
+        setConfirmPasswordError('');
+    } else if (isPasswordConfirmed(value, password)) {
+        setConfirmPasswordError('');
+    } else {
+        setConfirmPasswordError('Password does not match');
+    }
+};
+

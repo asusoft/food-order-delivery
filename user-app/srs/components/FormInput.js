@@ -32,7 +32,7 @@ const FormInput = ({
             {/* Label & Error msg */}
             {
                 label || errorMsg ? (
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingEnd: SIZES.padding, }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ color: COLORS.gray, marginEnd: 10 }}>{label}</Text>
                         <Text style={{ color: COLORS.red, marginEnd: 40 }}>{errorMsg}</Text>
                     </View>) : null
