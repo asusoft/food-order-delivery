@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Pressable, Image, TouchableOpacity } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 import FormInput from '../components/FormInput';
 import Header from '../components/Header';
@@ -18,6 +18,7 @@ const SignUp = () => {
     const [phoneNumberError, setPhoneNumberError] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
 
     function RenderHeader() {
@@ -132,9 +133,7 @@ const SignUp = () => {
                             }
                             maxLength={10}
                         />
-
                     </View>
-
                 </View>
                 <View style={{ marginTop: 20 }}>
                     <FormInput
@@ -147,28 +146,25 @@ const SignUp = () => {
                             validatePassword(value, setPasswordError);
                             setPassword(value);
                         }}
+                        secureTextEntry={!showPassword}
                         errorMsg={passwordError}
                         appendComponent={
-                            <View style={styles.appendComponentPassword}>
+                            <TouchableOpacity
+                                style={styles.appendComponentPassword}
+                                onPress={() => setShowPassword(!showPassword)}>
                                 <Image
-                                    source={
-                                        password == '' || (password != '' && passwordError == '')
-                                            ? icons.correct
-                                            : icons.cancel
-                                    }
-                                    style={[
-                                        styles.imageCorrect,
-                                        {
-                                            tintColor:
-                                                password == ''
-                                                    ? COLORS.gray
-                                                    : password != '' && passwordError == ''
-                                                        ? COLORS.green
-                                                        : COLORS.red,
-                                        },
-                                    ]}
+                                    source={showPassword ? icons.eye_close : icons.eye}
+                                    style={{
+                                        height: 20, width: 20, tintColor: COLORS.gray,
+                                        tintColor:
+                                            password == ''
+                                                ? COLORS.gray
+                                                : password != '' && passwordError == ''
+                                                    ? COLORS.green
+                                                    : COLORS.red,
+                                    }}
                                 />
-                            </View>
+                            </TouchableOpacity>
                         }
                     />
                 </View>
