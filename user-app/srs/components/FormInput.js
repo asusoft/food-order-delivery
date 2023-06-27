@@ -8,7 +8,7 @@ import {
     ViewStyle,
     StyleSheet,
 } from 'react-native';
-import {COLORS, SIZES} from '../../assets/constants'
+import { COLORS, SIZES } from '../../assets/constants/theme'
 
 // create a component
 const FormInput = ({
@@ -30,10 +30,14 @@ const FormInput = ({
     return (
         <View style={{ ...containerStyle }}>
             {/* Label & Error msg */}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ color: COLORS.gray}}>{label}</Text>
-                <Text style={{ color: COLORS.red}}>{errorMsg}</Text>
-            </View>
+            {
+                label || errorMsg ? (
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={{ color: COLORS.gray }}>{label}</Text>
+                        <Text style={{ color: COLORS.red }}>{errorMsg}</Text>
+                    </View>) : null
+            }
+
             {/* Text input */}
             <View style={[styles.containerInput, { ...inputContainerStyle }]}>
                 {prependComponent}
@@ -48,7 +52,6 @@ const FormInput = ({
                     keyboardType={keyboardType}
                     autoComplete={autoComplete}
                     autoCapitalize={autoCapitalize}
-                    onChangeText={(text) => onChange(text)}
                     maxLength={maxLength}
                 />
                 {appendComponent}
