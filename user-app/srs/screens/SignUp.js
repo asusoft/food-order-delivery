@@ -3,9 +3,26 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 import FormInput from '../components/FormInput';
+import Header from '../components/Header';
 
 // create a component
 const SignUp = () => {
+
+    function RenderHeader() {
+        return (
+            <Header
+                title="SIGN UP"
+                containerStyle={{
+                    height: 50,
+                    marginHorizontal: 20,
+                    marginTop: 10
+                }}
+                titleStyle={{}}
+                leftComponent={<View style={{ width: 40 }} />}
+                rightComponent={<View style={{ width: 40 }} />}
+            />
+        );
+    }
 
     function RenderForm() {
         return (
@@ -91,6 +108,7 @@ const SignUp = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            {RenderHeader()}
             {RenderForm()}
             {RenderFooter()}
             <View
