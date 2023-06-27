@@ -4,13 +4,15 @@ import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 import FormInput from '../components/FormInput';
 import Header from '../components/Header';
-import { validateEmail } from '../utils/Utils'
+import { validateEmail, validatePassword } from '../utils/Utils'
 
 
 // create a component
 const SignUp = () => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
 
     function RenderHeader() {
         return (
@@ -94,24 +96,41 @@ const SignUp = () => {
                     </View>
 
                 </View>
-                <View style={{ flexDirection: "row", marginTop: 20 }}>
+                <View style={{ marginTop: 20 }}>
                     <FormInput
                         label="Password"
                         placeholder="Choose Password"
-                        containerStyle={{
-                            flex: 1
-                        }}
                         inputContainerStyle={{
                             borderColor: COLORS.grey
                         }}
+                        onChange={value => {
+                            validatePassword(value, setPasswordError);
+                            setPassword(value);
+                        }}
+                        errorMsg={passwordError}
+                        appendComponent={
+                            <View style={styles.appendComponentPassword}>
+                                <Text style={{
+                                    color: password == ''
+                                        ? COLORS.gray
+                                        : password != '' && passwordError == ''
+                                            ? COLORS.green
+                                            : COLORS.red,
+                                }}> {
+                                        password == '' || (password != '' && passwordError == '')
+                                            ? "correct"
+                                            : "cancel"
+                                    }
+                                </Text>
+                            </View>
+                        }
                     />
+                </View>
+
+                <View style={{ marginTop: 20 }}>
                     <FormInput
                         label="Confirm Password"
-                        placeholder="Re enter password"
-                        containerStyle={{
-                            flex: 1,
-                            marginLeft: 10
-                        }}
+                        placeholder="Rewrite Password"
                         inputContainerStyle={{
                             borderColor: COLORS.grey
                         }}
@@ -173,6 +192,12 @@ const styles = StyleSheet.create({
     appendComponentEmail: {
         justifyContent: 'center',
         // borderWidth: 1
+    },
+    appendComponentPassword: {
+        // width: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        // borderWidth: 1,
     },
 });
 
