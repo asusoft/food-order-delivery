@@ -1,10 +1,11 @@
 //import liraries
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Pressable, Image } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 import FormInput from '../components/FormInput';
 import Header from '../components/Header';
 import { validateEmail, validatePassword, validatePhoneNumber, comparePassword } from '../utils/Utils'
+import icons from '../../assets/constants/icons';
 
 
 // create a component
@@ -60,18 +61,25 @@ const SignUp = () => {
                         errorMsg={emailError}
                         appendComponent={
                             <View style={styles.appendComponentEmail}>
-                                <Text style={{
-                                    color: email == ''
-                                        ? COLORS.gray
-                                        : email != '' && emailError == ''
-                                            ? COLORS.green
-                                            : COLORS.red,
-                                }}> {
+
+                                <Image
+                                    source={
                                         email == '' || (email != '' && emailError == '')
-                                            ? "correct"
-                                            : "cancel"
+                                            ? icons.correct
+                                            : icons.cancel
                                     }
-                                </Text>
+                                    style={[
+                                        styles.imageCorrect,
+                                        {
+                                            tintColor:
+                                                email == ''
+                                                    ? COLORS.gray
+                                                    : email != '' && emailError == ''
+                                                        ? COLORS.green
+                                                        : COLORS.red,
+                                        },
+                                    ]}
+                                />
                             </View>
                         }
                     />
@@ -102,18 +110,24 @@ const SignUp = () => {
                             errorMsg={phoneNumberError}
                             appendComponent={
                                 <View style={styles.appendComponentPassword}>
-                                    <Text style={{
-                                        color: phoneNumber == ''
-                                            ? COLORS.gray
-                                            : phoneNumber != '' && phoneNumberError == ''
-                                                ? COLORS.green
-                                                : COLORS.red,
-                                    }}> {
+                                    <Image
+                                        source={
                                             phoneNumber == '' || (phoneNumber != '' && phoneNumberError == '')
-                                                ? "correct"
-                                                : "cancel"
+                                                ? icons.correct
+                                                : icons.cancel
                                         }
-                                    </Text>
+                                        style={[
+                                            styles.imageCorrect,
+                                            {
+                                                tintColor:
+                                                    phoneNumber == ''
+                                                        ? COLORS.gray
+                                                        : phoneNumber != '' && phoneNumberError == ''
+                                                            ? COLORS.green
+                                                            : COLORS.red,
+                                            },
+                                        ]}
+                                    />
                                 </View>
                             }
                             maxLength={10}
@@ -136,18 +150,24 @@ const SignUp = () => {
                         errorMsg={passwordError}
                         appendComponent={
                             <View style={styles.appendComponentPassword}>
-                                <Text style={{
-                                    color: password == ''
-                                        ? COLORS.gray
-                                        : password != '' && passwordError == ''
-                                            ? COLORS.green
-                                            : COLORS.red,
-                                }}> {
+                                <Image
+                                    source={
                                         password == '' || (password != '' && passwordError == '')
-                                            ? "correct"
-                                            : "cancel"
+                                            ? icons.correct
+                                            : icons.cancel
                                     }
-                                </Text>
+                                    style={[
+                                        styles.imageCorrect,
+                                        {
+                                            tintColor:
+                                                password == ''
+                                                    ? COLORS.gray
+                                                    : password != '' && passwordError == ''
+                                                        ? COLORS.green
+                                                        : COLORS.red,
+                                        },
+                                    ]}
+                                />
                             </View>
                         }
                     />
@@ -167,18 +187,24 @@ const SignUp = () => {
                         errorMsg={confirmPasswordError}
                         appendComponent={
                             <View style={styles.appendComponentPassword}>
-                                <Text style={{
-                                    color: confirmPassword == ''
-                                        ? COLORS.gray
-                                        : confirmPassword != '' && confirmPasswordError == ''
-                                            ? COLORS.green
-                                            : COLORS.red,
-                                }}> {
+                                <Image
+                                    source={
                                         confirmPassword == '' || (confirmPassword != '' && confirmPasswordError == '')
-                                            ? "correct"
-                                            : "cancel"
+                                            ? icons.correct
+                                            : icons.cancel
                                     }
-                                </Text>
+                                    style={[
+                                        styles.imageCorrect,
+                                        {
+                                            tintColor:
+                                                confirmPassword == ''
+                                                    ? COLORS.gray
+                                                    : confirmPassword != '' && confirmPasswordError == ''
+                                                        ? COLORS.green
+                                                        : COLORS.red,
+                                        },
+                                    ]}
+                                />
                             </View>
                         }
                     />
@@ -245,6 +271,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         // borderWidth: 1,
+    },
+    imageCorrect: {
+        height: 20,
+        width: 20,
     },
 });
 
