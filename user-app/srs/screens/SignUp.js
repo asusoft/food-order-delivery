@@ -125,7 +125,7 @@ const SignUp = () => {
                             }}
                             onChange={value => {
                                 validatePhoneNumber(value, setPhoneNumberError);
-                                setPhoneNumber(value);
+                                setPhoneNumber("+234" + value);
                             }}
                             errorMsg={phoneNumberError}
                             appendComponent={
