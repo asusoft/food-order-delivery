@@ -52,6 +52,7 @@ const FormInput = ({
                     keyboardType={keyboardType}
                     autoComplete={autoComplete}
                     autoCapitalize={autoCapitalize}
+                    onChangeText={(text) => onChange(text)}
                     maxLength={maxLength}
                 />
                 {appendComponent}

@@ -1,12 +1,16 @@
 //import liraries
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 import FormInput from '../components/FormInput';
 import Header from '../components/Header';
+import { validateEmail } from '../utils/Utils'
+
 
 // create a component
 const SignUp = () => {
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
 
     function RenderHeader() {
         return (
@@ -37,10 +41,32 @@ const SignUp = () => {
                 <View style={{ marginTop: 20 }}>
                     <FormInput
                         label="Email"
+                        keyboardType="email-address"
                         placeholder="email@example.com"
                         inputContainerStyle={{
                             borderColor: COLORS.grey
                         }}
+                        onChange={value => {
+                            validateEmail(value, setEmailError);
+                            setEmail(value);
+                        }}
+                        errorMsg={emailError}
+                        appendComponent={
+                            <View style={styles.appendComponentEmail}>
+                                <Text style={{
+                                    color: email == ''
+                                        ? COLORS.gray
+                                        : email != '' && emailError == ''
+                                            ? COLORS.green
+                                            : COLORS.red,
+                                }}> {
+                                        email == '' || (email != '' && emailError == '')
+                                            ? "correct"
+                                            : "cancel"
+                                    }
+                                </Text>
+                            </View>
+                        }
                     />
                 </View>
                 <View style={{ marginTop: 20 }}>
@@ -143,7 +169,11 @@ const styles = StyleSheet.create({
         height: 80,
         borderRadius: 20,
         backgroundColor: COLORS.primary
-    }
+    },
+    appendComponentEmail: {
+        justifyContent: 'center',
+        // borderWidth: 1
+    },
 });
 
 //make this component available to the app
