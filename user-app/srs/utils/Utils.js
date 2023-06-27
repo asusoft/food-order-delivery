@@ -61,4 +61,3 @@ export const comparePassword = (value, password, setConfirmPasswordError) => {
         setConfirmPasswordError('Password does not match');
     }
 };
-
