@@ -6,10 +6,12 @@ import FormInput from '../components/FormInput';
 import Header from '../components/Header';
 import { validateEmail, validatePassword, validatePhoneNumber, comparePassword } from '../utils/Utils'
 import icons from '../../assets/constants/icons';
+import FooterButton from '../components/FooterButton';
 
 
 // create a component
 const SignUp = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('');
@@ -19,6 +21,20 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+    const isEnableSignUp = () => {
+        return (
+            name !== '' &&
+            email !== '' &&
+            phoneNumber !== '' &&
+            password !== '' &&
+            confirmPassword !== '' &&
+            emailError === '' &&
+            phoneNumberError === '' &&
+            passwordError === '' &&
+            confirmPasswordError === ''
+        );
+    };
 
 
     function RenderHeader() {
@@ -45,6 +61,9 @@ const SignUp = () => {
                     placeholder="Your name"
                     inputContainerStyle={{
                         borderColor: COLORS.grey
+                    }}
+                    onChange={value => {
+                        setName(value);
                     }}
                 />
                 <View style={{ marginTop: 20 }}>
@@ -211,11 +230,11 @@ const SignUp = () => {
 
     function RenderFooter() {
         return (
-            <Pressable style={styles.Footer}>
-                <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}>
-                    Sign Up
-                </Text>
-            </Pressable>
+            <FooterButton
+                label="Sign Up"
+                disabled={isEnableSignUp() ? false : true}
+                onPress={() => console.log('Pressed')}
+            />
         );
     }
 
