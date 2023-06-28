@@ -1,7 +1,7 @@
 node_modules/
 .expo/
 dist/
-.config.js
+config.js
 npm-debug.*
 *.jks
 *.p8
@@ -11,6 +11,8 @@ npm-debug.*
 *.orig.*
 web-build/
 Utils.js
+contexts/
+metro.config.js
 
 # macOS
 .DS_Store

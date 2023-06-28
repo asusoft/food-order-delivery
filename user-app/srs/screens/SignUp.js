@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import { validateEmail, validatePassword, validatePhoneNumber, comparePassword } from '../utils/Utils'
 import icons from '../../assets/constants/icons';
 import FooterButton from '../components/FooterButton';
-
+import { useAuthContext } from '../contexts/AuthContext';
 
 // create a component
 const SignUp = () => {
@@ -21,6 +21,12 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+    const { signUp } = useAuthContext();
+
+    const handleSignUp = async () => {
+        await signUp(name, email, phoneNumber, password)
+    }
 
     const isEnableSignUp = () => {
         return (
@@ -232,8 +238,8 @@ const SignUp = () => {
         return (
             <FooterButton
                 label="Sign Up"
-                disabled={isEnableSignUp() ? false : true}
-                onPress={() => console.log('Pressed')}
+                disabled={isEnableSignUp() ? true : false}
+                onPress={() => handleSignUp()}
             />
         );
     }

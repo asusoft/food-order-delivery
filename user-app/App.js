@@ -1,8 +1,12 @@
 import SignUp from "./srs/screens/SignUp";
+import AuthContextProvider from "./srs/contexts/AuthContext";
 
 export default function App() {
   return (
-    <SignUp />
+    <AuthContextProvider>
+      <SignUp />
+    </AuthContextProvider>
+
   );
 }
 
