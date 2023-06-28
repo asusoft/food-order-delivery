@@ -1,4 +1,4 @@
-import SignUp from "./srs/screens/SignUp";
+import SignUp from "./srs/screens/AuthScreens/SignUp";
 import AuthContextProvider from "./srs/contexts/AuthContext";
 
 export default function App() {

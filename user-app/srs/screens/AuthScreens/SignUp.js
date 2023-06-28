@@ -1,13 +1,13 @@
 //import liraries
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Pressable, Image, TouchableOpacity } from 'react-native';
-import { COLORS, SIZES } from '../../assets/constants/theme';
-import FormInput from '../components/FormInput';
-import Header from '../components/Header';
-import { validateEmail, validatePassword, validatePhoneNumber, comparePassword } from '../utils/Utils'
-import icons from '../../assets/constants/icons';
-import FooterButton from '../components/FooterButton';
-import { useAuthContext } from '../contexts/AuthContext';
+import { COLORS, SIZES } from '../../../assets/constants/theme';
+import FormInput from '../../../components/FormInput';
+import Header from '../../../components/Header';
+import { validateEmail, validatePassword, validatePhoneNumber, comparePassword } from '../../../utils/Utils'
+import icons from '../../../../assets/constants/icons';
+import FooterButton from '../../../components/FooterButton';
+import { useAuthContext } from '../../../contexts/AuthContext';
 
 // create a component
 const SignUp = () => {
