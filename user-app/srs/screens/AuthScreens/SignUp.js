@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Pressable, Image, TouchableOpacity } from 'react-native';
 import { COLORS, SIZES } from '../../../assets/constants/theme';
-import FormInput from '../../../components/FormInput';
-import Header from '../../../components/Header';
-import { validateEmail, validatePassword, validatePhoneNumber, comparePassword } from '../../../utils/Utils'
-import icons from '../../../../assets/constants/icons';
-import FooterButton from '../../../components/FooterButton';
-import { useAuthContext } from '../../../contexts/AuthContext';
+import FormInput from "../../components/FormInput";
+import Header from "../../components/Header"
+import { validateEmail, validatePassword, validatePhoneNumber, comparePassword } from '../../utils/Utils'
+import icons from "../../../assets/constants/icons"
+import FooterButton from '../../components/FooterButton';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 // create a component
 const SignUp = () => {
@@ -22,10 +23,18 @@ const SignUp = () => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    const navigation = useNavigation();
+
     const { signUp } = useAuthContext();
 
     const handleSignUp = async () => {
-        await signUp(email, password)
+        try {
+            await signUp(email, password);
+            navigation.navigate("OTP");
+        } catch (error) {
+            // Handle sign-up error
+            console.log("Error signing up:", error);
+        }
     }
 
     const isEnableSignUp = () => {
@@ -254,7 +263,7 @@ const SignUp = () => {
                 style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25 }}
             >
                 <Text style={{ fontSize: 16 }}>Already on App? </Text>
-                <Pressable >
+                <Pressable onPress={() => navigation.navigate("OTP")}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
                         Sign In here
                     </Text>
