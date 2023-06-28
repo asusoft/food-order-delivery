@@ -7,10 +7,9 @@ import Header from "../../components/Header"
 import FooterButton from '../../components/FooterButton';
 import { validateCode } from '../../utils/Utils';
 
-
 // create a component
-const OTP = () => {
-
+const OTP = ({ route }) => {
+    const { name, phoneNumber } = route.params;
     const [code, setCode] = useState('')
     const [codeError, setCodeError] = useState('')
     const [timer, setTimer] = useState(60);
@@ -66,7 +65,7 @@ const OTP = () => {
 
                 <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>VERIFY PHONE NUMBER</Text>
                 <Text style={{ fontSize: 16 }}>An authentication code has been sent to</Text>
-                <Text style={{ fontSize: 16 }}>+2349012345678</Text>
+                <Text style={{ fontSize: 16 }}>{phoneNumber}</Text>
             </View>
             <View style={styles.containerOTP}>
                 <FormInput

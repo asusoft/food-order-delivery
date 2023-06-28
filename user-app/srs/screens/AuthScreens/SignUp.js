@@ -30,7 +30,10 @@ const SignUp = () => {
     const handleSignUp = async () => {
         try {
             await signUp(email, password);
-            navigation.navigate("OTP");
+            navigation.navigate("OTP", {
+                name: name,
+                phoneNumber: phoneNumber,
+            });
         } catch (error) {
             // Handle sign-up error
             console.log("Error signing up:", error);
@@ -253,7 +256,6 @@ const SignUp = () => {
         );
     }
 
-
     return (
         <SafeAreaView style={styles.container}>
             {RenderHeader()}
@@ -263,7 +265,10 @@ const SignUp = () => {
                 style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25 }}
             >
                 <Text style={{ fontSize: 16 }}>Already on App? </Text>
-                <Pressable onPress={() => navigation.navigate("OTP")}>
+                <Pressable onPress={() => navigation.navigate("OTP", {
+                    name: name,
+                    phoneNumber: phoneNumber,
+                })}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
                         Sign In here
                     </Text>
