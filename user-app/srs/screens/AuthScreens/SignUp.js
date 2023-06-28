@@ -251,6 +251,12 @@ const SignUp = () => {
             <FooterButton
                 label="Sign Up"
                 disabled={isEnableSignUp() ? true : false}
+                footerStyle={{
+                    position: "absolute",
+                    bottom: 50,
+                    right: 10,
+                    left: 10,
+                }}
                 onPress={() => handleSignUp()}
             />
         );
@@ -284,28 +290,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.background
     },
-    Footer: {
-        position: "absolute",
-        flexDirection: "row",
-        justifyContent: "center",
-        padding: 20,
-        alignItems: "center",
-        bottom: 50,
-        right: 30,
-        left: 30,
-        height: 80,
-        borderRadius: 20,
-        backgroundColor: COLORS.primary
-    },
     appendComponentEmail: {
         justifyContent: 'center',
-        // borderWidth: 1
     },
     appendComponentPassword: {
         // width: 40,
         alignItems: 'center',
         justifyContent: 'center',
-        // borderWidth: 1,
     },
     imageCorrect: {
         height: 20,

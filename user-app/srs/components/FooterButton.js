@@ -15,7 +15,7 @@ const FooterButton = ({
             onPress={onPress}
             disabled={disabled}
             opacity={0.5}
-            style={{ ...styles.Footer, opacity: disabled ? 0.5 : 1, ...footerStyle }}
+            style={{ ...footerStyle, ...styles.Footer, opacity: disabled ? 0.5 : 1, }}
         >
             <Text style={{ fontSize: 24, color: COLORS.light, fontWeight: "800" }}>
                 {label}
