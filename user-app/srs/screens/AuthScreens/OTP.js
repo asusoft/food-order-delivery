@@ -6,13 +6,36 @@ import FormInput from "../../components/FormInput";
 import Header from "../../components/Header"
 import FooterButton from '../../components/FooterButton';
 import { validateCode } from '../../utils/Utils';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 // create a component
 const OTP = ({ route }) => {
+    const navigation = useNavigation();
     const { name, phoneNumber } = route.params;
-    const [code, setCode] = useState('')
     const [codeError, setCodeError] = useState('')
     const [timer, setTimer] = useState(60);
+
+    const { verifyPhone } = useAuthContext();
+
+    // If null, no SMS has been sent
+    const [confirm, setConfirm] = useState(null);
+
+    // verification code (OTP - One-Time-Passcode)
+    const [code, setCode] = useState('');
+
+    const handleRequestCode = async () => {
+        await verifyPhone(phoneNumber, setConfirm);
+    }
+
+    async function confirmCode() {
+        try {
+            await confirm.confirm(code);
+            alert("Phone Number confirmed")
+        } catch (error) {
+            console.log('Invalid code.');
+        }
+    }
 
     React.useEffect(() => {
         let interval = setInterval(() => {
@@ -55,6 +78,7 @@ const OTP = ({ route }) => {
             <FooterButton
                 label="Confirm"
                 disabled={isEnableConfirm() ? false : true}
+                onPress={() => confirmCode()}
             />
         );
     }
@@ -64,8 +88,28 @@ const OTP = ({ route }) => {
             <View style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: SIZES.padding, marginTop: SIZES.padding * 2, }}>
 
                 <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>VERIFY PHONE NUMBER</Text>
-                <Text style={{ fontSize: 16 }}>An authentication code has been sent to</Text>
-                <Text style={{ fontSize: 16 }}>{phoneNumber}</Text>
+                {
+                    confirm ? (
+                        <>
+                            <Text style={{ fontSize: 16 }}>An authentication code has been sent to</Text>
+                            <Text style={{ fontSize: 16 }}>{phoneNumber}</Text>
+                        </>
+                    ) : (
+                        <TouchableOpacity
+                            disabled={timer === 0 ? false : true}
+                            onPress={() => handleRequestCode()}
+                            style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                opacity: timer === 0 ? 1 : 0.5
+                            }}>
+                            <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
+                                REQUEST CODE
+                            </Text>
+                        </TouchableOpacity>
+                    )
+                }
+
             </View>
             <View style={styles.containerOTP}>
                 <FormInput
@@ -109,6 +153,7 @@ const OTP = ({ route }) => {
             <View style={{ marginTop: SIZES.padding, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 16 }}>Buy signing up, you agree to our</Text>
                 <TouchableOpacity
+                    onPress={() => navigation.navigate("SignUp")}
                     style={{
                         alignItems: 'center',
                         justifyContent: 'center',

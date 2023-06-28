@@ -35,8 +35,11 @@ const SignUp = () => {
                 phoneNumber: phoneNumber,
             });
         } catch (error) {
-            // Handle sign-up error
-            console.log("Error signing up:", error);
+            if (error.code === "auth/cancelled-popup-request") {
+                console.log("User interaction is ongoing. Please try again.");
+            } else {
+                console.log("Error signing up:", error);
+            }
         }
     }
 
@@ -143,7 +146,7 @@ const SignUp = () => {
                             }}
                             onChange={value => {
                                 validatePhoneNumber(value, setPhoneNumberError);
-                                setPhoneNumber("+234" + value);
+                                setPhoneNumber("+7" + value);
                             }}
                             errorMsg={phoneNumberError}
                             appendComponent={
