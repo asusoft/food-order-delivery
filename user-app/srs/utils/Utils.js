@@ -17,6 +17,12 @@ const isValidPhoneNumber = value => {
     return re.test(value);
 }
 
+const isValidCode = value => {
+    const re =
+        /^\d{6}$/;
+    return re.test(value);
+}
+
 const isPasswordConfirmed = (value, password) => {
     return value == password
 }
@@ -49,6 +55,16 @@ export const validatePhoneNumber = (value, setPhoneNumberError) => {
         setPhoneNumberError('');
     } else {
         setPhoneNumberError('Enter Phone Number without the first 0');
+    }
+};
+
+export const validateCode = (value, setCodeError) => {
+    if (value == '') {
+        setCodeError('');
+    } else if (isValidCode(value)) {
+        setCodeError('');
+    } else {
+        setCodeError('Incomplete code');
     }
 };
 
