@@ -25,7 +25,7 @@ const SignUp = () => {
     const { signUp } = useAuthContext();
 
     const handleSignUp = async () => {
-        await signUp(name, email, phoneNumber, password)
+        await signUp(email, password)
     }
 
     const isEnableSignUp = () => {
