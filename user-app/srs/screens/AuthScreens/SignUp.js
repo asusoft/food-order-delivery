@@ -34,7 +34,7 @@ const SignUp = () => {
     const handleSignUp = async () => {
         try {
             setLoading(true);
-            await signUp(email, password, phoneNumber);
+            await signUp(email, password, phoneNumber, name);
             setLoading(false);
             navigation.navigate("OTP", {
                 name: name,
@@ -197,7 +197,11 @@ const SignUp = () => {
                         label="Password"
                         placeholder="Choose Password"
                         inputContainerStyle={{
-                            borderColor: COLORS.grey
+                            borderColor: password == ''
+                                ? COLORS.gray
+                                : password != '' && passwordError == ''
+                                    ? COLORS.green
+                                    : COLORS.red,
                         }}
                         onChange={value => {
                             validatePassword(value, setPasswordError);
@@ -291,16 +295,15 @@ const SignUp = () => {
                 style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, opacity: loading ? 0.5 : 1 }}
             >
                 <Text style={{ fontSize: 16 }}>Already on App? </Text>
-                <Pressable>
+                <Pressable onPress={() => navigation.navigate("SignIn")}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
-                        Sign In here
+                        Sign In
                     </Text>
                 </Pressable>
             </View>
             {
                 loading ? <Loading /> : []
             }
-
         </SafeAreaView>
     );
 
