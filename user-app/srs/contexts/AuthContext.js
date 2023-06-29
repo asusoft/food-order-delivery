@@ -121,8 +121,6 @@ const AuthContextProvider = ({ children }) => {
     };
 
     const signIn = async (email, password) => {
-
-        console.log(email + " " + password)
         await signUserIn(email, password)
     };
 

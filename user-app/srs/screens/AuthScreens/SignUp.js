@@ -197,7 +197,11 @@ const SignUp = () => {
                         label="Password"
                         placeholder="Choose Password"
                         inputContainerStyle={{
-                            borderColor: COLORS.grey
+                            borderColor: password == ''
+                                ? COLORS.gray
+                                : password != '' && passwordError == ''
+                                    ? COLORS.green
+                                    : COLORS.red,
                         }}
                         onChange={value => {
                             validatePassword(value, setPasswordError);

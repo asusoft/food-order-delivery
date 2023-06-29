@@ -9,6 +9,7 @@ import icons from "../../../assets/constants/icons"
 import FooterButton from '../../components/FooterButton';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
+import { handleSignInError } from '../../contexts/errorHandler';
 
 // create a component
 const SignIn = () => {
@@ -26,7 +27,7 @@ const SignIn = () => {
         try {
             await signIn(email, password);
         } catch (error) {
-            console.log(error)
+            handleSignInError(error, setPasswordError, setEmailError)
         }
     }
 
@@ -66,7 +67,7 @@ const SignIn = () => {
                             borderColor: email == ''
                                 ? COLORS.grey
                                 : email != '' && emailError == ''
-                                    ? COLORS.green
+                                    ? COLORS.grey
                                     : COLORS.red,
                         }}
                         onChange={value => {
@@ -103,9 +104,14 @@ const SignIn = () => {
                         label="Password"
                         placeholder="Choose Password"
                         inputContainerStyle={{
-                            borderColor: COLORS.grey
+                            borderColor: password == ''
+                                ? COLORS.gray
+                                : password != '' && passwordError == ''
+                                    ? COLORS.gray
+                                    : COLORS.red,
                         }}
                         onChange={value => {
+                            setPasswordError('')
                             setPassword(value);
                         }}
                         secureTextEntry={!showPassword}

@@ -28,3 +28,14 @@ export const handleVerifyPhoneError = (error, setVerifyError) => {
         alert(error.message);
     }
 };
+
+export const handleSignInError = (error, setPasswordError, setEmailError) => {
+    const errorMessage = error.message.trim();
+    if (errorMessage.includes("auth/user-not-found")) {
+        setEmailError("User not found");
+    } else if (errorMessage.includes("auth/wrong-password")) {
+        setPasswordError("Incorrect password");
+    } else {
+        alert(error.message);
+    }
+};
