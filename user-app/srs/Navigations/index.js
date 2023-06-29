@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import SignUp from "../screens/AuthScreens/SignUp";
+import SignIn from "../screens/AuthScreens/SignIn";
 import OTP from "../screens/AuthScreens/OTP";
 import TempScreen from "../screens/Temp/TempScreen";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -34,6 +35,10 @@ const AuthStackNavigator = () => {
             <AuthStack.Screen
                 name="SignUp"
                 component={SignUp}
+            />
+            <AuthStack.Screen
+                name="SignIn"
+                component={SignIn}
             />
             <AuthStack.Screen
                 name="OTP"

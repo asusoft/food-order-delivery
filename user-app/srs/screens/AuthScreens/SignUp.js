@@ -291,7 +291,7 @@ const SignUp = () => {
                 style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, opacity: loading ? 0.5 : 1 }}
             >
                 <Text style={{ fontSize: 16 }}>Already on App? </Text>
-                <Pressable>
+                <Pressable onPress={() => navigation.navigate("SignIn")}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
                         Sign In here
                     </Text>
