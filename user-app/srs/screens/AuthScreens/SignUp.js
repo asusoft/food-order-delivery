@@ -10,6 +10,7 @@ import FooterButton from '../../components/FooterButton';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { handleSignUpError } from '../../contexts/errorHandler';
+import Loading from '../../components/Loading';
 
 // create a component
 const SignUp = () => {
@@ -24,13 +25,17 @@ const SignUp = () => {
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     const navigation = useNavigation();
 
     const { signUp } = useAuthContext();
 
     const handleSignUp = async () => {
         try {
+            setLoading(true);
             await signUp(email, password, phoneNumber);
+            setLoading(false);
             navigation.navigate("OTP", {
                 name: name,
                 phoneNumber: phoneNumber,
@@ -38,6 +43,7 @@ const SignUp = () => {
                 password: password
             });
         } catch (error) {
+            setLoading(false);
             handleSignUpError(error, setPasswordError, setEmailError, setPhoneNumberError)
         }
     }
@@ -75,8 +81,9 @@ const SignUp = () => {
 
     function RenderForm() {
         return (
-            <View style={{ marginHorizontal: 20, marginTop: 10 }}>
+            <View style={{ marginHorizontal: 20, marginTop: 10, opacity: loading ? 0.5 : 1 }}>
                 <FormInput
+                    editable={!loading}
                     label="Name"
                     placeholder="Your name"
                     inputContainerStyle={{
@@ -88,6 +95,7 @@ const SignUp = () => {
                 />
                 <View style={{ marginTop: 20 }}>
                     <FormInput
+                        editable={!loading}
                         label="Email"
                         keyboardType="email-address"
                         placeholder="email@example.com"
@@ -140,13 +148,14 @@ const SignUp = () => {
 
                         </View>
                         <FormInput
+                            editable={!loading}
                             placeholder="9012345678"
                             containerStyle={{
                                 flex: 1
                             }}
                             inputContainerStyle={{
                                 borderColor: phoneNumber == ''
-                                    ? COLORS.gray
+                                    ? COLORS.grey
                                     : phoneNumber != '' && phoneNumberError == ''
                                         ? COLORS.green
                                         : COLORS.red,
@@ -184,6 +193,7 @@ const SignUp = () => {
                 </View>
                 <View style={{ marginTop: 20 }}>
                     <FormInput
+                        editable={!loading}
                         label="Password"
                         placeholder="Choose Password"
                         inputContainerStyle={{
@@ -218,6 +228,7 @@ const SignUp = () => {
 
                 <View style={{ marginTop: 20 }}>
                     <FormInput
+                        editable={!loading}
                         label="Confirm Password"
                         placeholder="Rewrite Password"
                         inputContainerStyle={{
@@ -260,7 +271,7 @@ const SignUp = () => {
         return (
             <FooterButton
                 label="Sign Up"
-                disabled={isEnableSignUp() ? true : false}
+                disabled={isEnableSignUp() ? false : true}
                 footerStyle={{
                     position: "absolute",
                     bottom: 50,
@@ -271,14 +282,13 @@ const SignUp = () => {
             />
         );
     }
-
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={{ ...styles.container }}>
             {RenderHeader()}
             {RenderForm()}
             {RenderFooter()}
             <View
-                style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25 }}
+                style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, opacity: loading ? 0.5 : 1 }}
             >
                 <Text style={{ fontSize: 16 }}>Already on App? </Text>
                 <Pressable>
@@ -287,8 +297,13 @@ const SignUp = () => {
                     </Text>
                 </Pressable>
             </View>
+            {
+                loading ? <Loading /> : []
+            }
+
         </SafeAreaView>
     );
+
 };
 
 // define your styles
