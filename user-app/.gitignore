@@ -1,7 +1,7 @@
 node_modules/
 .expo/
 dist/
-.config.js
+config.js
 npm-debug.*
 *.jks
 *.p8
@@ -10,6 +10,11 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+Utils.js
+contexts/
+metro.config.js
+google-services.json
+GoogleService-Info.plist
 
 # macOS
 .DS_Store
