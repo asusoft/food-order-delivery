@@ -291,10 +291,7 @@ const SignUp = () => {
                 style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, opacity: loading ? 0.5 : 1 }}
             >
                 <Text style={{ fontSize: 16 }}>Already on App? </Text>
-                <Pressable onPress={() => navigation.navigate("OTP", {
-                    name: "name",
-                    phoneNumber: "+79963570585",
-                })}>
+                <Pressable>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
                         Sign In here
                     </Text>
