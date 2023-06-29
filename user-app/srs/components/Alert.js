@@ -10,7 +10,7 @@ const Alert = ({ visible, message, buttons }) => {
         <Modal visible={visible} transparent={true} animationType="fade">
             <View style={styles.overlay}>
                 <View style={styles.container}>
-                    <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center', borderBottomColor: COLORS.lightGray, borderWidth: 0.5, borderColor: COLORS.white, marginTop: 10, paddingHorizontal: 10 }}>
+                    <View style={styles.messageContainer}>
                         <Text style={styles.message}>{message}</Text>
                     </View>
                     <View style={styles.buttonContainer}>
@@ -20,7 +20,7 @@ const Alert = ({ visible, message, buttons }) => {
                                 style={{ ...styles.button, ...button.style }}
                                 onPress={button.onPress}
                             >
-                                <Text style={styles.buttonText}>{button.text}</Text>
+                                <Text style={{ ...styles.buttonText, color: button.color }}>{button.text}</Text>
                             </TouchableOpacity>
                         ))}
                     </View>
@@ -43,7 +43,18 @@ const styles = StyleSheet.create({
         height: '20%',
         width: '70%',
         borderRadius: 20,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.secondary,
+    },
+    messageContainer: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomColor: COLORS.lightGray,
+        borderWidth: 0.5,
+        borderColor: COLORS.white,
+        marginTop: 10,
+        paddingHorizontal: 10
     },
     message: {
         fontSize: 18,

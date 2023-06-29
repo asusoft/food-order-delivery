@@ -41,3 +41,14 @@ export const handleSignInError = (error, setPasswordError, setEmailError) => {
         alert(error.message);
     }
 };
+
+export const handleResetPasswordError = (error) => {
+    const errorMessage = error.message.trim();
+    if (errorMessage.includes("auth/invalid-email")) {
+        alert("An email address must be provide");
+    } else if (errorMessage.includes("auth/user-not-found")) {
+        alert("There is no user record corresponding to this identifier");
+    } else {
+        alert(error.message);
+    }
+};

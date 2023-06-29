@@ -9,7 +9,7 @@ import icons from "../../../assets/constants/icons"
 import FooterButton from '../../components/FooterButton';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
-import { handleSignInError } from '../../contexts/errorHandler';
+import { handleSignInError, handleResetPasswordError } from '../../contexts/errorHandler';
 import Alert from '../../components/Alert';
 import Loading from '../../components/Loading';
 
@@ -76,7 +76,7 @@ const SignIn = () => {
             setLoading(false);
         } catch (error) {
             setLoading(false)
-            alert(error)
+            handleResetPasswordError(error)
         }
     }
 
@@ -202,13 +202,13 @@ const SignIn = () => {
     }
 
     const verifyButtons = [
-        { text: 'OK', style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleOnVerifyOK },
-        { text: 'Cancel', color: '#e74c3c', onPress: hideAlert },
+        { text: 'OK', color: COLORS.blue, style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleOnVerifyOK },
+        { text: 'Cancel', color: COLORS.red, onPress: hideAlert },
     ];
 
     const resetButtons = [
-        { text: 'OK', style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleForgotPassword },
-        { text: 'Cancel', color: '#e74c3c', onPress: hideAlert },
+        { text: 'OK', color: COLORS.blue, style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleForgotPassword },
+        { text: 'Cancel', color: COLORS.red, onPress: hideAlert },
     ];
 
     return (
