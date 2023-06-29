@@ -55,10 +55,6 @@ const AuthContextProvider = ({ children }) => {
                         displayName: name,
                     })
                 })
-                .then(async () => {
-                    await auth()
-                        .signInWithEmailAndPassword(email, password)
-                })
         } catch (error) {
             throw new Error(error.message);
         }
@@ -87,7 +83,8 @@ const AuthContextProvider = ({ children }) => {
 
     async function linkAccounts(email, password, phoneNumber) {
         try {
-            await auth().signOut();
+            authUser ? await auth().signOut() : []
+
             const userCredentials = await auth().signInWithEmailAndPassword(email, password);
             const user = userCredentials.user;
             setAuthUser(user);
