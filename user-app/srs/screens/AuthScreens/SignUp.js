@@ -34,7 +34,7 @@ const SignUp = () => {
     const handleSignUp = async () => {
         try {
             setLoading(true);
-            await signUp(email, password, phoneNumber);
+            await signUp(email, password, phoneNumber, name);
             setLoading(false);
             navigation.navigate("OTP", {
                 name: name,

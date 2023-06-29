@@ -33,21 +33,28 @@ const AuthContextProvider = ({ children }) => {
 
     }, [uid]);
 
-    const signUp = async (email, password, phoneNumber) => {
+    const signUp = async (email, password, phoneNumber, name) => {
         const existingUser = await searchUser('phoneNumber', phoneNumber)
 
         if (existingUser.length !== 0) {
             throw new Error("A user with the provided phone number exists!!!");
         } else {
-            await signUserUp(email, password);
+            await signUserUp(email, password, name);
         }
 
     };
 
-    const signUserUp = async (email, password) => {
+    const signUserUp = async (email, password, name) => {
         try {
             await auth()
                 .createUserWithEmailAndPassword(email, password)
+                .then(userCredentials => {
+                    const user = userCredentials.user;
+
+                    user.updateProfile({
+                        displayName: name,
+                    })
+                })
                 .then(async () => {
                     await auth()
                         .signInWithEmailAndPassword(email, password)
@@ -86,7 +93,7 @@ const AuthContextProvider = ({ children }) => {
             const user = userCredentials.user;
             setAuthUser(user);
 
-            await createDbUser(user.uid, name, phoneNumber, email);
+            await createDbUser(user.uid, user.displayName, phoneNumber, email);
         } catch (error) {
             throw new Error(error);
         }
