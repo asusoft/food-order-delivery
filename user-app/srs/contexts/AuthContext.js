@@ -60,8 +60,8 @@ const AuthContextProvider = ({ children }) => {
     const searchNumber = async (searchTerm) => {
         try {
             const querySnapshot = await firestore()
-                .collection('Users') // Replace 'yourCollection' with the actual collection name
-                .where('phoneNumber', '==', searchTerm) // Replace 'fieldName' with the field you want to search in
+                .collection('Users')
+                .where('phoneNumber', '==', searchTerm)
                 .get();
 
             const searchResults = querySnapshot.docs.map((doc) => doc.data());
@@ -121,7 +121,15 @@ const AuthContextProvider = ({ children }) => {
     };
 
     const signIn = async (email, password) => {
-        await signUserIn(email, password)
+        const existingUser = await searchUser(email)
+
+        if (existingUser.length !== 0) {
+            await signUserIn(email, password)
+
+        } else {
+            throw new Error("Verify your account before signing in");
+        }
+
     };
 
     const signUserIn = async (email, password) => {
@@ -134,6 +142,20 @@ const AuthContextProvider = ({ children }) => {
                 })
         } catch (error) {
             throw new Error(error.message);
+        }
+    };
+
+    const searchUser = async (searchTerm) => {
+        try {
+            const querySnapshot = await firestore()
+                .collection('Users')
+                .where('email', '==', searchTerm)
+                .get();
+
+            const searchResults = querySnapshot.docs.map((doc) => doc.data());
+            return searchResults;
+        } catch (error) {
+            console.log('Error searching Firestore:', error);
         }
     };
 

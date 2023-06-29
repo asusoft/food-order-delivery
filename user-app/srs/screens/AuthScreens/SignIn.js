@@ -21,7 +21,7 @@ const SignIn = () => {
     const [passwordError, setPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const { signIn } = useAuthContext();
+    const { signIn, authUser, signOut } = useAuthContext();
 
     const handleSignIn = async () => {
         try {
@@ -38,6 +38,10 @@ const SignIn = () => {
             emailError === ''
         );
     };
+
+    const handleSignOut = () => {
+        signOut()
+    }
 
     function RenderHeader() {
         return (
@@ -159,7 +163,7 @@ const SignIn = () => {
             <View
                 style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'flex-end' }}
             >
-                <Pressable>
+                <Pressable onPress={() => handleSignOut()}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
                         Forgot Password?
                     </Text>
@@ -175,6 +179,9 @@ const SignIn = () => {
                     </Text>
                 </Pressable>
             </View>
+            <Text style={{ fontSize: 16, color: COLORS.primary }}>
+                {authUser?.email}
+            </Text>
         </SafeAreaView>
     );
 };

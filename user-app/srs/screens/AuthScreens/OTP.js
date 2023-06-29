@@ -22,7 +22,7 @@ const OTP = ({ route }) => {
 
     const [number, setNumber] = useState(phoneNumber)
 
-    const { verifyPhone, linkAccounts, authUser, dbUser } = useAuthContext();
+    const { verifyPhone, linkAccounts } = useAuthContext();
 
     const handleRequestCode = async () => {
         try {
