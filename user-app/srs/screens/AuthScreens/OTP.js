@@ -12,43 +12,51 @@ import { useNavigation } from '@react-navigation/native';
 // create a component
 const OTP = ({ route }) => {
     const navigation = useNavigation();
-    const { name, phoneNumber } = route.params;
-    const [codeError, setCodeError] = useState('')
-    const [timer, setTimer] = useState(60);
-
-    const { verifyPhone } = useAuthContext();
-
-    // If null, no SMS has been sent
-    const [confirm, setConfirm] = useState(null);
-
-    // verification code (OTP - One-Time-Passcode)
+    const { name, phoneNumber, email, password } = route.params;
     const [code, setCode] = useState('');
+    const [codeError, setCodeError] = useState('')
+    const [confirm, setConfirm] = useState(null);
+    const [timer, setTimer] = useState(120);
+
+    const { verifyPhone, linkAccounts, authUser } = useAuthContext();
 
     const handleRequestCode = async () => {
         await verifyPhone(phoneNumber, setConfirm);
     }
 
-    async function confirmCode() {
+    const handleConfirm = async () => {
         try {
             await confirm.confirm(code);
-            alert("Phone Number confirmed")
+            alert("Phone Number confirmed" + authUser)
+            await linkAccounts(email, password, name, phoneNumber)
         } catch (error) {
-            console.log('Invalid code.');
+            alert('Invalid code.');
         }
     }
 
+    const handleLinkAccounts = async () => {
+        await linkAccounts(email, password);
+    }
+
+    const handleResend = async () => {
+        setTimer(120)
+        await verifyPhone(phoneNumber, setConfirm);
+    }
+
     React.useEffect(() => {
-        let interval = setInterval(() => {
-            setTimer(prevTimer => {
-                if (prevTimer > 0) {
-                    return prevTimer - 1;
-                } else {
-                    return prevTimer;
-                }
-            });
-        }, 1000);
-        return () => clearInterval(interval);
-    }, []);
+        if (confirm) {
+            let interval = setInterval(() => {
+                setTimer(prevTimer => {
+                    if (prevTimer > 0) {
+                        return prevTimer - 1;
+                    } else {
+                        return prevTimer;
+                    }
+                });
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [confirm]);
 
     const isEnableConfirm = () => {
         return (
@@ -78,7 +86,7 @@ const OTP = ({ route }) => {
             <FooterButton
                 label="Confirm"
                 disabled={isEnableConfirm() ? false : true}
-                onPress={() => confirmCode()}
+                onPress={() => handleConfirm()}
             />
         );
     }
@@ -96,12 +104,10 @@ const OTP = ({ route }) => {
                         </>
                     ) : (
                         <TouchableOpacity
-                            disabled={timer === 0 ? false : true}
                             onPress={() => handleRequestCode()}
                             style={{
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                opacity: timer === 0 ? 1 : 0.5
                             }}>
                             <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
                                 REQUEST CODE
@@ -109,7 +115,16 @@ const OTP = ({ route }) => {
                         </TouchableOpacity>
                     )
                 }
-
+                <TouchableOpacity
+                    onPress={() => handleLinkAccounts()}
+                    style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                    <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
+                        Link Accounts
+                    </Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.containerOTP}>
                 <FormInput
@@ -118,11 +133,13 @@ const OTP = ({ route }) => {
                         width: '50%',
                         marginTop: 20
                     }}
+                    editable={confirm ? true : false}
                     onChange={value => {
                         validateCode(value, setCodeError)
                         setCode(value);
                     }}
                     inputContainerStyle={{
+                        opacity: confirm ? 1 : 0.2,
                         borderColor: code == ''
                             ? COLORS.gray
                             : code != '' && codeError == ''
@@ -132,12 +149,12 @@ const OTP = ({ route }) => {
                     maxLength={6}
                 />
                 <View style={styles.countdownTimer}>
-                    <Text style={{ color: COLORS.darkGray }}>
+                    <Text style={{ color: COLORS.darkGray, opacity: confirm ? 1 : 0.5, }}>
                         Didn't receive code?
                     </Text>
                     <TouchableOpacity
                         disabled={timer === 0 ? false : true}
-                        onPress={() => console.log('Pressed')}
+                        onPress={() => handleResend()}
                         style={{
                             alignItems: 'center',
                             justifyContent: 'center',

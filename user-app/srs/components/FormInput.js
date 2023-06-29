@@ -25,6 +25,7 @@ const FormInput = ({
     autoCapitalize = 'none',
     errorMsg = '',
     maxLength,
+    editable,
     inputContainerStyle,
 }) => {
     return (
@@ -46,6 +47,7 @@ const FormInput = ({
                         flex: 1,
                         ...inputStyle,
                     }}
+                    editable={editable}
                     placeholder={placeholder}
                     placeholderTextColor={COLORS.gray}
                     secureTextEntry={secureTextEntry}

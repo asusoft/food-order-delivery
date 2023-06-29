@@ -33,6 +33,8 @@ const SignUp = () => {
             navigation.navigate("OTP", {
                 name: name,
                 phoneNumber: phoneNumber,
+                email: email,
+                password: password
             });
         } catch (error) {
             if (error.code === "auth/cancelled-popup-request") {
@@ -277,6 +279,8 @@ const SignUp = () => {
                 <Pressable onPress={() => navigation.navigate("OTP", {
                     name: name,
                     phoneNumber: phoneNumber,
+                    email: "soft@test.com",
+                    password: "asusoft19A@"
                 })}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
                         Sign In here
