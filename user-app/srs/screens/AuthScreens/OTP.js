@@ -27,7 +27,7 @@ const OTP = ({ route }) => {
     const handleConfirm = async () => {
         try {
             await confirm.confirm(code);
-            alert("Phone Number confirmed" + authUser)
+            alert("Phone Number confirmed")
             await linkAccounts(email, password, name, phoneNumber)
         } catch (error) {
             alert('Invalid code.');
@@ -97,7 +97,7 @@ const OTP = ({ route }) => {
                         <>
                             <Text style={{ fontSize: 16 }}>An authentication code has been sent to</Text>
                             <Text style={{ fontSize: 16 }}>{phoneNumber}</Text>
-                            <Text style={{ fontSize: 16 }}>{dbUser?.name}</Text>
+
                         </>
                     ) : (
                         <TouchableOpacity
@@ -109,6 +109,7 @@ const OTP = ({ route }) => {
                             <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
                                 REQUEST CODE
                             </Text>
+                            <Text style={{ fontSize: 16 }}>{dbUser?.name}</Text>
                         </TouchableOpacity>
                     )
                 }
