@@ -7,9 +7,8 @@ import { COLORS } from '../../../assets/constants/theme';
 import { validateEmail } from '../../utils/Utils'
 import icons from "../../../assets/constants/icons"
 import FooterButton from '../../components/FooterButton';
+import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
-
-
 
 // create a component
 const SignIn = () => {
@@ -21,6 +20,16 @@ const SignIn = () => {
     const [passwordError, setPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    const { signIn } = useAuthContext();
+
+    const handleSignIn = async () => {
+        try {
+            await signIn(email, password);
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const isEnableSignUp = () => {
         return (
@@ -133,6 +142,7 @@ const SignIn = () => {
                     right: 10,
                     left: 10,
                 }}
+                onPress={() => handleSignIn()}
             />
         );
     }
