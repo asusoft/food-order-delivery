@@ -11,7 +11,6 @@ npm-debug.*
 *.orig.*
 web-build/
 Utils.js
-contexts/
 metro.config.js
 google-services.json
 GoogleService-Info.plist

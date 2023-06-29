@@ -25,7 +25,6 @@ const SignIn = () => {
     const handleSignIn = async () => {
         try {
             await signIn(email, password);
-
         } catch (error) {
             console.log(error)
         }
