@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, SafeAreaView, Image } from 'react-native';
+import { View, Text, StyleSheet, Pressable, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import FormInput from "../../components/FormInput";
 import Header from "../../components/Header"
 import { COLORS } from '../../../assets/constants/theme';
@@ -18,6 +18,9 @@ const SignIn = () => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
 
     const isEnableSignUp = () => {
         return (
@@ -90,10 +93,28 @@ const SignIn = () => {
                 <View style={{ marginTop: 20 }}>
                     <FormInput
                         label="Password"
-                        placeholder="Your Password"
+                        placeholder="Choose Password"
                         inputContainerStyle={{
                             borderColor: COLORS.grey
                         }}
+                        onChange={value => {
+                            setPassword(value);
+                        }}
+                        secureTextEntry={!showPassword}
+                        errorMsg={passwordError}
+                        appendComponent={
+                            <TouchableOpacity
+                                style={styles.appendComponentPassword}
+                                onPress={() => setShowPassword(!showPassword)}>
+                                <Image
+                                    source={showPassword ? icons.eye_close : icons.eye}
+                                    style={{
+                                        height: 20, width: 20, tintColor: COLORS.gray,
+                                        tintColor: COLORS.gray
+                                    }}
+                                />
+                            </TouchableOpacity>
+                        }
                     />
                 </View>
 
@@ -104,6 +125,7 @@ const SignIn = () => {
     function RenderFooter() {
         return (
             <FooterButton
+                disabled={isEnableSignUp() ? false : true}
                 label="Sign In"
                 footerStyle={{
                     position: "absolute",
@@ -149,6 +171,10 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background
     },
     appendComponentEmail: {
+        justifyContent: 'center',
+    },
+    appendComponentPassword: {
+        alignItems: 'center',
         justifyContent: 'center',
     },
     imageCorrect: {
