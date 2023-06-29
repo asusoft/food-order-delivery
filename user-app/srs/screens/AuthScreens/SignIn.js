@@ -1,9 +1,10 @@
 //import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Pressable, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Pressable, SafeAreaView, Image } from 'react-native';
 import FormInput from "../../components/FormInput";
 import Header from "../../components/Header"
 import { COLORS } from '../../../assets/constants/theme';
+import { validateEmail } from '../../utils/Utils'
 import icons from "../../../assets/constants/icons"
 import FooterButton from '../../components/FooterButton';
 import { useNavigation } from '@react-navigation/native';
@@ -13,6 +14,18 @@ import { useNavigation } from '@react-navigation/native';
 // create a component
 const SignIn = () => {
     const navigation = useNavigation();
+
+    const [email, setEmail] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [password, setPassword] = useState('');
+
+    const isEnableSignUp = () => {
+        return (
+            email !== '' &&
+            password !== '' &&
+            emailError === ''
+        );
+    };
 
     function RenderHeader() {
         return (
@@ -39,8 +52,39 @@ const SignIn = () => {
                         keyboardType="email-address"
                         placeholder="email@example.com"
                         inputContainerStyle={{
-                            borderColor: COLORS.grey
+                            borderColor: email == ''
+                                ? COLORS.grey
+                                : email != '' && emailError == ''
+                                    ? COLORS.green
+                                    : COLORS.red,
                         }}
+                        onChange={value => {
+                            validateEmail(value, setEmailError);
+                            setEmail(value);
+                        }}
+                        errorMsg={emailError}
+                        appendComponent={
+                            <View style={styles.appendComponentEmail}>
+                                <Image
+                                    source={
+                                        email == '' || (email != '' && emailError == '')
+                                            ? icons.correct
+                                            : icons.cancel
+                                    }
+                                    style={[
+                                        styles.imageCorrect,
+                                        {
+                                            tintColor:
+                                                email == ''
+                                                    ? COLORS.gray
+                                                    : email != '' && emailError == ''
+                                                        ? COLORS.green
+                                                        : COLORS.red,
+                                        },
+                                    ]}
+                                />
+                            </View>
+                        }
                     />
                 </View>
                 <View style={{ marginTop: 20 }}>
@@ -104,6 +148,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.background
     },
+    appendComponentEmail: {
+        justifyContent: 'center',
+    },
+    imageCorrect: {
+        height: 20,
+        width: 20,
+    }
 });
 
 //make this component available to the app
