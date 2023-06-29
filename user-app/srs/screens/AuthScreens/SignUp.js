@@ -9,6 +9,7 @@ import icons from "../../../assets/constants/icons"
 import FooterButton from '../../components/FooterButton';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
+import { handleSignUpError } from '../../contexts/errorHandler';
 
 // create a component
 const SignUp = () => {
@@ -29,7 +30,7 @@ const SignUp = () => {
 
     const handleSignUp = async () => {
         try {
-            await signUp(email, password);
+            await signUp(email, password, phoneNumber);
             navigation.navigate("OTP", {
                 name: name,
                 phoneNumber: phoneNumber,
@@ -37,11 +38,7 @@ const SignUp = () => {
                 password: password
             });
         } catch (error) {
-            if (error.code === "auth/cancelled-popup-request") {
-                console.log("User interaction is ongoing. Please try again.");
-            } else {
-                console.log("Error signing up:", error);
-            }
+            handleSignUpError(error, setPasswordError, setEmailError, setPhoneNumberError)
         }
     }
 
@@ -95,7 +92,11 @@ const SignUp = () => {
                         keyboardType="email-address"
                         placeholder="email@example.com"
                         inputContainerStyle={{
-                            borderColor: COLORS.grey
+                            borderColor: email == ''
+                                ? COLORS.grey
+                                : email != '' && emailError == ''
+                                    ? COLORS.green
+                                    : COLORS.red,
                         }}
                         onChange={value => {
                             validateEmail(value, setEmailError);
@@ -144,7 +145,11 @@ const SignUp = () => {
                                 flex: 1
                             }}
                             inputContainerStyle={{
-                                borderColor: COLORS.grey
+                                borderColor: phoneNumber == ''
+                                    ? COLORS.gray
+                                    : phoneNumber != '' && phoneNumberError == ''
+                                        ? COLORS.green
+                                        : COLORS.red,
                             }}
                             onChange={value => {
                                 validatePhoneNumber(value, setPhoneNumberError);
@@ -255,7 +260,7 @@ const SignUp = () => {
         return (
             <FooterButton
                 label="Sign Up"
-                disabled={isEnableSignUp() ? false : true}
+                disabled={isEnableSignUp() ? true : false}
                 footerStyle={{
                     position: "absolute",
                     bottom: 50,
