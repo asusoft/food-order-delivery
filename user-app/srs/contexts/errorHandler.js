@@ -35,6 +35,8 @@ export const handleSignInError = (error, setPasswordError, setEmailError) => {
         setEmailError("User not found");
     } else if (errorMessage.includes("auth/wrong-password")) {
         setPasswordError("Incorrect password");
+    } else if (errorMessage.includes("Verify your account before signing in")) {
+        //
     } else {
         alert(error.message);
     }

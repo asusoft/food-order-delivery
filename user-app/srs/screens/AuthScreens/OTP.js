@@ -37,7 +37,7 @@ const OTP = ({ route }) => {
         try {
             await confirm.confirm(code);
             alert("Phone Number confirmed")
-            await linkAccounts(email, password, name, number)
+            await linkAccounts(email, password, number)
         } catch (error) {
             handleVerifyPhoneError(error, setVerifyError);
         }
@@ -125,6 +125,7 @@ const OTP = ({ route }) => {
                     keyboardType='phone-pad'
                     textAlign='center'
                     value={number}
+                    placeholder='Your Phone Number'
                 />
                 {
                     confirm ? (
@@ -156,8 +157,6 @@ const OTP = ({ route }) => {
                                 </Text>
                             </TouchableOpacity>
                         </>
-
-
                     )
                 }
             </View>

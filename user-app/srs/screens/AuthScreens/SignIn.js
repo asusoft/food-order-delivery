@@ -10,6 +10,7 @@ import FooterButton from '../../components/FooterButton';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { handleSignInError } from '../../contexts/errorHandler';
+import Alert from '../../components/Alert';
 
 // create a component
 const SignIn = () => {
@@ -23,10 +24,25 @@ const SignIn = () => {
 
     const { signIn, authUser, signOut } = useAuthContext();
 
+    const [alertVisible, setAlertVisible] = useState(false);
+
+    const hideAlert = () => {
+        setAlertVisible(false);
+    };
+
+    const handleOnOK = () => {
+        navigation.navigate('OTP', { email: email, password: password });
+        hideAlert();
+    };
+
     const handleSignIn = async () => {
         try {
             await signIn(email, password);
         } catch (error) {
+            const errorMessage = error.message.trim();
+            if (errorMessage.includes("Verify your account before signing in")) {
+                setAlertVisible(true)
+            }
             handleSignInError(error, setPasswordError, setEmailError)
         }
     }
@@ -109,7 +125,7 @@ const SignIn = () => {
                         placeholder="Choose Password"
                         inputContainerStyle={{
                             borderColor: password == ''
-                                ? COLORS.gray
+                                ? COLORS.grey
                                 : password != '' && passwordError == ''
                                     ? COLORS.gray
                                     : COLORS.red,
@@ -155,6 +171,12 @@ const SignIn = () => {
             />
         );
     }
+
+    const buttons = [
+        { text: 'OK', style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleOnOK },
+        { text: 'Cancel', color: '#e74c3c', onPress: hideAlert },
+    ];
+
     return (
         <SafeAreaView style={styles.container}>
             {RenderHeader()}
@@ -175,13 +197,14 @@ const SignIn = () => {
                 <Text style={{ fontSize: 16 }}>Don't have an account? </Text>
                 <Pressable onPress={() => navigation.navigate("SignUp")}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
-                        Sign Up here
+                        Sign Up
                     </Text>
                 </Pressable>
             </View>
             <Text style={{ fontSize: 16, color: COLORS.primary }}>
                 {authUser?.email}
             </Text>
+            <Alert visible={alertVisible} message="Verify your account before signing in" buttons={buttons} />
         </SafeAreaView>
     );
 };

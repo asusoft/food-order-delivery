@@ -297,14 +297,13 @@ const SignUp = () => {
                 <Text style={{ fontSize: 16 }}>Already on App? </Text>
                 <Pressable onPress={() => navigation.navigate("SignIn")}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
-                        Sign In here
+                        Sign In
                     </Text>
                 </Pressable>
             </View>
             {
                 loading ? <Loading /> : []
             }
-
         </SafeAreaView>
     );
 

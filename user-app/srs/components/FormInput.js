@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    TextInputProps,
     TextInput,
-    ViewStyle,
     StyleSheet,
 } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme'
