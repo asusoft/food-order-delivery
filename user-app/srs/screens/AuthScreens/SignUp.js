@@ -255,7 +255,7 @@ const SignUp = () => {
         return (
             <FooterButton
                 label="Sign Up"
-                disabled={isEnableSignUp() ? true : false}
+                disabled={isEnableSignUp() ? false : true}
                 footerStyle={{
                     position: "absolute",
                     bottom: 50,
@@ -276,12 +276,7 @@ const SignUp = () => {
                 style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25 }}
             >
                 <Text style={{ fontSize: 16 }}>Already on App? </Text>
-                <Pressable onPress={() => navigation.navigate("OTP", {
-                    name: name,
-                    phoneNumber: phoneNumber,
-                    email: "soft@test.com",
-                    password: "asusoft19A@"
-                })}>
+                <Pressable>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
                         Sign In here
                     </Text>
