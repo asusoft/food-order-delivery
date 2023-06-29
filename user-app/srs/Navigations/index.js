@@ -3,13 +3,22 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import SignUp from "../screens/AuthScreens/SignUp";
 import OTP from "../screens/AuthScreens/OTP";
+import TempScreen from "../screens/Temp/TempScreen";
+import { useAuthContext } from "../contexts/AuthContext";
 
 const RootStack = createNativeStackNavigator();
 
+
 const RootNavigator = () => {
+    const { dbUser, authUser } = useAuthContext();
     return (
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
-            <RootStack.Screen name="Auth" component={AuthStackNavigator} />
+            {
+                dbUser ?
+                    <RootStack.Screen name="Temp" component={TempScreen} />
+                    :
+                    <RootStack.Screen name="Auth" component={AuthStackNavigator} />
+            }
         </RootStack.Navigator>
     )
 }

@@ -7,7 +7,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 
 // create a component
 const TempScreen = () => {
-    const { signOut } = useAuthContext();
+    const { signOut, dbUser } = useAuthContext();
 
     const handleSignOut = () => {
         signOut()
@@ -20,6 +20,9 @@ const TempScreen = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}>
+                <Text>Name: {dbUser?.name}</Text>
+                <Text>Email: {dbUser?.email}</Text>
+                <Text>Phone: {dbUser?.phoneNumber}</Text>
                 <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
                     SIGN OUT
                 </Text>
