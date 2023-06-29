@@ -11,6 +11,8 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { handleSignInError } from '../../contexts/errorHandler';
 import Alert from '../../components/Alert';
+import Loading from '../../components/Loading';
+
 
 // create a component
 const SignIn = () => {
@@ -26,6 +28,8 @@ const SignIn = () => {
 
     const [alertVisible, setAlertVisible] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     const hideAlert = () => {
         setAlertVisible(false);
     };
@@ -37,8 +41,11 @@ const SignIn = () => {
 
     const handleSignIn = async () => {
         try {
+            setLoading(true);
             await signIn(email, password);
+            setLoading(false);
         } catch (error) {
+            setLoading(false);
             const errorMessage = error.message.trim();
             if (errorMessage.includes("Verify your account before signing in")) {
                 setAlertVisible(true)
@@ -77,7 +84,7 @@ const SignIn = () => {
 
     function RenderForm() {
         return (
-            <View style={{ marginHorizontal: 20, marginTop: 10 }}>
+            <View style={{ marginHorizontal: 20, marginTop: 10, opacity: loading ? 0.5 : 1 }}>
                 <View style={{ marginTop: 20 }}>
                     <FormInput
                         label="Email"
@@ -183,7 +190,7 @@ const SignIn = () => {
             {RenderForm()}
             {RenderFooter()}
             <View
-                style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'flex-end' }}
+                style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'flex-end', opacity: loading ? 0.5 : 1 }}
             >
                 <Pressable onPress={() => handleSignOut()}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
@@ -205,6 +212,9 @@ const SignIn = () => {
                 {authUser?.email}
             </Text>
             <Alert visible={alertVisible} message="Verify your account before signing in" buttons={buttons} />
+            {
+                loading ? <Loading /> : []
+            }
         </SafeAreaView>
     );
 };
