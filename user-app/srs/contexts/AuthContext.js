@@ -34,7 +34,7 @@ const AuthContextProvider = ({ children }) => {
     }, [uid]);
 
     const signUp = async (email, password, phoneNumber) => {
-        const existingUser = await searchNumber(phoneNumber)
+        const existingUser = await searchUser('phoneNumber', phoneNumber)
 
         if (existingUser.length !== 0) {
             throw new Error("A user with the provided phone number exists!!!");
@@ -57,22 +57,8 @@ const AuthContextProvider = ({ children }) => {
         }
     };
 
-    const searchNumber = async (searchTerm) => {
-        try {
-            const querySnapshot = await firestore()
-                .collection('Users')
-                .where('phoneNumber', '==', searchTerm)
-                .get();
-
-            const searchResults = querySnapshot.docs.map((doc) => doc.data());
-            return searchResults;
-        } catch (error) {
-            console.log('Error searching Firestore:', error);
-        }
-    };
-
     async function verifyPhone(phoneNumber, setConfirm) {
-        const existingUser = await searchNumber(phoneNumber)
+        const existingUser = await searchUser('phoneNumber', phoneNumber)
 
         if (existingUser.length !== 0) {
             throw new Error("A user with the provided phone number exists!!!");
@@ -121,7 +107,7 @@ const AuthContextProvider = ({ children }) => {
     };
 
     const signIn = async (email, password) => {
-        const existingUser = await searchUser(email)
+        const existingUser = await searchUser('email', email)
 
         if (existingUser.length !== 0) {
             await signUserIn(email, password)
@@ -145,11 +131,11 @@ const AuthContextProvider = ({ children }) => {
         }
     };
 
-    const searchUser = async (searchTerm) => {
+    const searchUser = async (fieldName, searchTerm) => {
         try {
             const querySnapshot = await firestore()
                 .collection('Users')
-                .where('email', '==', searchTerm)
+                .where(fieldName, '==', searchTerm)
                 .get();
 
             const searchResults = querySnapshot.docs.map((doc) => doc.data());
