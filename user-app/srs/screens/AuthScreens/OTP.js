@@ -109,7 +109,6 @@ const OTP = ({ route }) => {
                             <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
                                 REQUEST CODE
                             </Text>
-                            <Text style={{ fontSize: 16 }}>{dbUser?.name}</Text>
                         </TouchableOpacity>
                     )
                 }
