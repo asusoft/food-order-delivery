@@ -24,7 +24,7 @@ const SignIn = () => {
     const [passwordError, setPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const { signIn } = useAuthContext();
+    const { signIn, resetPassword } = useAuthContext();
 
     const [alertVisible, setAlertVisible] = useState(false);
 
@@ -51,6 +51,17 @@ const SignIn = () => {
                 setAlertVisible(true)
             }
             handleSignInError(error, setPasswordError, setEmailError)
+        }
+    }
+
+    const handleForgotPassword = async () => {
+        try {
+            setLoading(true);
+            await resetPassword(email);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false)
+            alert(error)
         }
     }
 
@@ -188,7 +199,7 @@ const SignIn = () => {
             <View
                 style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'flex-end', opacity: loading ? 0.5 : 1 }}
             >
-                <Pressable>
+                <Pressable onPress={() => handleForgotPassword()}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
                         Forgot Password?
                     </Text>

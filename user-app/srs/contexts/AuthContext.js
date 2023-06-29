@@ -158,6 +158,17 @@ const AuthContextProvider = ({ children }) => {
             .catch(error => alert(error.message));
     };
 
+    const resetPassword = async (email) => {
+        try {
+            await auth().sendPasswordResetEmail(email)
+                .then(() => {
+                    alert("Password reset link has been sent to " + email)
+                })
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
     return (
         <AuthContext.Provider value={{
             authUser,
@@ -170,7 +181,8 @@ const AuthContextProvider = ({ children }) => {
             setAuthUser,
             verifyPhone,
             confirmCode,
-            linkAccounts
+            linkAccounts,
+            resetPassword
         }}>
             {children}
         </AuthContext.Provider>
