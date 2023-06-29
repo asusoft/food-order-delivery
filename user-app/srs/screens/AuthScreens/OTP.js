@@ -18,7 +18,7 @@ const OTP = ({ route }) => {
     const [confirm, setConfirm] = useState(null);
     const [timer, setTimer] = useState(120);
 
-    const { verifyPhone, linkAccounts, authUser } = useAuthContext();
+    const { verifyPhone, linkAccounts, authUser, dbUser } = useAuthContext();
 
     const handleRequestCode = async () => {
         await verifyPhone(phoneNumber, setConfirm);
@@ -32,10 +32,6 @@ const OTP = ({ route }) => {
         } catch (error) {
             alert('Invalid code.');
         }
-    }
-
-    const handleLinkAccounts = async () => {
-        await linkAccounts(email, password);
     }
 
     const handleResend = async () => {
@@ -101,6 +97,7 @@ const OTP = ({ route }) => {
                         <>
                             <Text style={{ fontSize: 16 }}>An authentication code has been sent to</Text>
                             <Text style={{ fontSize: 16 }}>{phoneNumber}</Text>
+                            <Text style={{ fontSize: 16 }}>{dbUser?.name}</Text>
                         </>
                     ) : (
                         <TouchableOpacity
@@ -115,16 +112,6 @@ const OTP = ({ route }) => {
                         </TouchableOpacity>
                     )
                 }
-                <TouchableOpacity
-                    onPress={() => handleLinkAccounts()}
-                    style={{
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}>
-                    <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
-                        Link Accounts
-                    </Text>
-                </TouchableOpacity>
             </View>
             <View style={styles.containerOTP}>
                 <FormInput
