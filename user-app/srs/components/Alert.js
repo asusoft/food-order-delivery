@@ -10,7 +10,7 @@ const Alert = ({ visible, message, buttons }) => {
         <Modal visible={visible} transparent={true} animationType="fade">
             <View style={styles.overlay}>
                 <View style={styles.container}>
-                    <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center', borderBottomColor: COLORS.lightGray, borderWidth: 0.5, borderColor: COLORS.white, marginTop: 10 }}>
+                    <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center', borderBottomColor: COLORS.lightGray, borderWidth: 0.5, borderColor: COLORS.white, marginTop: 10, paddingHorizontal: 10 }}>
                         <Text style={styles.message}>{message}</Text>
                     </View>
                     <View style={styles.buttonContainer}>

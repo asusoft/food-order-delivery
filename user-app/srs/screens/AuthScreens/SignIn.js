@@ -27,15 +27,21 @@ const SignIn = () => {
     const { signIn, resetPassword } = useAuthContext();
 
     const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+    const [alertButtons, setAlertButtons] = useState([]);
 
     const [loading, setLoading] = useState(false);
 
     const hideAlert = () => {
+        setAlertMessage('')
+        setAlertButtons([])
         setAlertVisible(false);
     };
 
-    const handleOnOK = () => {
+    const handleOnVerifyOK = () => {
         navigation.navigate('OTP', { email: email, password: password });
+        setAlertMessage('')
+        setAlertButtons([])
         hideAlert();
     };
 
@@ -48,13 +54,22 @@ const SignIn = () => {
             setLoading(false);
             const errorMessage = error.message.trim();
             if (errorMessage.includes("Verify your account before signing in")) {
+                setAlertMessage('Verify your account before signing in')
+                setAlertButtons(verifyButtons)
                 setAlertVisible(true)
             }
             handleSignInError(error, setPasswordError, setEmailError)
         }
     }
 
+    const confirmReset = () => {
+        setAlertMessage('A password reset link will be sent to you email')
+        setAlertButtons(resetButtons)
+        setAlertVisible(true)
+    }
+
     const handleForgotPassword = async () => {
+        hideAlert();
         try {
             setLoading(true);
             await resetPassword(email);
@@ -186,8 +201,13 @@ const SignIn = () => {
         );
     }
 
-    const buttons = [
-        { text: 'OK', style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleOnOK },
+    const verifyButtons = [
+        { text: 'OK', style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleOnVerifyOK },
+        { text: 'Cancel', color: '#e74c3c', onPress: hideAlert },
+    ];
+
+    const resetButtons = [
+        { text: 'OK', style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleForgotPassword },
         { text: 'Cancel', color: '#e74c3c', onPress: hideAlert },
     ];
 
@@ -199,7 +219,7 @@ const SignIn = () => {
             <View
                 style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'flex-end', opacity: loading ? 0.5 : 1 }}
             >
-                <Pressable onPress={() => handleForgotPassword()}>
+                <Pressable onPress={() => confirmReset()}>
                     <Text style={{ fontSize: 16, color: COLORS.primary }}>
                         Forgot Password?
                     </Text>
@@ -215,7 +235,7 @@ const SignIn = () => {
                     </Text>
                 </Pressable>
             </View>
-            <Alert visible={alertVisible} message="Verify your account before signing in" buttons={buttons} />
+            <Alert visible={alertVisible} message={alertMessage} buttons={alertButtons} />
             {
                 loading ? <Loading /> : []
             }
