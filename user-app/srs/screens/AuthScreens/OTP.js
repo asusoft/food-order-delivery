@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
 import { COLORS, SIZES } from '../../../assets/constants/theme';
 import FormInput from "../../components/FormInput";
 import Header from "../../components/Header"
@@ -8,6 +8,7 @@ import FooterButton from '../../components/FooterButton';
 import { validateCode } from '../../utils/Utils';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
+import { handleVerifyPhoneError } from '../../contexts/errorHandler';
 
 // create a component
 const OTP = ({ route }) => {
@@ -17,30 +18,44 @@ const OTP = ({ route }) => {
     const [codeError, setCodeError] = useState('')
     const [confirm, setConfirm] = useState(null);
     const [timer, setTimer] = useState(120);
+    const [verifyError, setVerifyError] = useState('')
+
+    const [number, setNumber] = useState(phoneNumber)
 
     const { verifyPhone, linkAccounts, authUser, dbUser } = useAuthContext();
 
     const handleRequestCode = async () => {
-        await verifyPhone(phoneNumber, setConfirm);
+        try {
+            await verifyPhone(number, setConfirm);
+        } catch (error) {
+            handleVerifyPhoneError(error, setVerifyError);
+        }
+
     }
 
     const handleConfirm = async () => {
         try {
             await confirm.confirm(code);
             alert("Phone Number confirmed")
-            await linkAccounts(email, password, name, phoneNumber)
+            await linkAccounts(email, password, name, number)
         } catch (error) {
-            alert('Invalid code.');
+            handleVerifyPhoneError(error, setVerifyError);
         }
     }
 
     const handleResend = async () => {
+        setVerifyError('')
         setTimer(120)
-        await verifyPhone(phoneNumber, setConfirm);
+        await verifyPhone(number, setConfirm);
+    }
+
+    const handleChangeNumber = async () => {
+        setConfirm('')
     }
 
     React.useEffect(() => {
         if (confirm) {
+            setVerifyError('')
             let interval = setInterval(() => {
                 setTimer(prevTimer => {
                     if (prevTimer > 0) {
@@ -92,24 +107,57 @@ const OTP = ({ route }) => {
             <View style={{ alignItems: 'center', justifyContent: 'center', paddingHorizontal: SIZES.padding, marginTop: SIZES.padding * 2, }}>
 
                 <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>VERIFY PHONE NUMBER</Text>
+                <FormInput
+                    containerStyle={{
+                        height: 50,
+                        width: '50%',
+                        marginBottom: 30,
+                    }}
+                    onChange={value => {
+                        setNumber(value);
+                    }}
+                    inputContainerStyle={{
+                        borderColor: COLORS.background,
+                        borderRadius: 0,
+                        borderWidth: 0.5,
+                        borderBottomColor: COLORS.grey,
+                    }}
+                    keyboardType='phone-pad'
+                    textAlign='center'
+                    value={number}
+                />
                 {
                     confirm ? (
                         <>
                             <Text style={{ fontSize: 16 }}>An authentication code has been sent to</Text>
-                            <Text style={{ fontSize: 16 }}>{phoneNumber}</Text>
-
+                            <Text style={{ fontSize: 16 }}>{number}</Text>
+                            <TouchableOpacity
+                                onPress={() => handleChangeNumber()}
+                                style={{
+                                    marginTop: 20,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}>
+                                <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
+                                    Change Number
+                                </Text>
+                            </TouchableOpacity>
                         </>
                     ) : (
-                        <TouchableOpacity
-                            onPress={() => handleRequestCode()}
-                            style={{
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>
-                            <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
-                                REQUEST CODE
-                            </Text>
-                        </TouchableOpacity>
+                        <>
+                            <TouchableOpacity
+                                onPress={() => handleRequestCode()}
+                                style={{
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}>
+                                <Text style={{ color: COLORS.primary, marginStart: 10, fontWeight: 'bold' }}>
+                                    REQUEST CODE
+                                </Text>
+                            </TouchableOpacity>
+                        </>
+
+
                     )
                 }
             </View>
@@ -118,13 +166,15 @@ const OTP = ({ route }) => {
                     containerStyle={{
                         height: 50,
                         width: '50%',
-                        marginTop: 20
+                        marginTop: 20,
+                        marginBottom: 20
                     }}
                     editable={confirm ? true : false}
                     onChange={value => {
                         validateCode(value, setCodeError)
                         setCode(value);
                     }}
+                    errorMsg={verifyError}
                     inputContainerStyle={{
                         opacity: confirm ? 1 : 0.2,
                         borderColor: code == ''
@@ -133,9 +183,10 @@ const OTP = ({ route }) => {
                                 ? COLORS.green
                                 : COLORS.red,
                     }}
+                    textAlign='center'
                     maxLength={6}
                 />
-                <View style={styles.countdownTimer}>
+                <View style={{ ...styles.countdownTimer }}>
                     <Text style={{ color: COLORS.darkGray, opacity: confirm ? 1 : 0.5, }}>
                         Didn't receive code?
                     </Text>

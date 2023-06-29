@@ -26,6 +26,8 @@ const FormInput = ({
     errorMsg = '',
     maxLength,
     editable,
+    value,
+    textAlign,
     inputContainerStyle,
 }) => {
     return (
@@ -35,7 +37,7 @@ const FormInput = ({
                 label || errorMsg ? (
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ color: COLORS.gray, marginEnd: 10 }}>{label}</Text>
-                        <Text style={{ color: COLORS.red, marginEnd: 40 }}>{errorMsg}</Text>
+                        <Text style={{ color: COLORS.red, marginEnd: 10 }}>{errorMsg}</Text>
                     </View>) : null
             }
 
@@ -56,6 +58,9 @@ const FormInput = ({
                     autoCapitalize={autoCapitalize}
                     onChangeText={(text) => onChange(text)}
                     maxLength={maxLength}
+                    value={value}
+                    autoCorrect={false}
+                    textAlign={textAlign}
                 />
                 {appendComponent}
             </View>
