@@ -65,9 +65,8 @@ const SignIn = () => {
             <View>
                 <View style={{ marginTop: 20 }}>
                     <FormInput
-                        label="Email"
                         keyboardType="email-address"
-                        placeholder="email@example.com"
+                        placeholder="Your email address"
                         inputContainerStyle={{
                             borderColor: email == ''
                                 ? COLORS.grey
@@ -106,8 +105,7 @@ const SignIn = () => {
                 </View>
                 <View style={{ marginTop: 20 }}>
                     <FormInput
-                        label="Password"
-                        placeholder="Choose Password"
+                        placeholder="Password"
                         inputContainerStyle={{
                             borderColor: password == ''
                                 ? COLORS.grey
@@ -144,7 +142,7 @@ const SignIn = () => {
         return (
             <FooterButton
                 disabled={isEnableSignUp() ? false : true}
-                label="Send"
+                label="Log in"
                 footerStyle={{
                     marginTop: SIZES.padding * 2,
                     height: 50,

@@ -31,14 +31,14 @@ const Layout = ({
                 }}>
                 <View style={{ alignItems: 'center' }}>
                     <Image
-                        source={images.logo1}
+                        source={images.logo2}
                         resizeMode="contain"
                         style={styles.logo}
                     />
                 </View>
                 {/* Title & Subtitle */}
-                <View style={{ marginTop: SIZES.padding, ...titleContainerStyle }}>
-                    <Text style={{ textAlign: 'center', color: COLORS.black, fontSize: 18, fontWeight: '700' }}>
+                <View style={{ ...titleContainerStyle }}>
+                    <Text style={{ textAlign: 'center', color: COLORS.black, fontSize: 20, fontWeight: '700' }}>
                         {title}
                     </Text>
                     <Text
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.background,
     },
     logo: {
-        height: 150,
+        height: 100,
         width: 200,
     },
 });

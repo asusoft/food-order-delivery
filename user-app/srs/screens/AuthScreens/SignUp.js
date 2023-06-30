@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Pressable, Image, TouchableOpacity } from 'react-native';
 import { COLORS, SIZES } from '../../../assets/constants/theme';
 import FormInput from "../../components/FormInput";
-import Header from "../../components/Header"
 import { validateEmail, validatePassword, validatePhoneNumber, comparePassword } from '../../utils/Utils'
 import icons from "../../../assets/constants/icons"
 import FooterButton from '../../components/FooterButton';
@@ -11,7 +10,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { handleSignUpError } from '../../contexts/errorHandler';
 import Loading from '../../components/Loading';
-import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
+import Layout from './Layout';
 
 // create a component
 const SignUp = () => {
@@ -63,29 +62,11 @@ const SignUp = () => {
         );
     };
 
-
-    function RenderHeader() {
-        return (
-            <Header
-                title="Create account"
-                containerStyle={{
-                    height: 50,
-                    marginHorizontal: 20,
-                    marginTop: 10
-                }}
-                titleStyle={{}}
-                leftComponent={<View style={{ width: 40 }} />}
-                rightComponent={<View style={{ width: 40 }} />}
-            />
-        );
-    }
-
     function RenderForm() {
         return (
-            <View style={{ marginHorizontal: 20, marginTop: 10, opacity: loading ? 0.5 : 1 }}>
+            <View>
                 <FormInput
                     editable={!loading}
-                    label="Name"
                     placeholder="Your name"
                     inputContainerStyle={{
                         borderColor: COLORS.grey
@@ -94,10 +75,9 @@ const SignUp = () => {
                         setName(value);
                     }}
                 />
-                <View style={{ marginTop: 20 }}>
+                <View style={{ marginTop: 15 }}>
                     <FormInput
                         editable={!loading}
-                        label="Email"
                         keyboardType="email-address"
                         placeholder="email@example.com"
                         inputContainerStyle={{
@@ -137,8 +117,7 @@ const SignUp = () => {
                         }
                     />
                 </View>
-                <View style={{ marginTop: 20 }}>
-                    <Text>Phone Number</Text>
+                <View style={{ marginTop: 15 }}>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={{
                             height: 52, width: 50, marginTop: 10, alignItems: 'center', justifyContent: 'center', marginEnd: 10, borderWidth: 1,
@@ -192,10 +171,9 @@ const SignUp = () => {
                         />
                     </View>
                 </View>
-                <View style={{ marginTop: 20 }}>
+                <View style={{ marginTop: 15 }}>
                     <FormInput
                         editable={!loading}
-                        label="Password"
                         placeholder="Choose Password"
                         inputContainerStyle={{
                             borderColor: password == ''
@@ -230,11 +208,9 @@ const SignUp = () => {
                         }
                     />
                 </View>
-
-                <View style={{ marginTop: 20 }}>
+                <View style={{ marginTop: 15 }}>
                     <FormInput
                         editable={!loading}
-                        label="Confirm Password"
                         placeholder="Rewrite Password"
                         inputContainerStyle={{
                             borderColor: COLORS.grey
@@ -275,19 +251,24 @@ const SignUp = () => {
     function RenderFooter() {
         return (
             <FooterButton
-                label="Sign Up"
                 disabled={isEnableSignUp() ? false : true}
+                label="Sign Up"
                 footerStyle={{
-                    marginTop: SIZES.padding * 2
+                    marginTop: SIZES.padding,
+                    height: 50,
+                    marginHorizontal: 0
                 }}
                 onPress={() => handleSignUp()}
             />
         );
     }
     return (
-        <KeyboardAvoidingWrapper>
-            <SafeAreaView style={styles.container}>
-                {RenderHeader()}
+        <Layout
+            title="Create account"
+            titleContainerStyle={{
+                opacity: loading ? 0.5 : 1
+            }}>
+            <View style={styles.container}>
                 {RenderForm()}
                 {RenderFooter()}
                 <View
@@ -300,11 +281,11 @@ const SignUp = () => {
                         </Text>
                     </Pressable>
                 </View>
-                {
-                    loading ? <Loading /> : []
-                }
-            </SafeAreaView>
-        </KeyboardAvoidingWrapper>
+            </View>
+            {
+                loading ? <Loading style={{ top: '30%' }} /> : []
+            }
+        </Layout>
     );
 
 };
