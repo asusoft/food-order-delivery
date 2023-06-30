@@ -21,6 +21,7 @@ const SignUp = () => {
     const [passwordError, setPasswordError] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [phoneNumberError, setPhoneNumberError] = useState('');
+    const [phoneNumberSignUpError, setPhoneNumberSignUpError] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +45,7 @@ const SignUp = () => {
             });
         } catch (error) {
             setLoading(false);
-            handleSignUpError(error, setPasswordError, setEmailError, setPhoneNumberError)
+            handleSignUpError(error, setPasswordError, setEmailError, setPhoneNumberSignUpError)
         }
     }
 
@@ -88,7 +89,7 @@ const SignUp = () => {
                             borderColor: email == ''
                                 ? COLORS.grey
                                 : email != '' && emailError == ''
-                                    ? COLORS.green
+                                    ? COLORS.grey
                                     : COLORS.red,
                         }}
                         onChange={value => {
@@ -140,15 +141,16 @@ const SignUp = () => {
                             inputContainerStyle={{
                                 borderColor: phoneNumber == ''
                                     ? COLORS.grey
-                                    : phoneNumber != '' && phoneNumberError == ''
-                                        ? COLORS.green
+                                    : phoneNumber != '' && phoneNumberError == '' && phoneNumberSignUpError == ''
+                                        ? COLORS.grey
                                         : COLORS.red,
                             }}
                             onChange={value => {
+                                setPhoneNumberSignUpError('')
                                 validatePhoneNumber(value, setPhoneNumberError);
                                 setPhoneNumber("+7" + value);
                             }}
-                            errorMsg={phoneNumberError}
+                            errorMsg={phoneNumberSignUpError !== '' ? phoneNumberSignUpError : phoneNumberError}
                             appendComponent={
                                 <TouchableOpacity onPress={phoneNumberError ? () => onInfoPressed() : undefined} style={styles.appendComponentPassword}>
                                     <Image
@@ -163,7 +165,7 @@ const SignUp = () => {
                                                 tintColor:
                                                     phoneNumber == ''
                                                         ? COLORS.gray
-                                                        : phoneNumber != '' && phoneNumberError == ''
+                                                        : phoneNumber != '' && phoneNumberError == '' && phoneNumberSignUpError == ''
                                                             ? COLORS.green
                                                             : COLORS.red,
                                             },
@@ -183,7 +185,7 @@ const SignUp = () => {
                             borderColor: password == ''
                                 ? COLORS.grey
                                 : password != '' && passwordError == ''
-                                    ? COLORS.green
+                                    ? COLORS.grey
                                     : COLORS.red,
                         }}
                         onChange={value => {
@@ -285,16 +287,6 @@ const SignUp = () => {
                         </Text>
                     </Pressable>
                 </View>
-                <Pressable onPress={() => navigation.navigate("OTP", {
-                    name: name,
-                    phoneNumber: phoneNumber,
-                    email: email,
-                    password: password
-                })}>
-                    <Text style={{ fontSize: 16, color: COLORS.darkPrimary }}>
-                        GO TO OTP
-                    </Text>
-                </Pressable>
             </View>
             {
                 loading ? <Loading style={{ top: '30%' }} /> : []

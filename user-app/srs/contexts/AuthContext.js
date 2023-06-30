@@ -13,7 +13,6 @@ const AuthContextProvider = ({ children }) => {
     const [authUser, setAuthUser] = useState(null);
     const [dbUser, setDbUser] = useState(null);
 
-    console.log(authUser)
     const sub = uid;
 
     React.useEffect(() => {
@@ -107,18 +106,25 @@ const AuthContextProvider = ({ children }) => {
                 sub: sub,
             })
             .then((docRef) => {
-                //setDbUser(docRef);
+                setDbUser(docRef);
             })
             .catch(error => alert(error.message))
     };
 
     const signIn = async (email, password) => {
+        try {
+            await auth().signInWithEmailAndPassword(email, password)
+        } catch (error) {
+            throw new Error(error.message);
+        }
+
         const existingUser = await searchUser('email', email)
 
         if (existingUser.length !== 0) {
+            auth().signOut()
             await signUserIn(email, password)
-
         } else {
+            auth().signOut()
             throw new Error("Verify your account before signing in");
         }
 
