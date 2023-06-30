@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { SIZES } from '../../assets/constants/theme';
 
 const Header = ({
     title,
@@ -16,8 +17,10 @@ const Header = ({
             <View style={styles.containerTitle}>
                 <Text style={[styles.titleStyle, titleStyle]}>{title}</Text>
             </View>
+
             {/* Right */}
             {rightComponent}
+
         </View>
     );
 };

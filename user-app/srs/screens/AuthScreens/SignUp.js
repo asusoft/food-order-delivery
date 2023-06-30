@@ -11,6 +11,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { handleSignUpError } from '../../contexts/errorHandler';
 import Loading from '../../components/Loading';
+import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
 
 // create a component
 const SignUp = () => {
@@ -66,7 +67,7 @@ const SignUp = () => {
     function RenderHeader() {
         return (
             <Header
-                title="SIGN UP"
+                title="Create account"
                 containerStyle={{
                     height: 50,
                     marginHorizontal: 20,
@@ -198,7 +199,7 @@ const SignUp = () => {
                         placeholder="Choose Password"
                         inputContainerStyle={{
                             borderColor: password == ''
-                                ? COLORS.gray
+                                ? COLORS.grey
                                 : password != '' && passwordError == ''
                                     ? COLORS.green
                                     : COLORS.red,
@@ -277,34 +278,33 @@ const SignUp = () => {
                 label="Sign Up"
                 disabled={isEnableSignUp() ? false : true}
                 footerStyle={{
-                    position: "absolute",
-                    bottom: 50,
-                    right: 10,
-                    left: 10,
+                    marginTop: SIZES.padding * 2
                 }}
                 onPress={() => handleSignUp()}
             />
         );
     }
     return (
-        <SafeAreaView style={{ ...styles.container }}>
-            {RenderHeader()}
-            {RenderForm()}
-            {RenderFooter()}
-            <View
-                style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, opacity: loading ? 0.5 : 1 }}
-            >
-                <Text style={{ fontSize: 16 }}>Already on App? </Text>
-                <Pressable onPress={() => navigation.navigate("SignIn")}>
-                    <Text style={{ fontSize: 16, color: COLORS.primary }}>
-                        Sign In
-                    </Text>
-                </Pressable>
-            </View>
-            {
-                loading ? <Loading /> : []
-            }
-        </SafeAreaView>
+        <KeyboardAvoidingWrapper>
+            <SafeAreaView style={styles.container}>
+                {RenderHeader()}
+                {RenderForm()}
+                {RenderFooter()}
+                <View
+                    style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, opacity: loading ? 0.5 : 1, alignSelf: 'center' }}
+                >
+                    <Text style={{ fontSize: 16 }}>Already on App? </Text>
+                    <Pressable onPress={() => navigation.navigate("SignIn")}>
+                        <Text style={{ fontSize: 16, color: COLORS.primary }}>
+                            Sign In
+                        </Text>
+                    </Pressable>
+                </View>
+                {
+                    loading ? <Loading /> : []
+                }
+            </SafeAreaView>
+        </KeyboardAvoidingWrapper>
     );
 
 };

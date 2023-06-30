@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import FormInput from "../../components/FormInput";
 import Header from "../../components/Header"
-import { COLORS } from '../../../assets/constants/theme';
+import { COLORS, SIZES } from '../../../assets/constants/theme';
 import { validateEmail } from '../../utils/Utils'
 import icons from "../../../assets/constants/icons"
 import FooterButton from '../../components/FooterButton';
@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { handleSignInError, handleResetPasswordError } from '../../contexts/errorHandler';
 import Alert from '../../components/Alert';
 import Loading from '../../components/Loading';
+import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
 
 
 // create a component
@@ -191,10 +192,7 @@ const SignIn = () => {
                 disabled={isEnableSignUp() ? false : true}
                 label="Sign In"
                 footerStyle={{
-                    position: "absolute",
-                    bottom: 50,
-                    right: 10,
-                    left: 10,
+                    marginTop: SIZES.padding * 2
                 }}
                 onPress={() => handleSignIn()}
             />
@@ -212,34 +210,38 @@ const SignIn = () => {
     ];
 
     return (
-        <SafeAreaView style={styles.container}>
-            {RenderHeader()}
-            {RenderForm()}
-            {RenderFooter()}
-            <View
-                style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'flex-end', opacity: loading ? 0.5 : 1 }}
-            >
-                <Pressable onPress={() => confirmReset()}>
-                    <Text style={{ fontSize: 16, color: COLORS.primary }}>
-                        Forgot Password?
-                    </Text>
-                </Pressable>
-            </View>
-            <View
-                style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'center' }}
-            >
-                <Text style={{ fontSize: 16 }}>Don't have an account? </Text>
-                <Pressable onPress={() => navigation.navigate("SignUp")}>
-                    <Text style={{ fontSize: 16, color: COLORS.primary }}>
-                        Sign Up
-                    </Text>
-                </Pressable>
-            </View>
-            <Alert visible={alertVisible} message={alertMessage} buttons={alertButtons} />
-            {
-                loading ? <Loading /> : []
-            }
-        </SafeAreaView>
+        <KeyboardAvoidingWrapper>
+            <SafeAreaView style={styles.container}>
+                {RenderHeader()}
+                {RenderForm()}
+
+                <View
+                    style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'flex-end', opacity: loading ? 0.5 : 1 }}
+                >
+                    <Pressable onPress={() => confirmReset()}>
+                        <Text style={{ fontSize: 16, color: COLORS.primary }}>
+                            Forgot Password?
+                        </Text>
+                    </Pressable>
+                </View>
+                {RenderFooter()}
+                <View
+                    style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, opacity: loading ? 0.5 : 1, alignSelf: 'center' }}
+                >
+                    <Text style={{ fontSize: 16 }}>Don't have an account? </Text>
+                    <Pressable onPress={() => navigation.navigate("SignUp")}>
+                        <Text style={{ fontSize: 16, color: COLORS.primary }}>
+                            Sign Up
+                        </Text>
+                    </Pressable>
+                </View>
+
+                <Alert visible={alertVisible} message={alertMessage} buttons={alertButtons} />
+                {
+                    loading ? <Loading /> : []
+                }
+            </SafeAreaView>
+        </KeyboardAvoidingWrapper>
     );
 };
 
