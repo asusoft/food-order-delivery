@@ -27,8 +27,8 @@ const Onboarding = () => {
                     <Image source={{ uri: item.image }} style={{ width: width / 2, height: width / 2, resizeMode: 'contain' }} />
                 </View>
                 <View style={{ flex: 0.3, alignItems: 'center', paddingHorizontal: 40 }}>
-                    <Text style={{ fontSize: 20, fontWeight: '800', textAlign: 'center' }}>{item.title}</Text>
-                    <Text style={{ marginTop: 30, fontSize: 16, textAlign: 'center', marginHorizontal: 20 }}>{item.description}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: '800', textAlign: 'center', color: COLORS.white }}>{item.title}</Text>
+                    <Text style={{ marginTop: 30, fontSize: 16, textAlign: 'center', marginHorizontal: 20, color: COLORS.white }}>{item.description}</Text>
                 </View>
             </View>
         )
@@ -78,13 +78,13 @@ const Onboarding = () => {
             <View style={{ flexDirection: 'row', marginTop: 70, position: 'absolute', bottom: 80, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 40 }}>
                 <Button
                     text="Log in"
-                    color={COLORS.black}
+                    color={COLORS.darkPrimary}
                     textColor={COLORS.white}
                     onPress={() => onSignIn()}
                 />
                 <Button
                     text="Create account"
-                    color={COLORS.black}
+                    color={COLORS.darkPrimary}
                     textColor={COLORS.white}
                     customStyle={{
                         marginLeft: 30,
