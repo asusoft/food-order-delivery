@@ -15,7 +15,8 @@ export const COLORS = {
   red: '#ff4545',
   green: '#00FF00',
   brown: '#5C4033',
-  blue: '#0000FF'
+  blue: '#0000FF',
+  black: '#000000'
 };
 
 
