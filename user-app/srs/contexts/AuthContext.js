@@ -54,6 +54,7 @@ const AuthContextProvider = ({ children }) => {
                     user.updateProfile({
                         displayName: name,
                     })
+
                 })
         } catch (error) {
             throw new Error(error.message);
@@ -75,7 +76,7 @@ const AuthContextProvider = ({ children }) => {
         try {
             await confirm.confirm(code);
             alert("Your Phone Number has been verified")
-            await linkAccounts(confirm, code)
+            //await linkAccounts(confirm, code) 
         } catch (error) {
             throw new Error(error);
         }
@@ -87,6 +88,7 @@ const AuthContextProvider = ({ children }) => {
 
             const userCredentials = await auth().signInWithEmailAndPassword(email, password);
             const user = userCredentials.user;
+
             setAuthUser(user);
 
             await createDbUser(user.uid, user.displayName, phoneNumber, email);
@@ -110,12 +112,19 @@ const AuthContextProvider = ({ children }) => {
     };
 
     const signIn = async (email, password) => {
+        try {
+            await auth().signInWithEmailAndPassword(email, password)
+        } catch (error) {
+            throw new Error(error.message);
+        }
+
         const existingUser = await searchUser('email', email)
 
         if (existingUser.length !== 0) {
+            auth().signOut()
             await signUserIn(email, password)
-
         } else {
+            auth().signOut()
             throw new Error("Verify your account before signing in");
         }
 
