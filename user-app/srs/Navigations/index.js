@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignUp from "../screens/AuthScreens/SignUp";
 import SignIn from "../screens/AuthScreens/SignIn";
 import OTP from "../screens/AuthScreens/OTP";
+import Onboarding from "../screens/Onboarding/Onboarding";
 import TempScreen from "../screens/Temp/TempScreen";
 import { useAuthContext } from "../contexts/AuthContext";
 
@@ -18,7 +19,13 @@ const RootNavigator = () => {
                 dbUser ?
                     <RootStack.Screen name="Temp" component={TempScreen} />
                     :
-                    <RootStack.Screen name="Auth" component={AuthStackNavigator} />
+                    (
+                        <>
+                            <RootStack.Screen name="Onboard" component={Onboarding} />
+                            <RootStack.Screen name="Auth" component={AuthStackNavigator} />
+                        </>
+                    )
+
             }
         </RootStack.Navigator>
     )
