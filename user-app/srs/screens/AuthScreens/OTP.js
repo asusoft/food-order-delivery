@@ -9,11 +9,12 @@ import { validateCode } from '../../utils/Utils';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { handleVerifyPhoneError } from '../../contexts/errorHandler';
+import Loading from '../../components/Loading';
 
 // create a component
 const OTP = ({ route }) => {
     const navigation = useNavigation();
-    const { name, phoneNumber, email, password } = route.params;
+    const { phoneNumber, email, password } = route.params;
     const [code, setCode] = useState('');
     const [codeError, setCodeError] = useState('')
     const [confirm, setConfirm] = useState(null);
@@ -24,21 +25,27 @@ const OTP = ({ route }) => {
 
     const { verifyPhone, linkAccounts } = useAuthContext();
 
+    const [loading, setLoading] = useState(false);
+
     const handleRequestCode = async () => {
         try {
             await verifyPhone(number, setConfirm);
         } catch (error) {
             handleVerifyPhoneError(error, setVerifyError);
         }
-
     }
 
     const handleConfirm = async () => {
         try {
+            setLoading(true);
             await confirm.confirm(code);
+            setLoading(false);
             alert("Phone Number confirmed")
+            setLoading(true);
             await linkAccounts(email, password, number)
+            setLoading(false);
         } catch (error) {
+            setLoading(false);
             handleVerifyPhoneError(error, setVerifyError);
         }
     }
@@ -217,7 +224,9 @@ const OTP = ({ route }) => {
                     </Text>
                 </TouchableOpacity>
             </View>
-
+            {
+                loading ? <Loading /> : []
+            }
         </SafeAreaView>
     );
 };

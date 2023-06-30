@@ -1,13 +1,19 @@
 //import liraries
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS } from '../../../assets/constants/theme';
+import Loading from '../../components/Loading';
 
 import { useAuthContext } from '../../contexts/AuthContext';
 
 // create a component
 const TempScreen = () => {
     const { signOut, dbUser } = useAuthContext();
+    const [loading, setLoading] = useState(false);
+
+    React.useEffect(() => {
+        dbUser ? setLoading(false) : setLoading(true)
+    }, [dbUser])
 
     const handleSignOut = () => {
         signOut()
@@ -27,6 +33,9 @@ const TempScreen = () => {
                     SIGN OUT
                 </Text>
             </TouchableOpacity>
+            {
+                loading ? <Loading /> : []
+            }
         </View>
     );
 };
