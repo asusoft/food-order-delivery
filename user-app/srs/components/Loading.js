@@ -4,9 +4,9 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 
 // create a component
-const Loading = () => {
+const Loading = ({ style }) => {
     return (
-        <View style={styles.container}>
+        <View style={{ ...styles.container, ...style }}>
             <ActivityIndicator size={"large"} color={COLORS.primary} />
         </View>
     );

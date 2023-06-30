@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignUp from "../screens/AuthScreens/SignUp";
 import SignIn from "../screens/AuthScreens/SignIn";
 import OTP from "../screens/AuthScreens/OTP";
+import ResetPassword from "../screens/AuthScreens/ResetPassword";
 import Onboarding from "../screens/Onboarding/Onboarding";
 import TempScreen from "../screens/Temp/TempScreen";
 import { useAuthContext } from "../contexts/AuthContext";
@@ -50,6 +51,10 @@ const AuthStackNavigator = () => {
             <AuthStack.Screen
                 name="OTP"
                 component={OTP}
+            />
+            <AuthStack.Screen
+                name="Reset"
+                component={ResetPassword}
             />
         </AuthStack.Navigator>
     );

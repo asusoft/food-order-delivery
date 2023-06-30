@@ -7,7 +7,7 @@ import { COLORS } from '../../assets/constants/theme';
 // create a component
 const KeyboardAvoidingWrapper = ({ children }) => {
     return (
-        <KeyboardAwareScrollView style={{ backgroundColor: COLORS.background }}>
+        <KeyboardAwareScrollView style={{ backgroundColor: COLORS.background, }}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{ backgroundColor: COLORS.grey }}>
                 {children}
             </TouchableWithoutFeedback>

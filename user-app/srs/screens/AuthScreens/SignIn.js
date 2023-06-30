@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, SafeAreaView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Pressable, SafeAreaView, Image, TouchableOpacity, Alert as NewAlert } from 'react-native';
 import FormInput from "../../components/FormInput";
 import Header from "../../components/Header"
 import { COLORS, SIZES } from '../../../assets/constants/theme';
@@ -25,7 +25,7 @@ const SignIn = () => {
     const [passwordError, setPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const { signIn, resetPassword } = useAuthContext();
+    const { signIn } = useAuthContext();
 
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
@@ -60,24 +60,6 @@ const SignIn = () => {
                 setAlertVisible(true)
             }
             handleSignInError(error, setPasswordError, setEmailError)
-        }
-    }
-
-    const confirmReset = () => {
-        setAlertMessage('A password reset link will be sent to you email')
-        setAlertButtons(resetButtons)
-        setAlertVisible(true)
-    }
-
-    const handleForgotPassword = async () => {
-        hideAlert();
-        try {
-            setLoading(true);
-            await resetPassword(email);
-            setLoading(false);
-        } catch (error) {
-            setLoading(false)
-            handleResetPasswordError(error)
         }
     }
 
@@ -204,11 +186,6 @@ const SignIn = () => {
         { text: 'Cancel', color: COLORS.red, onPress: hideAlert },
     ];
 
-    const resetButtons = [
-        { text: 'OK', color: COLORS.blue, style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleForgotPassword },
-        { text: 'Cancel', color: COLORS.red, onPress: hideAlert },
-    ];
-
     return (
         <KeyboardAvoidingWrapper>
             <SafeAreaView style={styles.container}>
@@ -218,7 +195,7 @@ const SignIn = () => {
                 <View
                     style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'flex-end', opacity: loading ? 0.5 : 1 }}
                 >
-                    <Pressable onPress={() => confirmReset()}>
+                    <Pressable onPress={() => navigation.navigate("Reset")}>
                         <Text style={{ fontSize: 16, color: COLORS.primary }}>
                             Forgot Password?
                         </Text>
@@ -249,7 +226,9 @@ const SignIn = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.background
+        backgroundColor: COLORS.background,
+        justifyContent: 'center'
+
     },
     appendComponentEmail: {
         justifyContent: 'center',
