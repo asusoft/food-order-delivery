@@ -53,7 +53,7 @@ const SignIn = () => {
         }
     }
 
-    const isEnableSignUp = () => {
+    const isEnableSignIn = () => {
         return (
             email !== '' &&
             password !== '' &&
@@ -141,7 +141,7 @@ const SignIn = () => {
     function RenderFooter() {
         return (
             <FooterButton
-                disabled={isEnableSignUp() ? false : true}
+                disabled={isEnableSignIn() ? false : true}
                 label="Log in"
                 footerStyle={{
                     marginTop: SIZES.padding * 2,
@@ -168,7 +168,7 @@ const SignIn = () => {
                     style={{ marginHorizontal: 20, flexDirection: "row", marginTop: 25, alignSelf: 'flex-end', opacity: loading ? 0.5 : 1 }}
                 >
                     <Pressable onPress={() => navigation.navigate("Reset")}>
-                        <Text style={{ fontSize: 16, color: COLORS.primary }}>
+                        <Text style={{ fontSize: 16, color: COLORS.darkPrimary }}>
                             Forgot Password?
                         </Text>
                     </Pressable>
@@ -179,7 +179,7 @@ const SignIn = () => {
                 >
                     <Text style={{ fontSize: 16 }}>Don't have an account? </Text>
                     <Pressable onPress={() => navigation.navigate("SignUp")}>
-                        <Text style={{ fontSize: 16, color: COLORS.primary }}>
+                        <Text style={{ fontSize: 16, color: COLORS.darkPrimary }}>
                             Sign Up
                         </Text>
                     </Pressable>

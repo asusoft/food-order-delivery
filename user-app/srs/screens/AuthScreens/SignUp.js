@@ -276,21 +276,11 @@ const SignUp = () => {
                 >
                     <Text style={{ fontSize: 16 }}>Already on App? </Text>
                     <Pressable onPress={() => navigation.navigate("SignIn")}>
-                        <Text style={{ fontSize: 16, color: COLORS.primary }}>
+                        <Text style={{ fontSize: 16, color: COLORS.darkPrimary }}>
                             Sign In
                         </Text>
                     </Pressable>
                 </View>
-                <Pressable onPress={() => navigation.navigate("OTP", {
-                    name: name,
-                    phoneNumber: phoneNumber,
-                    email: email,
-                    password: password
-                })}>
-                    <Text style={{ fontSize: 16, color: COLORS.primary }}>
-                        GO TO OTP
-                    </Text>
-                </Pressable>
             </View>
             {
                 loading ? <Loading style={{ top: '30%' }} /> : []
