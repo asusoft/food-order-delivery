@@ -24,6 +24,8 @@ export const handleVerifyPhoneError = (error, setVerifyError) => {
         alert("Account cannot be verified at the moment, please try again later");
     } else if (errorMessage.includes("auth/code-expired")) {
         setVerifyError("SMS code has expired. Request a new code");
+    } else if (errorMessage.includes("auth/invalid-phone-number")) {
+        setVerifyError("Invalid phone number format.");
     } else {
         alert(error.message);
     }

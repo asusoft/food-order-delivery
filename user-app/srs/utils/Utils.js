@@ -13,7 +13,7 @@ const isValidPassword = value => {
 
 const isValidPhoneNumber = value => {
     const re =
-        /^\d{10}$/;
+        /^(?:\+\d{11}|\d{10})$/;
     return re.test(value);
 }
 
@@ -54,7 +54,7 @@ export const validatePhoneNumber = (value, setPhoneNumberError) => {
     } else if (isValidPhoneNumber(value)) {
         setPhoneNumberError('');
     } else {
-        setPhoneNumberError('Enter Phone Number without the first 0');
+        setPhoneNumberError('Invalid phone number format');
     }
 };
 

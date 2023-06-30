@@ -62,6 +62,10 @@ const SignUp = () => {
         );
     };
 
+    const onInfoPressed = () => {
+        alert("Phone number are written without the country code in the format [subscriber number including area code].")
+    }
+
     function RenderForm() {
         return (
             <View>
@@ -146,12 +150,12 @@ const SignUp = () => {
                             }}
                             errorMsg={phoneNumberError}
                             appendComponent={
-                                <View style={styles.appendComponentPassword}>
+                                <TouchableOpacity onPress={phoneNumberError ? () => onInfoPressed() : undefined} style={styles.appendComponentPassword}>
                                     <Image
                                         source={
                                             phoneNumber == '' || (phoneNumber != '' && phoneNumberError == '')
                                                 ? icons.correct
-                                                : icons.cancel
+                                                : icons.info
                                         }
                                         style={[
                                             styles.imageCorrect,
@@ -165,7 +169,7 @@ const SignUp = () => {
                                             },
                                         ]}
                                     />
-                                </View>
+                                </TouchableOpacity>
                             }
                             maxLength={10}
                         />
@@ -281,6 +285,16 @@ const SignUp = () => {
                         </Text>
                     </Pressable>
                 </View>
+                <Pressable onPress={() => navigation.navigate("OTP", {
+                    name: name,
+                    phoneNumber: phoneNumber,
+                    email: email,
+                    password: password
+                })}>
+                    <Text style={{ fontSize: 16, color: COLORS.darkPrimary }}>
+                        GO TO OTP
+                    </Text>
+                </Pressable>
             </View>
             {
                 loading ? <Loading style={{ top: '30%' }} /> : []

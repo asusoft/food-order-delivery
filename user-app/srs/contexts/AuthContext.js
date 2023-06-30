@@ -13,6 +13,7 @@ const AuthContextProvider = ({ children }) => {
     const [authUser, setAuthUser] = useState(null);
     const [dbUser, setDbUser] = useState(null);
 
+    console.log(authUser)
     const sub = uid;
 
     React.useEffect(() => {
@@ -54,6 +55,7 @@ const AuthContextProvider = ({ children }) => {
                     user.updateProfile({
                         displayName: name,
                     })
+
                 })
         } catch (error) {
             throw new Error(error.message);
@@ -75,7 +77,7 @@ const AuthContextProvider = ({ children }) => {
         try {
             await confirm.confirm(code);
             alert("Your Phone Number has been verified")
-            await linkAccounts(confirm, code)
+            //await linkAccounts(confirm, code) 
         } catch (error) {
             throw new Error(error);
         }
@@ -87,6 +89,7 @@ const AuthContextProvider = ({ children }) => {
 
             const userCredentials = await auth().signInWithEmailAndPassword(email, password);
             const user = userCredentials.user;
+
             setAuthUser(user);
 
             await createDbUser(user.uid, user.displayName, phoneNumber, email);
@@ -104,7 +107,7 @@ const AuthContextProvider = ({ children }) => {
                 sub: sub,
             })
             .then((docRef) => {
-                setDbUser(docRef);
+                //setDbUser(docRef);
             })
             .catch(error => alert(error.message))
     };
