@@ -1,49 +1,32 @@
 //import liraries
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, SafeAreaView, Image, TouchableOpacity, Alert as NewAlert } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, TouchableOpacity, Alert as NewAlert } from 'react-native';
 import FormInput from "../../components/FormInput";
-import Header from "../../components/Header"
 import { COLORS, SIZES } from '../../../assets/constants/theme';
 import { validateEmail } from '../../utils/Utils'
 import icons from "../../../assets/constants/icons"
 import FooterButton from '../../components/FooterButton';
 import { useAuthContext } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
-import { handleSignInError, handleResetPasswordError } from '../../contexts/errorHandler';
-import Alert from '../../components/Alert';
+import { handleSignInError } from '../../contexts/errorHandler';
 import Loading from '../../components/Loading';
-import KeyboardAvoidingWrapper from '../../components/KeyboardAvoidingWrapper';
-
+import Layout from './Layout';
 
 // create a component
 const SignIn = () => {
     const navigation = useNavigation();
+    const { signIn } = useAuthContext();
 
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-
-    const { signIn } = useAuthContext();
-
-    const [alertVisible, setAlertVisible] = useState(false);
-    const [alertMessage, setAlertMessage] = useState('');
-    const [alertButtons, setAlertButtons] = useState([]);
-
     const [loading, setLoading] = useState(false);
 
-    const hideAlert = () => {
-        setAlertMessage('')
-        setAlertButtons([])
-        setAlertVisible(false);
-    };
 
     const handleOnVerifyOK = () => {
-        navigation.navigate('OTP', { email: email, password: password });
-        setAlertMessage('')
-        setAlertButtons([])
-        hideAlert();
+        navigation.navigate('OTP', { email: email, password: password })
     };
 
     const handleSignIn = async () => {
@@ -55,9 +38,16 @@ const SignIn = () => {
             setLoading(false);
             const errorMessage = error.message.trim();
             if (errorMessage.includes("Verify your account before signing in")) {
-                setAlertMessage('Verify your account before signing in')
-                setAlertButtons(verifyButtons)
-                setAlertVisible(true)
+                NewAlert.alert('', 'Verify your account before signing in', [
+                    {
+                        text: 'Cancel',
+                    },
+                    {
+                        text: 'Verify',
+                        onPress: () => handleOnVerifyOK(),
+                        style: 'cancel'
+                    },
+                ]);
             }
             handleSignInError(error, setPasswordError, setEmailError)
         }
@@ -70,26 +60,9 @@ const SignIn = () => {
             emailError === ''
         );
     };
-
-    function RenderHeader() {
-        return (
-            <Header
-                title="SIGN IN"
-                containerStyle={{
-                    height: 50,
-                    marginHorizontal: 20,
-                    marginTop: 10
-                }}
-                titleStyle={{}}
-                leftComponent={<View style={{ width: 40 }} />}
-                rightComponent={<View style={{ width: 40 }} />}
-            />
-        );
-    }
-
     function RenderForm() {
         return (
-            <View style={{ marginHorizontal: 20, marginTop: 10, opacity: loading ? 0.5 : 1 }}>
+            <View>
                 <View style={{ marginTop: 20 }}>
                     <FormInput
                         label="Email"
@@ -163,7 +136,6 @@ const SignIn = () => {
                         }
                     />
                 </View>
-
             </View>
         );
     }
@@ -172,24 +144,26 @@ const SignIn = () => {
         return (
             <FooterButton
                 disabled={isEnableSignUp() ? false : true}
-                label="Sign In"
+                label="Send"
                 footerStyle={{
-                    marginTop: SIZES.padding * 2
+                    marginTop: SIZES.padding * 2,
+                    height: 50,
+                    marginHorizontal: 0
                 }}
                 onPress={() => handleSignIn()}
             />
         );
     }
 
-    const verifyButtons = [
-        { text: 'OK', color: COLORS.blue, style: { borderWidth: 0.5, borderColor: COLORS.white, borderEndColor: COLORS.lightGray }, onPress: handleOnVerifyOK },
-        { text: 'Cancel', color: COLORS.red, onPress: hideAlert },
-    ];
-
     return (
-        <KeyboardAvoidingWrapper>
-            <SafeAreaView style={styles.container}>
-                {RenderHeader()}
+        <Layout
+            title="Sign in to your account"
+            subtitle="Welcome back"
+            titleContainerStyle={{
+                marginTop: SIZES.padding * 2,
+                opacity: loading ? 0.5 : 1
+            }}>
+            <View style={{ ...styles.container, opacity: loading ? 0.5 : 1 }}>
                 {RenderForm()}
 
                 <View
@@ -212,13 +186,11 @@ const SignIn = () => {
                         </Text>
                     </Pressable>
                 </View>
-
-                <Alert visible={alertVisible} message={alertMessage} buttons={alertButtons} />
-                {
-                    loading ? <Loading /> : []
-                }
-            </SafeAreaView>
-        </KeyboardAvoidingWrapper>
+            </View>
+            {
+                loading ? <Loading style={{ top: '30%' }} /> : []
+            }
+        </Layout>
     );
 };
 
@@ -226,9 +198,8 @@ const SignIn = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: SIZES.padding,
         backgroundColor: COLORS.background,
-        justifyContent: 'center'
-
     },
     appendComponentEmail: {
         justifyContent: 'center',
