@@ -16,7 +16,11 @@ export const COLORS = {
   green: '#00FF00',
   brown: '#5C4033',
   blue: '#0000FF',
-  black: '#000000'
+  black: '#000000',
+  oldPrimary: '#ff9248',
+  potPrimary: '#EBB668'
+
+
 };
 
 
