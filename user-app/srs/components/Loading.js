@@ -4,10 +4,11 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 
 // create a component
-const Loading = ({ style }) => {
+const Loading = ({ style, text }) => {
     return (
         <View style={{ ...styles.container, ...style }}>
             <ActivityIndicator size={"large"} color={COLORS.primary} />
+            <Text style={{ fontSize: 18, marginTop: 20 }}>{text}</Text>
         </View>
     );
 };

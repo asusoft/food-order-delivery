@@ -186,7 +186,7 @@ const SignIn = () => {
                 </View>
             </View>
             {
-                loading ? <Loading style={{ top: '30%' }} /> : []
+                loading ? <Loading style={{ top: '30%' }} text='Logging in...' /> : []
             }
         </Layout>
     );

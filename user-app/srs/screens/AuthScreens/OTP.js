@@ -253,7 +253,7 @@ const OTP = ({ route }) => {
                 </View>
             </View>
             {
-                loading ? <Loading style={{ top: '30%' }} /> : []
+                loading ? <Loading style={{ top: '30%' }} text='Verifying...' /> : []
             }
         </Layout>
     );
