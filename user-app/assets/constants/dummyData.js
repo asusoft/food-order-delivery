@@ -20,6 +20,198 @@ const OnboardingData = [
 ]
 
 
+const Categories = [
+    {
+        id: 1,
+        name: 'Fast Food',
+        icon: "https://www.citypng.com/public/uploads/small/11653329235ne77vw13spafnlhowriskdmgxggwddl7kqipk4uyzh7zjvsn4gqeedkyif1cmp6jvlxmax8nfgrpe4diquhgqlwhutw52fvpbpp2.png"
+    },
+    {
+        id: 2,
+        name: "Pizza",
+        icon: "https://www.freeiconspng.com/thumbs/pizza-png/pizza-png-23.png"
+    },
+    {
+        id: 3,
+        name: "Breakfast",
+        icon: "https://toppng.com/uploads/preview/big-burger-11562902444grmy1oetg2.png"
+    },
+    {
+        id: 4,
+        name: "Drink",
+        icon: "https://www.pngall.com/wp-content/uploads/7/Dessert-PNG-Photo.png"
+    },
+    {
+        id: 5,
+        name: "Nuggets",
+        icon: "https://www.pngall.com/wp-content/uploads/5/Summer-Cocktail-PNG.png"
+    },
+    {
+        id: 6,
+        name: "Burger",
+        icon: "https://www.citypng.com/public/uploads/small/11653329235ne77vw13spafnlhowriskdmgxggwddl7kqipk4uyzh7zjvsn4gqeedkyif1cmp6jvlxmax8nfgrpe4diquhgqlwhutw52fvpbpp2.png"
+    },
+]
+
+
+const Restaurants = [
+    {
+        "id": "1",
+        "name": "El Cabo Coffe Bar Tres De Mayo",
+        "deliveryFee": 35,
+        "minDeliveryTime": 20,
+        "maxDeliveryTime": 30,
+        "rating": 4.5,
+        "address": "Lenina Avenue 35, No 4, Visotky",
+        categories: [3, 2],
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg",
+    },
+    {
+        "id": "2",
+        "name": "Tony Roma's - C.C. Meridiano",
+        "deliveryFee": 40,
+        "address": "PO Box 96439",
+        "minDeliveryTime": 15,
+        "maxDeliveryTime": 35,
+        "rating": 4.7,
+        categories: [1, 2, 3, 4],
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
+    },
+    {
+        "id": "3",
+        "name": "Brothers Barbecue",
+        "address": "Apt 299",
+        "deliveryFee": 30,
+        "minDeliveryTime": 20,
+        "maxDeliveryTime": 30,
+        "rating": 4.3,
+        categories: [1, 2],
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg",
+    },
+    {
+        "id": "4",
+        "name": "Hamburguesa Nostra La Salle",
+        "address": "19th Floor",
+        "deliveryFee": 50,
+        "minDeliveryTime": 30,
+        "maxDeliveryTime": 40,
+        "rating": 4.5,
+        categories: [2, 5],
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant4.jpeg",
+    }
+]
+
+const Offers = [
+    {
+        "id": 1,
+        "title": "Leucovorin Calcium",
+        "description": "276-949-3469",
+        "merchantID": 1,
+        "startDate": "5/14/2023",
+        "endDate": "7/12/2023",
+        "isActive": true,
+        "image": "http://dummyimage.com/132x100.png/5fa2dd/ffffff"
+    },
+    {
+        "id": 2,
+        "title": "SHISEIDO UV PROTECTIVE COMPACT (REFILL)",
+        "description": "212-448-8832",
+        "merchantID": 2,
+        "startDate": "12/16/2022",
+        "endDate": "7/8/2023",
+        "isActive": false,
+        "image": "http://dummyimage.com/111x100.png/cc0000/ffffff"
+    },
+    {
+        "id": 3,
+        "title": "Ondansetron Hydrochloride",
+        "description": "759-758-8016",
+        "merchantID": 3,
+        "startDate": "11/4/2022",
+        "endDate": "9/1/2023",
+        "isActive": true,
+        "image": "http://dummyimage.com/184x100.png/ff4444/ffffff"
+    },
+    {
+        "id": 4,
+        "title": "babies r us ibuprofen",
+        "description": "633-418-7426",
+        "merchantID": 4,
+        "startDate": "10/9/2022",
+        "endDate": "2/18/2023",
+        "isActive": true,
+        "image": "http://dummyimage.com/129x100.png/cc0000/ffffff"
+    },
+    {
+        "id": 5,
+        "title": "equaline antibiotic",
+        "description": "815-260-3327",
+        "merchantID": 5,
+        "startDate": "10/24/2022",
+        "endDate": "11/15/2022",
+        "isActive": true,
+        "image": "http://dummyimage.com/160x100.png/5fa2dd/ffffff"
+    }
+]
+
+const Stories = [
+    {
+        "id": 1,
+        "title": "Leucovorin Calcium",
+        "description": "276-949-3469",
+        "merchantID": 1,
+        "startDate": "5/14/2023",
+        "endDate": "7/12/2023",
+        "isActive": true,
+        "image": "http://dummyimage.com/132x100.png/5fa2dd/ffffff"
+    },
+    {
+        "id": 2,
+        "title": "SHISEIDO UV PROTECTIVE COMPACT (REFILL)",
+        "description": "212-448-8832",
+        "merchantID": 2,
+        "startDate": "12/16/2022",
+        "endDate": "7/8/2023",
+        "isActive": false,
+        "image": "http://dummyimage.com/111x100.png/cc0000/ffffff"
+    },
+    {
+        "id": 3,
+        "title": "Ondansetron Hydrochloride",
+        "description": "759-758-8016",
+        "merchantID": 3,
+        "startDate": "11/4/2022",
+        "endDate": "9/1/2023",
+        "isActive": true,
+        "image": "http://dummyimage.com/184x100.png/ff4444/ffffff"
+    },
+    {
+        "id": 4,
+        "title": "babies r us ibuprofen",
+        "description": "633-418-7426",
+        "merchantID": 4,
+        "startDate": "10/9/2022",
+        "endDate": "2/18/2023",
+        "isActive": true,
+        "image": "http://dummyimage.com/129x100.png/cc0000/ffffff"
+    },
+    {
+        "id": 5,
+        "title": "equaline antibiotic",
+        "description": "815-260-3327",
+        "merchantID": 5,
+        "startDate": "10/24/2022",
+        "endDate": "11/15/2022",
+        "isActive": true,
+        "image": "http://dummyimage.com/160x100.png/5fa2dd/ffffff"
+    }
+]
+
+
 export default {
-    OnboardingData
+    OnboardingData,
+    Categories,
+    Restaurants,
+    Offers,
+    Stories
 }
