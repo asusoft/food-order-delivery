@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import SignUp from "../screens/AuthScreens/SignUp";
@@ -8,28 +8,46 @@ import ResetPassword from "../screens/AuthScreens/ResetPassword";
 import Onboarding from "../screens/Onboarding/Onboarding";
 import TempScreen from "../screens/Temp/TempScreen";
 import { useAuthContext } from "../contexts/AuthContext";
+import Loading from "../screens/Onboarding/Loading";
 
 const RootStack = createNativeStackNavigator();
 
 
 const RootNavigator = () => {
-    const { dbUser, authUser } = useAuthContext();
-    return (
-        <RootStack.Navigator screenOptions={{ headerShown: false }}>
-            {
-                dbUser ?
-                    <RootStack.Screen name="Temp" component={TempScreen} />
-                    :
-                    (
-                        <>
-                            <RootStack.Screen name="Onboard" component={Onboarding} />
-                            <RootStack.Screen name="Auth" component={AuthStackNavigator} />
-                        </>
-                    )
+    const { dbUser } = useAuthContext();
+    const [loading, setLoading] = useState(true)
 
-            }
-        </RootStack.Navigator>
-    )
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+
+        // Cleanup the timer when the component unmounts or the dependency changes
+        return () => clearTimeout(timer);
+    })
+
+    if (loading) {
+        return (
+            <Loading />
+        )
+    } else {
+        return (
+            <RootStack.Navigator screenOptions={{ headerShown: false }}>
+                {
+                    dbUser ?
+                        <RootStack.Screen name="Temp" component={TempScreen} />
+                        :
+                        (
+                            <>
+                                <RootStack.Screen name="Onboard" component={Onboarding} />
+                                <RootStack.Screen name="Auth" component={AuthStackNavigator} />
+                            </>
+                        )
+
+                }
+            </RootStack.Navigator>
+        )
+    }
 }
 
 const AuthStack = createNativeStackNavigator();

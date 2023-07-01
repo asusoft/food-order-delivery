@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore';
 
@@ -26,12 +26,11 @@ const AuthContextProvider = ({ children }) => {
                     querySnapshot.forEach((doc) => {
                         const dbUserData = doc.data()
                         const dbUserObject = { ...dbUserData, id: doc.id };
-                        setDbUser(dbUserObject)
+                        dbUserData !== '' ? setDbUser(dbUserObject) : []
                     });
                 })
             : []
-
-    }, [uid]);
+    }, [uid, authUser]);
 
     const signUp = async (email, password, phoneNumber, name) => {
         const existingUser = await searchUser('phoneNumber', phoneNumber)
@@ -41,7 +40,6 @@ const AuthContextProvider = ({ children }) => {
         } else {
             await signUserUp(email, password, name);
         }
-
     };
 
     const signUserUp = async (email, password, name) => {
@@ -50,7 +48,6 @@ const AuthContextProvider = ({ children }) => {
                 .createUserWithEmailAndPassword(email, password)
                 .then(userCredentials => {
                     const user = userCredentials.user;
-
                     user.updateProfile({
                         displayName: name,
                     })
@@ -75,8 +72,6 @@ const AuthContextProvider = ({ children }) => {
     async function confirmCode(confirm, code) {
         try {
             await confirm.confirm(code);
-            alert("Your Phone Number has been verified")
-            //await linkAccounts(confirm, code) 
         } catch (error) {
             throw new Error(error);
         }
@@ -92,6 +87,7 @@ const AuthContextProvider = ({ children }) => {
             setAuthUser(user);
 
             await createDbUser(user.uid, user.displayName, phoneNumber, email);
+            alert("Your account has been verified")
         } catch (error) {
             throw new Error(error);
         }
@@ -127,7 +123,6 @@ const AuthContextProvider = ({ children }) => {
             auth().signOut()
             throw new Error("Verify your account before signing in");
         }
-
     };
 
     const signUserIn = async (email, password) => {

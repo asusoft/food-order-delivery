@@ -41,9 +41,6 @@ const OTP = ({ route }) => {
         try {
             setLoading(true);
             await confirm.confirm(code);
-            setLoading(false);
-            alert("Phone Number confirmed")
-            setLoading(true);
             await linkAccounts(email, password, number)
             setLoading(false);
         } catch (error) {
