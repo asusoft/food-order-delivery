@@ -3,6 +3,9 @@ const correct = require('../icons/correct.png');
 const eye = require('../icons/eye.png');
 const eye_close = require('../icons/eye_close.png');
 const info = require('../icons/info.png');
+const menu = require('../icons/menu.png');
+const notification = require('../icons/notification.png');
+const search = require('../icons/search.png');
 
 
 export default {
@@ -10,5 +13,8 @@ export default {
     correct,
     eye,
     eye_close,
-    info
+    info,
+    menu,
+    notification,
+    search
 }
