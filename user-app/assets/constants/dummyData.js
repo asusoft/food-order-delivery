@@ -54,9 +54,9 @@ const Categories = [
 ]
 
 
-const Restaurants = [
+const Merchants = [
     {
-        "id": "1",
+        "id": 1,
         "name": "El Cabo Coffe Bar Tres De Mayo",
         "deliveryFee": 35,
         "minDeliveryTime": 20,
@@ -67,7 +67,7 @@ const Restaurants = [
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg",
     },
     {
-        "id": "2",
+        "id": 2,
         "name": "Tony Roma's - C.C. Meridiano",
         "deliveryFee": 40,
         "address": "PO Box 96439",
@@ -78,7 +78,7 @@ const Restaurants = [
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg",
     },
     {
-        "id": "3",
+        "id": 3,
         "name": "Brothers Barbecue",
         "address": "Apt 299",
         "deliveryFee": 30,
@@ -89,7 +89,7 @@ const Restaurants = [
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg",
     },
     {
-        "id": "4",
+        "id": 4,
         "name": "Hamburguesa Nostra La Salle",
         "address": "19th Floor",
         "deliveryFee": 50,
@@ -104,51 +104,51 @@ const Restaurants = [
 const Offers = [
     {
         "id": 1,
-        "title": "Leucovorin Calcium",
-        "description": "276-949-3469",
-        "merchantID": 1,
-        "startDate": "5/14/2023",
-        "endDate": "7/12/2023",
+        "title": "Weekend Brunch Special",
+        "description": "Enjoy a delicious brunch with a variety of options.",
+        "merchantID": 3,
+        "startDate": "2023-07-10",
+        "endDate": "2023-07-12",
         "isActive": true,
         "image": "http://dummyimage.com/132x100.png/5fa2dd/ffffff"
     },
     {
         "id": 2,
-        "title": "SHISEIDO UV PROTECTIVE COMPACT (REFILL)",
-        "description": "212-448-8832",
-        "merchantID": 2,
-        "startDate": "12/16/2022",
-        "endDate": "7/8/2023",
-        "isActive": false,
+        "title": "Family Meal Deal",
+        "description": "Order a family-sized meal with a discount for your loved ones.",
+        "merchantID": 4,
+        "startDate": "2023-07-05",
+        "endDate": "2023-07-15",
+        "isActive": true,
         "image": "http://dummyimage.com/111x100.png/cc0000/ffffff"
     },
     {
         "id": 3,
-        "title": "Ondansetron Hydrochloride",
-        "description": "759-758-8016",
-        "merchantID": 3,
-        "startDate": "11/4/2022",
-        "endDate": "9/1/2023",
+        "title": "Happy Hour Drinks",
+        "description": "Get discounted prices on selected drinks during our happy hour.",
+        "merchantID": 2,
+        "startDate": "2023-07-01",
+        "endDate": "2023-07-31",
         "isActive": true,
         "image": "http://dummyimage.com/184x100.png/ff4444/ffffff"
     },
     {
         "id": 4,
-        "title": "babies r us ibuprofen",
-        "description": "633-418-7426",
-        "merchantID": 4,
-        "startDate": "10/9/2022",
-        "endDate": "2/18/2023",
+        "title": "Lunch Combo",
+        "description": "Try our special lunch combo with a main dish, side, and beverage.",
+        "merchantID": 1,
+        "startDate": "2023-07-08",
+        "endDate": "2023-07-20",
         "isActive": true,
         "image": "http://dummyimage.com/129x100.png/cc0000/ffffff"
     },
     {
         "id": 5,
-        "title": "equaline antibiotic",
-        "description": "815-260-3327",
-        "merchantID": 5,
-        "startDate": "10/24/2022",
-        "endDate": "11/15/2022",
+        "title": "Dessert Delight",
+        "description": "Indulge in our heavenly desserts and satisfy your sweet tooth.",
+        "merchantID": 2,
+        "startDate": "2023-07-12",
+        "endDate": "2023-07-18",
         "isActive": true,
         "image": "http://dummyimage.com/160x100.png/5fa2dd/ffffff"
     }
@@ -157,51 +157,51 @@ const Offers = [
 const Stories = [
     {
         "id": 1,
-        "title": "Leucovorin Calcium",
-        "description": "276-949-3469",
         "merchantID": 1,
-        "startDate": "5/14/2023",
-        "endDate": "7/12/2023",
+        "title": "New Menu Launch",
+        "description": "Introducing our exciting new menu with delicious dishes!",
+        "startDate": "2023-07-10",
+        "endDate": "2023-07-15",
         "isActive": true,
-        "image": "http://dummyimage.com/132x100.png/5fa2dd/ffffff"
+        "image": "https://example.com/images/new_menu.jpg"
     },
     {
         "id": 2,
-        "title": "SHISEIDO UV PROTECTIVE COMPACT (REFILL)",
-        "description": "212-448-8832",
-        "merchantID": 2,
-        "startDate": "12/16/2022",
-        "endDate": "7/8/2023",
-        "isActive": false,
+        "merchantID": 4,
+        "title": "Chef's Special",
+        "description": "Try our exclusive Chef's Special dish crafted with care.",
+        "startDate": "2023-07-05",
+        "endDate": "2023-07-20",
+        "isActive": true,
         "image": "http://dummyimage.com/111x100.png/cc0000/ffffff"
     },
     {
         "id": 3,
-        "title": "Ondansetron Hydrochloride",
-        "description": "759-758-8016",
         "merchantID": 3,
-        "startDate": "11/4/2022",
-        "endDate": "9/1/2023",
+        "title": "Limited-Time Offer",
+        "description": "Don't miss out on our limited-time offer with exciting discounts!",
+        "startDate": "2023-07-01",
+        "endDate": "2023-07-31",
         "isActive": true,
         "image": "http://dummyimage.com/184x100.png/ff4444/ffffff"
     },
     {
         "id": 4,
-        "title": "babies r us ibuprofen",
-        "description": "633-418-7426",
-        "merchantID": 4,
-        "startDate": "10/9/2022",
-        "endDate": "2/18/2023",
+        "merchantID": 2,
+        "title": "Celebration Catering",
+        "description": "Let us cater your special celebrations with our delectable dishes.",
+        "startDate": "2023-07-08",
+        "endDate": "2023-07-15",
         "isActive": true,
         "image": "http://dummyimage.com/129x100.png/cc0000/ffffff"
     },
     {
         "id": 5,
-        "title": "equaline antibiotic",
-        "description": "815-260-3327",
-        "merchantID": 5,
-        "startDate": "10/24/2022",
-        "endDate": "11/15/2022",
+        "merchantID": 1,
+        "title": "Happy Hour Offer",
+        "description": "Join us during happy hour for exclusive discounts on drinks and snacks.",
+        "startDate": "2023-07-12",
+        "endDate": "2023-07-18",
         "isActive": true,
         "image": "http://dummyimage.com/160x100.png/5fa2dd/ffffff"
     }
@@ -211,7 +211,7 @@ const Stories = [
 export default {
     OnboardingData,
     Categories,
-    Restaurants,
+    Merchants,
     Offers,
     Stories
 }
