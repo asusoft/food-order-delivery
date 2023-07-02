@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
         padding: 10,
-        borderRadius: 20,
+        borderRadius: 10,
         backgroundColor: COLORS.secondary
     },
     locationText: {

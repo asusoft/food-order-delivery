@@ -1,14 +1,33 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import { COLORS } from '../../../assets/constants/theme';
 import Header from '../../components/Header';
+import Offer from '../../components/Offer';
+import dummyData from '../../../assets/constants/dummyData'
 
 // create a component
 const HomeScreen = () => {
+    const Offers = dummyData.Offers;
     return (
         <SafeAreaView style={styles.container}>
             <Header />
+            <View style={{ paddingLeft: 20, marginBottom: 10 }}>
+                <FlatList
+                    data={Offers}
+                    horizontal
+                    scrollEventThrottle={32}
+                    pagingEnabled
+                    snapToAlignment={'center'}
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={item => item.id}
+                    renderItem={({ item }) => {
+                        return (
+                            <Offer item={item} />
+                        )
+                    }}
+                />
+            </View>
         </SafeAreaView>
     );
 };
