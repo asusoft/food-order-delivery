@@ -3,16 +3,16 @@ import { View, Text, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { COLORS } from '../../assets/constants/theme';
 
-export default function Rating({ rating }) {
+export default function Rating({ rating, showText, size, containerStyle }) {
   const filledStars = Math.floor(rating);
   const maxStars = Array(5 - filledStars).fill('staro');
   const r = [...Array(filledStars).fill('star'), ...maxStars];
 
   return (
-    <View style={styles.rating}>
-      <Text style={styles.ratingNumber}>{rating}</Text>
+    <View style={{ ...styles.rating, ...containerStyle }}>
+      {showText ? <Text style={styles.ratingNumber}>{rating}</Text> : []}
       {r.map((type, index) => {
-        return <AntDesign key={index} name={type} size={16} color={COLORS.red} />;
+        return <AntDesign key={index} name={type} size={size} color={COLORS.red} />;
       })}
     </View>
   );
@@ -23,7 +23,5 @@ const styles = StyleSheet.create({
   rating: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 4
   },
 });

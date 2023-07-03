@@ -8,12 +8,14 @@ import Story from '../../components/Story';
 import StoryViewer from '../../components/StoryViewer';
 import dummyData from '../../../assets/constants/dummyData'
 import MerchantCard from '../../components/MerchantCard';
+import DishCard from '../../components/DishCard';
 
 // create a component
 const HomeScreen = () => {
     const Offers = dummyData.Offers;
     const Storie = dummyData.Stories;
     const Merchants = dummyData.Merchants;
+    const Dishes = dummyData.Dishes;
 
     const [modalVisible, setModalVisible] = useState(false);
     const [story, setStory] = useState([]);
@@ -51,6 +53,23 @@ const HomeScreen = () => {
                         renderItem={({ item }) => {
                             return (
                                 <Story item={item} setStory={setStory} setModalVisible={setModalVisible} />
+                            )
+                        }}
+                    />
+                </View>
+                <View style={{ marginTop: 10, marginHorizontal: 25 }}>
+                    <Text style={{ fontSize: 17, fontWeight: '700', marginBottom: 10 }}>Specials for you</Text>
+                    <FlatList
+                        data={Dishes}
+                        horizontal
+                        scrollEventThrottle={32}
+                        pagingEnabled
+                        snapToAlignment={'center'}
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={item => item.id}
+                        renderItem={({ item }) => {
+                            return (
+                                <DishCard dish={item} />
                             )
                         }}
                     />

@@ -33,7 +33,7 @@ const MerchantCard = ({ merchant }) => {
                     <Image style={styles.InfoIcon} source={icons.delivery} />
                     <Text style={styles.InfoText}>₽{merchant.deliveryFee}</Text>
                     <Image style={styles.InfoIcon} source={icons.time} />
-                    <Text style={styles.InfoText}>{merchant.minDeliveryTime.toFixed(1)} - {merchant.maxDeliveryTime.toFixed(1)} mins</Text>
+                    <Text style={styles.InfoText}>{merchant.minDeliveryTime.toFixed(0)} - {merchant.maxDeliveryTime.toFixed(0)} mins</Text>
                 </View>
             </View>
         </Pressable>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     MerchantItem: {
         height: 250,
         marginVertical: 10,
-        borderRadius: 25,
+        borderRadius: 10,
         backgroundColor: COLORS.secondary,
     },
 
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
 
     MerchantImage: {
         flex: 1,
-        borderTopEndRadius: 25,
-        borderTopStartRadius: 25,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
     },
 
     ItemInfo: {
@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
     InfoIcon: {
         height: 25,
         width: 25,
-        tintColor: COLORS.primary
+        tintColor: COLORS.oldPrimary
     }
 });
