@@ -163,7 +163,7 @@ const Stories = [
         "startDate": "2023-07-10",
         "endDate": "2023-07-15",
         "isActive": true,
-        "image": "https://example.com/images/new_menu.jpg"
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg"
     },
     {
         "id": 2,
@@ -173,7 +173,7 @@ const Stories = [
         "startDate": "2023-07-05",
         "endDate": "2023-07-20",
         "isActive": true,
-        "image": "http://dummyimage.com/111x100.png/cc0000/ffffff"
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg"
     },
     {
         "id": 3,
@@ -183,7 +183,7 @@ const Stories = [
         "startDate": "2023-07-01",
         "endDate": "2023-07-31",
         "isActive": true,
-        "image": "http://dummyimage.com/184x100.png/ff4444/ffffff"
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant4.jpeg"
     },
     {
         "id": 4,
@@ -193,7 +193,7 @@ const Stories = [
         "startDate": "2023-07-08",
         "endDate": "2023-07-15",
         "isActive": true,
-        "image": "http://dummyimage.com/129x100.png/cc0000/ffffff"
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant2.jpeg"
     },
     {
         "id": 5,
@@ -203,7 +203,7 @@ const Stories = [
         "startDate": "2023-07-12",
         "endDate": "2023-07-18",
         "isActive": true,
-        "image": "http://dummyimage.com/160x100.png/5fa2dd/ffffff"
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg"
     }
 ]
 

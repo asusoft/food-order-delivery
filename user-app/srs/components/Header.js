@@ -34,18 +34,17 @@ const styles = StyleSheet.create({
     },
     location: {
         flex: 1,
+        height: 30,
         marginHorizontal: 30,
         flexDirection: "row",
         justifyContent: 'center',
         alignItems: "center",
-        padding: 10,
         borderRadius: 10,
         backgroundColor: COLORS.secondary
     },
     locationText: {
-        color: "gray",
         fontWeight: "500",
-        fontSize: 18,
+        fontSize: 14,
     },
 });
 
