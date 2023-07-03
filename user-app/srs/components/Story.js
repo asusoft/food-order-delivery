@@ -5,13 +5,23 @@ import { COLORS } from '../../assets/constants/theme';
 import dummyData from '../../assets/constants/dummyData';
 
 // create a component
-const Story = ({ item }) => {
+const Story = ({ item, setStory, setModalVisible }) => {
     const merchants = dummyData.Merchants;
     const merchant = merchants.find(merchant => merchant.id === item.merchantID);
     const image = { uri: item.image };
+
+    const handleStoryPress = ({ story }) => {
+        setStory(story)
+        setModalVisible(true)
+    }
     return (
         <View style={{ margin: 5, width: 100 }}>
-            <TouchableOpacity onPress={() => alert(item.id + ' ' + item.title)} style={styles.container}>
+            <TouchableOpacity onPress={() => {
+                setStory(item);
+                setModalVisible(true);
+            }}
+                style={styles.container}
+            >
                 <Image source={image} style={{ height: '100%', width: '100%', borderRadius: 10 }} />
                 <View style={{
                     flex: 1,

@@ -1,16 +1,21 @@
 //import liraries
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import { COLORS } from '../../../assets/constants/theme';
 import Header from '../../components/Header';
 import Offer from '../../components/Offer';
 import Story from '../../components/Story';
+import StoryViewer from '../../components/StoryViewer';
 import dummyData from '../../../assets/constants/dummyData'
 
 // create a component
 const HomeScreen = () => {
     const Offers = dummyData.Offers;
     const Storie = dummyData.Stories;
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [story, setStory] = useState([]);
+
     return (
         <SafeAreaView style={styles.container}>
             <Header />
@@ -42,11 +47,12 @@ const HomeScreen = () => {
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => {
                         return (
-                            <Story item={item} />
+                            <Story item={item} setStory={setStory} setModalVisible={setModalVisible} />
                         )
                     }}
                 />
             </View>
+            <StoryViewer setModalVisible={setModalVisible} story={story} modalVisible={modalVisible} />
         </SafeAreaView>
     );
 };
