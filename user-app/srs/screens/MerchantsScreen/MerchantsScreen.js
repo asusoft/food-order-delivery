@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable, Image } from 'react-native';
 import Header from '../../components/Header';
 import SearchBar from '../../components/SearchBar';
 import MerchantCard from '../../components/MerchantCard';
@@ -8,10 +8,13 @@ import dummyData from '../../../assets/constants/dummyData'
 import { COLORS } from '../../../assets/constants/theme';
 import { SafeAreaView } from 'react-native';
 import { useAuthContext } from '../../contexts/AuthContext'
+import Category from '../../components/Category';
 
 
 // create a component
 const MerchantsScreen = () => {
+    const Merchants = dummyData.Merchants;
+    const categories = dummyData.Categories;
     const { dbUser } = useAuthContext();
     const firstName = dbUser?.name.split(" ")[0];
     return (
@@ -28,6 +31,24 @@ const MerchantsScreen = () => {
                             <Text style={styles.greetingSubheader}>Explore our merchants</Text>
                         </View>
                         <SearchBar />
+                        <View style={{ marginHorizontal: 15, marginBottom: 5, flexDirection: "row" }}>
+                            <FlatList
+                                data={categories}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                                renderItem={({ item }) => {
+                                    return (
+                                        <Category category={item} />
+                                    );
+                                }}
+                            />
+                        </View>
+                        <View style={{ marginTop: 20, marginHorizontal: 25 }}>
+                            <FlatList data={Merchants}
+                                renderItem={({ item }) => <MerchantCard merchant={item} />}
+                                showsVerticalScrollIndicator={false}
+                            />
+                        </View>
                     </>
                 )}
             />
