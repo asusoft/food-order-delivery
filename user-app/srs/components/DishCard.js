@@ -46,13 +46,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderRadius: 10,
         backgroundColor: COLORS.secondary,
-    }, Like: {
+    },
+    Like: {
         position: "absolute",
         top: 2,
         right: 2,
-        padding: 15,
-        height: 15,
-        width: 10,
+        height: 20,
+        width: 25,
     },
 });
 
