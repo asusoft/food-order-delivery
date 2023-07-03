@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import HomeScreen from "../screens/HomeScreen/HomeScreen";
 import SignUp from "../screens/AuthScreens/SignUp";
 import SignIn from "../screens/AuthScreens/SignIn";
 import OTP from "../screens/AuthScreens/OTP";
@@ -35,7 +35,7 @@ const RootNavigator = () => {
             <RootStack.Navigator screenOptions={{ headerShown: false }}>
                 {
                     dbUser ?
-                        <RootStack.Screen name="Temp" component={TempScreen} />
+                        <RootStack.Screen name="Home" component={HomeScreen} />
                         :
                         (
                             <>

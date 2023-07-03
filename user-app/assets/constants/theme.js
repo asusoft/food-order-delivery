@@ -19,7 +19,8 @@ export const COLORS = {
   black: '#000000',
   oldPrimary: '#ff9248',
   potPrimary: '#EBB668',
-  darkPrimary: "#592D00"
+  darkPrimary: "#592D00",
+  skeleton: "#E0E0E0"
 };
 
 
