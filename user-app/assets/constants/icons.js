@@ -4,6 +4,7 @@ const cross = require('../icons/cross.png');
 const delivery = require('../icons/delivery.png');
 const eye = require('../icons/eye.png');
 const eye_close = require('../icons/eye_close.png');
+const filter = require('../icons/filter.png');
 const heart = require("../icons/heart.png")
 const heartFilled = require("../icons/heart_filled.png")
 const info = require('../icons/info.png');
@@ -22,6 +23,7 @@ export default {
     delivery,
     eye,
     eye_close,
+    filter,
     heart,
     heartFilled,
     info,

@@ -5,8 +5,8 @@ import SignUp from "../screens/AuthScreens/SignUp";
 import SignIn from "../screens/AuthScreens/SignIn";
 import OTP from "../screens/AuthScreens/OTP";
 import ResetPassword from "../screens/AuthScreens/ResetPassword";
+import MerchantsScreen from "../screens/MerchantsScreen/MerchantsScreen";
 import Onboarding from "../screens/Onboarding/Onboarding";
-import TempScreen from "../screens/Temp/TempScreen";
 import { useAuthContext } from "../contexts/AuthContext";
 import Loading from "../screens/Onboarding/Loading";
 
@@ -35,7 +35,7 @@ const RootNavigator = () => {
             <RootStack.Navigator screenOptions={{ headerShown: false }}>
                 {
                     dbUser ?
-                        <RootStack.Screen name="Home" component={HomeScreen} />
+                        <RootStack.Screen name="Merchants" component={MerchantsScreen} />
                         :
                         (
                             <>
