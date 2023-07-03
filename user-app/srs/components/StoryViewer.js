@@ -20,12 +20,11 @@ const StoryViewer = ({ story, modalVisible, setModalVisible }) => {
                 animationType="slide"
                 visible={modalVisible}
                 onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
                     setModalVisible(!modalVisible);
                 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.container}>
-                        <Image source={image} style={{ height: '100%', width: '100%', borderRadius: 10 }} />
+                        <Image source={image} style={{ height: '100%', width: '100%', borderRadius: 10, resizeMode: 'cover' }} />
                         <View style={{
                             flex: 1,
                             height: '100%',

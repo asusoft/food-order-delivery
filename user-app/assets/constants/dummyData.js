@@ -64,6 +64,7 @@ const Merchants = [
         "rating": 4.5,
         "address": "Lenina Avenue 35, No 4, Visotky",
         categories: [3, 2],
+        isFavorite: true,
         "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg",
     },
     {
