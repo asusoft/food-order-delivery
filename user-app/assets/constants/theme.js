@@ -11,7 +11,7 @@ export const COLORS = {
   lightGray: '#DDDDDD',
   lightGray2: '#ededed',
   background: '#FAF0E6',
-  transparentBlack: "rgba(0, 0, 0, 0.7)",
+  transparentBlack: "rgba(0, 0, 0, 0.6)",
   red: '#ff4545',
   green: '#00FF00',
   brown: '#5C4033',
@@ -28,7 +28,7 @@ export const SIZES = {
   // global sizes
   base: 8,
   font: 14,
-  radius: 12,
+  radius: 20,
   padding: 24,
 
   // font sizes

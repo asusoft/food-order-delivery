@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { COLORS } from '../../assets/constants/theme';
+import { COLORS, SIZES } from '../../assets/constants/theme';
 import icons from '../../assets/constants/icons';
 import dummyData from '../../assets/constants/dummyData';
 import Rating from './Rating'
@@ -43,14 +43,13 @@ const styles = StyleSheet.create({
         padding: 5,
         width: 125,
         height: 180,
-        borderRadius: 10,
-        borderRadius: 10,
+        borderRadius: SIZES.radius,
         backgroundColor: COLORS.secondary,
     },
     Like: {
         position: "absolute",
-        top: 2,
-        right: 2,
+        top: 5,
+        right: 5,
         height: 20,
         width: 25,
     },

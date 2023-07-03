@@ -30,7 +30,7 @@ const StoryViewer = ({ story, modalVisible, setModalVisible }) => {
                             height: '100%',
                             width: '100%',
                             position: 'absolute', color: COLORS.secondary, fontWeight: '700', fontSize: 12, borderRadius: 10,
-                            backgroundColor: 'rgba(0, 0, 0, 0.6)', paddingHorizontal: 20,
+                            backgroundColor: COLORS.transparentBlack, paddingHorizontal: 20,
                             paddingVertical: 60,
                             justifyContent: 'space-between'
                         }}>

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, Image, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { COLORS } from '../../assets/constants/theme';
+import { COLORS, SIZES } from '../../assets/constants/theme';
 import icons from '../../assets/constants/icons';
 
 const SearchBar = () => {
@@ -16,7 +16,6 @@ const SearchBar = () => {
                 caretHidden={true}
                 autoFocus={false}
             />
-            <Image source={icons.filter} style={{ height: 25, width: 25, tintColor: "black", marginLeft: "auto" }} />
         </View>
     );
 };
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         padding: 10,
-        borderRadius: 20,
+        borderRadius: 15,
         backgroundColor: COLORS.secondary,
     },
 

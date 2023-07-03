@@ -1,6 +1,6 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { COLORS } from '../../assets/constants/theme';
+import { COLORS, SIZES } from '../../assets/constants/theme';
 import icons from '../../assets/constants/icons';
 
 
@@ -22,7 +22,9 @@ const MerchantCard = ({ merchant }) => {
                         uri: merchant.image,
                     }}
                 />
-                <Image source={merchant?.isFavorite ? icons.heartFilled : icons.heart} style={styles.Like} />
+                <View style={styles.Like}>
+                    <Image source={merchant?.isFavorite ? icons.heartFilled : icons.heart} style={{ height: 30, width: 30, tintColor: merchant?.isFavorite ? COLORS.red : COLORS.white }} />
+                </View>
             </View>
             <View style={styles.ItemInfo}>
                 <Text style={styles.ItemName}>{merchant.name}</Text>
@@ -47,20 +49,20 @@ const styles = StyleSheet.create({
     MerchantItem: {
         height: 250,
         marginVertical: 10,
-        borderRadius: 10,
+        borderRadius: SIZES.radius,
         backgroundColor: COLORS.secondary,
     },
 
     MerchantItemImageHolder: {
         height: "65%",
         width: "100%",
-        borderTopEndRadius: 25
+        borderTopEndRadius: SIZES.radius
     },
 
     MerchantImage: {
         flex: 1,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        borderTopLeftRadius: SIZES.radius,
+        borderTopRightRadius: SIZES.radius,
     },
 
     ItemInfo: {
@@ -74,7 +76,6 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         fontWeight: "600"
     },
-
     ItemDescription: {
         fontSize: 12,
         marginBottom: 5,
@@ -83,11 +84,14 @@ const styles = StyleSheet.create({
     },
     Like: {
         position: "absolute",
+        alignItems: 'center',
+        justifyContent: 'center',
         top: 8,
         right: 8,
-        padding: 15,
-        height: 35,
-        width: 35,
+        height: 40,
+        width: 40,
+        borderRadius: 22,
+        backgroundColor: COLORS.transparentBlack,
         tintColor: COLORS.red
     },
     InfoText: {

@@ -1,6 +1,6 @@
 import { Image, Pressable, StyleSheet, Text, View, FlatList } from 'react-native';
 import React from 'react';
-import { COLORS } from '../../assets/constants/theme';
+import { COLORS, SIZES } from '../../assets/constants/theme';
 
 const Category = ({ category }) => {
     const onPress = () => {
@@ -8,9 +8,12 @@ const Category = ({ category }) => {
     }
 
     return (
-        <Pressable style={styles.CategoryItem}>
-            <Image source={{ uri: category.image }} style={styles.ItemIcon} />
-            <Text style={styles.CategoryName}>{category.name}</Text>
+        <Pressable style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <Image source={{ uri: category.icon }} style={styles.category} />
+            <View style={{ padding: 5, borderRadius: 5 }}>
+                <Text style={{ fontSize: 12 }}>{category.name}</Text>
+            </View>
+
         </Pressable>
     );
 };
@@ -19,28 +22,14 @@ export default Category;
 
 
 const styles = StyleSheet.create({
-    CategoryItem: {
-        flexDirection: 'row',
-        backgroundColor: COLORS.secondary,
+    category: {
         margin: 8,
-        width: 130,
-        height: 50,
-        borderRadius: 15,
+        width: 55,
+        height: 55,
+        borderRadius: SIZES.radius,
         alignItems: 'center',
-        justifyContent: "flex-start",
-        padding: 15
+        justifyContent: "center",
+        resizeMode: 'contain'
+
     },
-
-    CategoryName: {
-        fontSize: 12,
-        fontWeight: "500",
-    },
-
-    ItemIcon: {
-        height: 40,
-        width: 40,
-        marginEnd: 10,
-        resizeMode: "contain"
-
-    }
 });

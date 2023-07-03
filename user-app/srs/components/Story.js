@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { COLORS } from '../../assets/constants/theme';
+import { COLORS, SIZES } from '../../assets/constants/theme';
 import dummyData from '../../assets/constants/dummyData';
 
 // create a component
@@ -22,12 +22,12 @@ const Story = ({ item, setStory, setModalVisible }) => {
             }}
                 style={styles.container}
             >
-                <Image source={image} style={{ height: '100%', width: '100%', borderRadius: 10 }} />
+                <Image source={image} style={{ height: '100%', width: '100%', borderRadius: SIZES.radius }} />
                 <View style={{
                     flex: 1,
                     height: '100%',
                     width: '100%',
-                    position: 'absolute', color: COLORS.secondary, fontWeight: '700', fontSize: 12, borderRadius: 10,
+                    position: 'absolute', color: COLORS.secondary, fontWeight: '700', fontSize: 12, borderRadius: SIZES.radius,
                     backgroundColor: 'rgba(0, 0, 0, 0.3)', paddingHorizontal: 10, paddingVertical: 5
                 }}>
                     <Text style={{
@@ -47,12 +47,11 @@ const styles = StyleSheet.create({
         padding: 1,
         width: 100,
         height: 120,
-        borderRadius: 10,
+        borderRadius: SIZES.radius,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
         borderColor: COLORS.darkPrimary,
-        borderRadius: 10,
         backgroundColor: COLORS.secondary,
     },
 });

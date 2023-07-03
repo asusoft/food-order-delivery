@@ -34,12 +34,12 @@ const Categories = [
     {
         id: 3,
         name: "Breakfast",
-        icon: "https://toppng.com/uploads/preview/big-burger-11562902444grmy1oetg2.png"
+        icon: "https://www.pngall.com/wp-content/uploads/7/Dessert-PNG-Photo.png"
     },
     {
         id: 4,
         name: "Drink",
-        icon: "https://www.pngall.com/wp-content/uploads/7/Dessert-PNG-Photo.png"
+        icon: "https://www.pngall.com/wp-content/uploads/5/Summer-Cocktail-PNG.png"
     },
     {
         id: 5,

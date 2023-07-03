@@ -1,14 +1,15 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable, Image, ScrollView } from 'react-native';
 import Header from '../../components/Header';
 import SearchBar from '../../components/SearchBar';
 import MerchantCard from '../../components/MerchantCard';
 import dummyData from '../../../assets/constants/dummyData'
-import { COLORS } from '../../../assets/constants/theme';
+import { COLORS, SIZES } from '../../../assets/constants/theme';
 import { SafeAreaView } from 'react-native';
 import { useAuthContext } from '../../contexts/AuthContext'
 import Category from '../../components/Category';
+import icons from '../../../assets/constants/icons';
 
 
 // create a component
@@ -24,14 +25,15 @@ const MerchantsScreen = () => {
                 ListHeaderComponent={() => (
                     <>
                         <Header />
-                        <View style={styles.greetings}>
-                            <Text style={styles.greetingHeader}>
-                                Hello, {firstName}
-                            </Text>
-                            <Text style={styles.greetingSubheader}>Explore our merchants</Text>
-                        </View>
                         <SearchBar />
-                        <View style={{ marginHorizontal: 15, marginBottom: 5, flexDirection: "row" }}>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: 15, marginBottom: 5, flexDirection: "row" }}>
+                            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                <View style={styles.filter}>
+                                    <Image source={icons.filter} style={{ width: 25, height: 25, tintColor: COLORS.black }} />
+                                </View>
+                                <Text style={{ fontSize: 12 }}>Filters</Text>
+                            </View>
+
                             <FlatList
                                 data={categories}
                                 horizontal={true}
@@ -42,7 +44,7 @@ const MerchantsScreen = () => {
                                     );
                                 }}
                             />
-                        </View>
+                        </ScrollView>
                         <View style={{ marginTop: 20, marginHorizontal: 25 }}>
                             <FlatList data={Merchants}
                                 renderItem={({ item }) => <MerchantCard merchant={item} />}
@@ -62,22 +64,16 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.background,
     },
-    greetings: {
-        margin: 5,
-        marginLeft: 20,
-        marginTop: 10,
-        padding: 5
+    filter: {
+        backgroundColor: COLORS.secondary,
+        margin: 8,
+        width: 55,
+        height: 55,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: "center",
+        padding: 15
     },
-    greetingHeader: {
-        fontWeight: "700",
-        fontSize: 25
-    },
-    greetingSubheader: {
-        color: "gray",
-        fontWeight: "500",
-        fontSize: 15,
-        marginTop: 10
-    }
 });
 
 //make this component available to the app
