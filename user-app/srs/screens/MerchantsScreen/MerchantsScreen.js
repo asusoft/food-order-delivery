@@ -10,10 +10,12 @@ import { SafeAreaView } from 'react-native';
 import Category from '../../components/Category';
 import icons from '../../../assets/constants/icons';
 import MerchantsSkeleton from '../../skeletons/MerchantsScreenSkeleton';
+import { useNavigation } from '@react-navigation/native';
 
 
 // create a component
 const MerchantsScreen = () => {
+    const navigation = useNavigation()
     const Merchants = dummyData.Merchants;
     const categories = dummyData.Categories;
 
@@ -22,7 +24,7 @@ const MerchantsScreen = () => {
     React.useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 3000);
+        }, 1000);
 
         // Cleanup the timer when the component unmounts or the dependency changes
         return () => clearTimeout(timer);
@@ -43,9 +45,9 @@ const MerchantsScreen = () => {
                             <SearchBar />
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: 15, marginBottom: 5, flexDirection: "row" }}>
                                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                                    <View style={styles.filter}>
+                                    <Pressable onPress={() => navigation.goBack()} style={styles.filter}>
                                         <Image source={icons.filter} style={{ width: 25, height: 25, tintColor: COLORS.black }} />
-                                    </View>
+                                    </Pressable>
                                     <Text style={{ fontSize: 12 }}>Filters</Text>
                                 </View>
 
@@ -62,7 +64,7 @@ const MerchantsScreen = () => {
                             </ScrollView>
                             <View style={{ marginTop: 20, marginHorizontal: 25 }}>
                                 <FlatList data={Merchants}
-                                    renderItem={({ item }) => <MerchantCard merchant={item} />}
+                                    renderItem={({ item }) => <MerchantCard merchant={item} onPress={() => navigation.navigate('MerchantInfo')} />}
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>

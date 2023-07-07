@@ -20,7 +20,7 @@ export const COLORS = {
   oldPrimary: '#ff9248',
   potPrimary: '#EBB668',
   darkPrimary: "#592D00",
-  skeleton: "#E0E0E0"
+  skeleton: "#D3D3D3"
 };
 
 

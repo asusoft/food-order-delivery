@@ -1,6 +1,6 @@
 //import liraries
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, FlatList, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, FlatList, ScrollView, Pressable } from 'react-native';
 import { COLORS } from '../../../assets/constants/theme';
 import Header from '../../components/Header';
 import Offer from '../../components/Offer';
@@ -10,9 +10,11 @@ import dummyData from '../../../assets/constants/dummyData'
 import MerchantCard from '../../components/MerchantCard';
 import DishCard from '../../components/DishCard';
 import HomeSkeleton from '../../skeletons/HomeSkeleton';
+import { useNavigation } from '@react-navigation/native';
 
 // create a component
 const HomeScreen = () => {
+    const navigation = useNavigation();
     const Offers = dummyData.Offers;
     const Storie = dummyData.Stories;
     const Merchants = dummyData.Merchants;
@@ -26,7 +28,7 @@ const HomeScreen = () => {
     React.useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 3000);
+        }, 1000);
 
         // Cleanup the timer when the component unmounts or the dependency changes
         return () => clearTimeout(timer);
@@ -98,7 +100,12 @@ const HomeScreen = () => {
                                 />
                             </View>
                             <View style={{ marginTop: 20, marginHorizontal: 25 }}>
-                                <Text style={{ fontSize: 17, fontWeight: '700', marginBottom: 10 }}>Popular merchants near you</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <Text style={{ fontSize: 17, fontWeight: '700', marginBottom: 10 }}>Popular merchants near you</Text>
+                                    <Pressable onPress={() => navigation.navigate("Merchants")}>
+                                        <Text style={{ fontSize: 17, fontWeight: '500', marginBottom: 10 }}>See all</Text>
+                                    </Pressable>
+                                </View>
                                 <FlatList data={Merchants}
                                     renderItem={({ item }) => <MerchantCard merchant={item} />}
                                     showsVerticalScrollIndicator={false}

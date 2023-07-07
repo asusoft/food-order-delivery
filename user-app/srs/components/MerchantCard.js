@@ -33,7 +33,7 @@ const MerchantCard = ({ merchant }) => {
                     <Image style={styles.InfoIcon} source={icons.star} />
                     <Text style={styles.InfoText}>{merchant.rating.toFixed(1)}</Text>
                     <Image style={styles.InfoIcon} source={icons.delivery} />
-                    <Text style={styles.InfoText}>₽{merchant.deliveryFee}</Text>
+                    <Text style={styles.InfoText}>₦ {merchant.deliveryFee}</Text>
                     <Image style={styles.InfoIcon} source={icons.time} />
                     <Text style={styles.InfoText}>{merchant.minDeliveryTime.toFixed(0)} - {merchant.maxDeliveryTime.toFixed(0)} mins</Text>
                 </View>
