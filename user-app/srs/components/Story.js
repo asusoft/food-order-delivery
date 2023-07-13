@@ -10,10 +10,6 @@ const Story = ({ item, setStory, setModalVisible }) => {
     const merchant = merchants.find(merchant => merchant.id === item.merchantID);
     const image = { uri: item.image };
 
-    const handleStoryPress = ({ story }) => {
-        setStory(story)
-        setModalVisible(true)
-    }
     return (
         <View style={{ margin: 5, width: 100 }}>
             <TouchableOpacity onPress={() => {
@@ -22,7 +18,7 @@ const Story = ({ item, setStory, setModalVisible }) => {
             }}
                 style={styles.container}
             >
-                <Image source={image} style={{ height: '100%', width: '100%', borderRadius: SIZES.radius }} />
+                <Image source={image} style={{ height: '100%', width: '100%', borderRadius: 12 }} />
                 <View style={{
                     flex: 1,
                     height: '100%',
@@ -47,7 +43,7 @@ const styles = StyleSheet.create({
         padding: 1,
         width: 100,
         height: 120,
-        borderRadius: SIZES.radius,
+        borderRadius: 12,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,

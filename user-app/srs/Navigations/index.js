@@ -9,6 +9,7 @@ import MerchantsScreen from "../screens/MerchantsScreen/MerchantsScreen";
 import Onboarding from "../screens/Onboarding/Onboarding";
 import { useAuthContext } from "../contexts/AuthContext";
 import Loading from "../screens/Onboarding/Loading";
+import MerchantInfoScreen from "../screens/MerchantsScreen/MerchantInfoScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -35,7 +36,7 @@ const RootNavigator = () => {
             <RootStack.Navigator screenOptions={{ headerShown: false }}>
                 {
                     dbUser ?
-                        <RootStack.Screen name="Merchants" component={MerchantsScreen} />
+                        <RootStack.Screen name="Landing" component={MerchantStackNavigator} />
                         :
                         (
                             <>
@@ -75,6 +76,30 @@ const AuthStackNavigator = () => {
                 component={ResetPassword}
             />
         </AuthStack.Navigator>
+    );
+};
+
+const MerchantStack = createNativeStackNavigator();
+
+const MerchantStackNavigator = () => {
+    return (
+        <MerchantStack.Navigator
+            screenOptions={{ headerShown: false }}
+            initialRouteName="Home"
+        >
+            <MerchantStack.Screen
+                name="Home"
+                component={HomeScreen}
+            />
+            <MerchantStack.Screen
+                name="Merchants"
+                component={MerchantsScreen}
+            />
+            <MerchantStack.Screen
+                name="MerchantInfo"
+                component={MerchantInfoScreen}
+            />
+        </MerchantStack.Navigator>
     );
 };
 

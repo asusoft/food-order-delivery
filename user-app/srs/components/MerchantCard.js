@@ -4,14 +4,11 @@ import { COLORS, SIZES } from '../../assets/constants/theme';
 import icons from '../../assets/constants/icons';
 
 
-const MerchantCard = ({ merchant }) => {
+const MerchantCard = ({ merchant, onPress }) => {
     const navigation = useNavigation();
     const route = useRoute();
     const routeName = route.name;
 
-    const onPress = () => {
-
-    }
 
     return (
         <Pressable onPress={onPress} style={styles.MerchantItem}>
