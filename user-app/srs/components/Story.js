@@ -23,7 +23,7 @@ const Story = ({ item, setStory, setModalVisible }) => {
                     flex: 1,
                     height: '100%',
                     width: '100%',
-                    position: 'absolute', color: COLORS.secondary, fontWeight: '700', fontSize: 12, borderRadius: SIZES.radius,
+                    position: 'absolute', color: COLORS.secondary, fontWeight: '700', fontSize: 12, borderRadius: 12,
                     backgroundColor: 'rgba(0, 0, 0, 0.3)', paddingHorizontal: 10, paddingVertical: 5
                 }}>
                     <Text style={{

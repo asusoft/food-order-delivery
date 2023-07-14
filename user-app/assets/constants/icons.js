@@ -1,3 +1,4 @@
+const back = require('../icons/back.png');
 const cancel = require('../icons/cancel.png');
 const correct = require('../icons/correct.png');
 const cross = require('../icons/cross.png');
@@ -17,6 +18,7 @@ const time = require('../icons/time.png');
 
 
 export default {
+    back,
     cancel,
     cross,
     correct,

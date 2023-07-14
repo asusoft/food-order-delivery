@@ -8,7 +8,7 @@ import Story from '../../components/Story';
 import StoryViewer from '../../components/StoryViewer';
 import dummyData from '../../../assets/constants/dummyData'
 import MerchantCard from '../../components/MerchantCard';
-import DishCard from '../../components/DishCard';
+import Special from '../../components/Special';
 import HomeSkeleton from '../../skeletons/HomeSkeleton';
 import { useNavigation } from '@react-navigation/native';
 
@@ -94,7 +94,7 @@ const HomeScreen = () => {
                                     keyExtractor={item => item.id}
                                     renderItem={({ item }) => {
                                         return (
-                                            <DishCard dish={item} />
+                                            <Special dish={item} />
                                         )
                                     }}
                                 />

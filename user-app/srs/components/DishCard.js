@@ -9,28 +9,20 @@ import Rating from './Rating'
 // create a component
 const DishCard = ({ dish }) => {
     return (
-        <View style={{ margin: 5, width: 125 }}>
-            <View style={styles.container}>
+        <View style={styles.container}>
+            <View style={{ height: '55%', backgroundColor: COLORS.secondary, borderTopEndRadius: SIZES.radius, borderTopStartRadius: SIZES.radius, }}>
                 <Image
                     source={{
                         uri: dish.image,
                     }}
-                    style={{ height: 90, width: 90, borderRadius: 50, alignSelf: 'center', marginVertical: 5 }}
+                    style={{ flex: 1, borderTopEndRadius: SIZES.radius, borderTopStartRadius: SIZES.radius }}
                 />
-                <View style={{ padding: 8 }}>
-                    <Text numberOfLines={1} style={{ fontSize: 15 }}>{dish.name}</Text>
-                    <Text style={{ marginTop: 5, fontSize: 15, fontWeight: '500' }}>₦ {dish.price}</Text>
-                </View>
-                <Rating
-                    rating={dish.rating.toFixed(1)}
-                    showText={false}
-                    size={12}
-                    containerStyle={{
-                        marginLeft: 8,
-                        marginTop: -5
-                    }}
-                />
-                <Image source={dish?.isFavorite ? icons.heartFilled : icons.heart} style={{ ...styles.Like, tintColor: dish?.isFavorite ? COLORS.red : COLORS.grey }} />
+            </View>
+            <View style={{ padding: 8, height: '25%' }}>
+                <Text numberOfLines={2} style={{ fontSize: 15 }}>{dish.name}</Text>
+            </View>
+            <View style={{ height: '20%', backgroundColor: COLORS.secondary, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 18, fontWeight: '700' }}>₦ {dish.price}</Text>
             </View>
 
         </View>
@@ -40,11 +32,12 @@ const DishCard = ({ dish }) => {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        padding: 5,
-        width: 125,
-        height: 180,
+        margin: 8,
+        padding: 6,
+        width: 170,
+        height: 260,
         borderRadius: SIZES.radius,
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.darkSecondary,
     },
     Like: {
         position: "absolute",
