@@ -355,6 +355,24 @@ const Dishes = [
     }
 ]
 
+const Sizes = [
+    {
+        id: 1,
+        name: 'Small',
+        price: '750',
+    },
+    {
+        id: 2,
+        name: 'medium',
+        price: '1050',
+    },
+    {
+        id: 3,
+        name: 'Large',
+        price: '1250'
+    }
+]
+
 
 export default {
     OnboardingData,
@@ -362,5 +380,6 @@ export default {
     Merchants,
     Offers,
     Stories,
-    Dishes
+    Dishes,
+    Sizes
 }

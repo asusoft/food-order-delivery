@@ -10,7 +10,9 @@ const heart = require("../icons/heart.png")
 const heartFilled = require("../icons/heart_filled.png")
 const info = require('../icons/info.png');
 const menu = require('../icons/menu.png');
+const minus = require('../icons/minus.png');
 const notification = require('../icons/notification.png');
+const plus = require('../icons/plus.png');
 const search = require('../icons/search.png');
 const star = require('../icons/star.png');
 const time = require('../icons/time.png');
@@ -30,7 +32,9 @@ export default {
     heartFilled,
     info,
     menu,
+    minus,
     notification,
+    plus,
     search,
     star,
     time
