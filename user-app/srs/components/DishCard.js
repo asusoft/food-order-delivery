@@ -19,7 +19,7 @@ const DishCard = ({ dish, onPress }) => {
                 <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 8 }}>{dish.name}</Text>
                 <Text numberOfLines={4}>{dish.description}</Text>
                 <View style={{ opacity: 0.7, backgroundColor: COLORS.lightPrimary, marginTop: 10, borderRadius: 12, alignItems: 'center', justifyContent: 'center', padding: 8 }}>
-                    <Text style={{ opacity: 1, fontSize: 16, color: COLORS.darkPrimary, fontWeight: '700' }}>From # 750</Text>
+                    <Text style={{ opacity: 1, fontSize: 16, color: COLORS.darkPrimary, fontWeight: '700' }}>From ₦ 750</Text>
                 </View>
             </View>
         </Pressable>

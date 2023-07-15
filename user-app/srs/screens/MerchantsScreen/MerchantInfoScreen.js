@@ -5,21 +5,42 @@ import { COLORS, SIZES } from '../../../assets/constants/theme';
 import dummyData from '../../../assets/constants/dummyData';
 import MerchantInfo from '../../components/MerchantInfo';
 import TopButtons from '../../components/TopButtons';
-import { useNavigation } from '@react-navigation/native';
 import icons from '../../../assets/constants/icons';
-import images from '../../../assets/constants/images';
 import FooterButton from '../../components/FooterButton';
 import MerchantMenu from '../../components/merchantMenu';
+
+import { useMerchantContext } from '../../contexts/MerchantContext';
 
 
 const HEADER_HEIGHT = 290;
 
 // create a component
-const MerchantInfoScreen = () => {
-    const navigation = useNavigation();
-    const merchant = dummyData.Merchants[0];
+const MerchantInfoScreen = ({ navigation, route }) => {
+
+    const merchants = dummyData.Merchants[0];
+
+    const dummyImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfUoQbNCD6YgZ2ruZ7vH48CIg3zgYnWShQStmDz8g5BT-ERLuFy1Td-bs7C7wxYBF4MRw&usqp=CAU"
+
+    const [merchant, setMerchant] = useState({})
     const [modalVisible, setModalVisible] = useState(false);
 
+    const { getMerchantByID } = useMerchantContext();
+
+    const { merchant_ID } = route.params;
+
+
+
+    React.useEffect(() => {
+        async function fetchData() {
+            try {
+                const mercha = await getMerchantByID(merchant_ID);
+                setMerchant(mercha);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData();
+    }, [merchant_ID])
 
     const goBack = () => {
         navigation.goBack();
@@ -37,13 +58,14 @@ const MerchantInfoScreen = () => {
                 opacity: modalVisible ? 0.3 : 1
             }}>
                 <Image
-                    source={{ uri: merchant.image ? merchant.image : images.restaurant }}
+                    source={{ uri: merchant.image ? merchant.image : dummyImage }}
                     resizeMode="contain"
                     style={{
                         height: HEADER_HEIGHT + 55,
                         width: "200%",
                     }}
                 />
+
                 <View style={{
                     position: "absolute",
                     backgroundColor: COLORS.transparent,
@@ -66,7 +88,7 @@ const MerchantInfoScreen = () => {
                                 source={icons.time}
                                 style={{ height: 35, width: 35, tintColor: COLORS.primary }}
                             />
-                            <Text style={{ fontSize: 14, color: COLORS.white }}>Open untill: 00:00</Text>
+                            <Text style={{ fontSize: 14, color: COLORS.white }}>Open untill: {merchant.closingTime}</Text>
                         </View>
                         <View style={{ height: '100%', width: '35%' }}>
                             <View style={{ height: '45%', width: '100%', backgroundColor: COLORS.transparentBlack, marginBottom: 10, borderRadius: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 10 }}>
@@ -128,7 +150,7 @@ const MerchantInfoScreen = () => {
                     <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> 10 items</Text>
                 }
                 rightComponent={
-                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> ₽ 1500</Text>
+                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> ₦ 1500</Text>
                 }
             />
         );

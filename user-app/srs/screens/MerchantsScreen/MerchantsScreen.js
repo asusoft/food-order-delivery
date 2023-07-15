@@ -12,23 +12,32 @@ import icons from '../../../assets/constants/icons';
 import MerchantsSkeleton from '../../skeletons/MerchantsScreenSkeleton';
 import { useNavigation } from '@react-navigation/native';
 
+import { useMerchantContext } from '../../contexts/MerchantContext';
+
 
 // create a component
 const MerchantsScreen = () => {
     const navigation = useNavigation()
-    const Merchants = dummyData.Merchants;
-    const categories = dummyData.Categories;
+    const { getMerchants } = useMerchantContext();
+    const [merchants, setMerchants] = useState([])
 
     const [loading, setLoading] = useState(true)
 
     React.useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 1000);
+        async function fetchData() {
+            try {
+                const merchantsList = await getMerchants();
+                setMerchants(merchantsList);
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
+                console.error(error);
+            }
+        }
+        fetchData();
+    }, [])
 
-        // Cleanup the timer when the component unmounts or the dependency changes
-        return () => clearTimeout(timer);
-    })
+    const categories = dummyData.Categories;
 
     if (loading) {
         return (
@@ -63,8 +72,8 @@ const MerchantsScreen = () => {
                                 />
                             </ScrollView>
                             <View style={{ marginTop: 20, marginHorizontal: 25 }}>
-                                <FlatList data={Merchants}
-                                    renderItem={({ item }) => <MerchantCard merchant={item} onPress={() => navigation.navigate('MerchantInfo')} />}
+                                <FlatList data={merchants}
+                                    renderItem={({ item }) => <MerchantCard merchant={item} onPress={() => navigation.navigate('MerchantInfo', { merchant_ID: item.id })} />}
                                     showsVerticalScrollIndicator={false}
                                 />
                             </View>
