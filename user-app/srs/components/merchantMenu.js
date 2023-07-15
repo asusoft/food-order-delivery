@@ -18,55 +18,39 @@ const MerchantMenu = ({ onPress }) => {
             id: 1,
             title: 'Main dishes',
             data: [
-                {
-                    list: [
-                        dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-                    ],
-                },
+                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
             ],
         },
         {
             id: 2,
             title: 'Sides',
             data: [
-                {
-                    list: [
-                        dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-                    ],
-                },
+                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
+
             ],
         },
         {
             id: 3,
             title: 'Drinks',
             data: [
-                {
-                    list: [
-                        dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-                    ],
-                },
+                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
+
             ],
         },
         {
             id: 4,
             title: 'Desserts',
             data: [
-                {
-                    list: [
-                        dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-                    ],
-                },
+                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
+
             ],
         },
         {
             id: 5,
             title: 'BreakFast',
             data: [
-                {
-                    list: [
-                        dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-                    ],
-                },
+                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
+
             ],
         },
     ];
@@ -122,10 +106,10 @@ const MerchantMenu = ({ onPress }) => {
         )
     }, [DATA])
 
-    const renderItem = useCallback(({ item }) => {
+    const renderItem = useCallback(({ item, index }) => {
         return (
-            <View style={{ width: '100%', marginStart: -5 }}>
-                <RenderMenuItems item={item.list} />
+            <View >
+                <DishCard dish={item} onPress={onPress} />
             </View>
         )
     }, [DATA])
@@ -139,7 +123,7 @@ const MerchantMenu = ({ onPress }) => {
     }, [DATA])
 
     const getItemLayout = sectionListGetitemLayout({
-        getItemHeight: (rowData, sectionIndex, rowIndex) => 260 * 3,
+        getItemHeight: (rowData, sectionIndex, rowIndex) => 185,
         getSectionHeaderHeight: () => 40,
         getSeparatorHeight: () => 8,
         getSectionFooterHeight: () => 30
@@ -181,6 +165,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: COLORS.background,
     },
+    itemStyle: {
+        height: 100,
+        backgroundColor: '#F0F0F0',
+        borderRadius: 6,
+        alignItems: 'center',
+        justifyContent: "center"
+    }
 });
 
 //make this component available to the app

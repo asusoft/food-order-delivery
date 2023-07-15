@@ -33,7 +33,8 @@ const MerchantInfoScreen = () => {
                 height: HEADER_HEIGHT + 1055,
                 marginTop: -1000,
                 paddingTop: 1000,
-                backgroundColor: COLORS.grey
+                backgroundColor: COLORS.grey,
+                opacity: modalVisible ? 0.3 : 1
             }}>
                 <Image
                     source={{ uri: merchant.image ? merchant.image : images.restaurant }}
@@ -147,7 +148,8 @@ const MerchantInfoScreen = () => {
                 borderTopEndRadius: SIZES.radius * 2,
                 borderTopStartRadius: SIZES.radius * 2,
                 marginTop: -35,
-                paddingHorizontal: 20
+                paddingHorizontal: 20,
+                opacity: modalVisible ? 0.6 : 1
             }}>
                 {/* {RenderMenuHeader()} */}
                 <MerchantMenu onPress={() => goToDishInfo()} />

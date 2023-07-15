@@ -22,7 +22,8 @@ export const COLORS = {
   potPrimary: '#EBB668',
   darkPrimary: "#592D00",
   darkSecondary: "#EAE4DF",
-  skeleton: "#D3D3D3"
+  skeleton: "#D3D3D3",
+  lightPrimary: '#FCD299'
 };
 
 

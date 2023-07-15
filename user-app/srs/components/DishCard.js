@@ -7,19 +7,20 @@ import { COLORS, SIZES } from '../../assets/constants/theme';
 const DishCard = ({ dish, onPress }) => {
     return (
         <Pressable onPress={onPress} style={styles.container}>
-            <View style={{ height: '55%', backgroundColor: COLORS.secondary, borderTopEndRadius: SIZES.radius, borderTopStartRadius: SIZES.radius, }}>
+            <View style={{ height: '100%', width: '40%', overflow: 'hidden' }}>
                 <Image
-                    source={{
-                        uri: dish.image,
+                    source={{ uri: dish.image ? dish.image : [] }}
+                    style={{
+                        flex: 1
                     }}
-                    style={{ flex: 1, borderTopEndRadius: SIZES.radius, borderTopStartRadius: SIZES.radius }}
                 />
             </View>
-            <View style={{ padding: 8, height: '25%' }}>
-                <Text numberOfLines={2} style={{ fontSize: 15 }}>{dish.name}</Text>
-            </View>
-            <View style={{ height: '20%', backgroundColor: COLORS.secondary, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
-                <Text style={{ fontSize: 18, fontWeight: '700' }}>₦ {dish.price}</Text>
+            <View style={{ flex: 1, marginHorizontal: 20, }}>
+                <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 8 }}>{dish.name}</Text>
+                <Text numberOfLines={4}>{dish.description}</Text>
+                <View style={{ opacity: 0.7, backgroundColor: COLORS.lightPrimary, marginTop: 10, borderRadius: 12, alignItems: 'center', justifyContent: 'center', padding: 8 }}>
+                    <Text style={{ opacity: 1, fontSize: 16, color: COLORS.darkPrimary, fontWeight: '700' }}>From # 750</Text>
+                </View>
             </View>
         </Pressable>
     );
@@ -30,11 +31,10 @@ const styles = StyleSheet.create({
     container: {
         marginHorizontal: 8,
         marginVertical: 5,
-        padding: 8,
-        width: 165,
-        height: 260,
+        height: 175,
+        paddingVertical: 20,
         borderRadius: SIZES.radius,
-        backgroundColor: COLORS.darkSecondary,
+        flexDirection: 'row'
     },
     Like: {
         position: "absolute",
