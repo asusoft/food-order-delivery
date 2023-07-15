@@ -2,9 +2,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
-import icons from '../../assets/constants/icons';
-import dummyData from '../../assets/constants/dummyData';
-import Rating from './Rating'
 
 // create a component
 const DishCard = ({ dish }) => {
@@ -24,7 +21,6 @@ const DishCard = ({ dish }) => {
             <View style={{ height: '20%', backgroundColor: COLORS.secondary, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 18, fontWeight: '700' }}>₦ {dish.price}</Text>
             </View>
-
         </View>
     );
 };
@@ -32,9 +28,10 @@ const DishCard = ({ dish }) => {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        margin: 8,
-        padding: 6,
-        width: 170,
+        marginHorizontal: 8,
+        marginVertical: 5,
+        padding: 8,
+        width: 165,
         height: 260,
         borderRadius: SIZES.radius,
         backgroundColor: COLORS.darkSecondary,

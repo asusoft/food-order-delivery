@@ -1,6 +1,6 @@
 //import liraries
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, Animated, FlatList, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Animated, FlatList, Image, SectionList, TouchableOpacity, Pressable } from 'react-native';
 import { COLORS, SIZES } from '../../../assets/constants/theme';
 import dummyData from '../../../assets/constants/dummyData';
 import MerchantInfo from '../../components/MerchantInfo';
@@ -9,113 +9,64 @@ import TopButtons from '../../components/TopButtons';
 import { useNavigation } from '@react-navigation/native';
 import icons from '../../../assets/constants/icons';
 import images from '../../../assets/constants/images';
+import FooterButton from '../../components/FooterButton';
+import MerchantMenu from '../../components/merchantMenu';
 
 
-const HEADER_HEIGHT = 310;
+const HEADER_HEIGHT = 290;
 
 // create a component
 const MerchantInfoScreen = () => {
     const navigation = useNavigation();
-    const merchant = dummyData.Merchants[3];
-    const dishes = dummyData.Dishes;
-
+    const merchant = dummyData.Merchants[0];
     const [modalVisible, setModalVisible] = useState(false);
 
-    const scrollY = useRef(new Animated.Value(0)).current;
 
     const goBack = () => {
         navigation.goBack();
     }
 
-    function renderMerchantCardHeader() {
+    function RenderHeader() {
         return (
-            <View
-                style={{
-                    alignItems: "center",
-                    overflow: 'hidden',
-                    height: HEADER_HEIGHT + 1055,
-                    marginTop: -1000,
-                    paddingTop: 1000,
-                    backgroundColor: COLORS.grey
-                }}
-            >
-                <Animated.Image
+            <View style={{
+                alignItems: "center",
+                overflow: 'hidden',
+                height: HEADER_HEIGHT + 1055,
+                marginTop: -1000,
+                paddingTop: 1000,
+                backgroundColor: COLORS.grey
+            }}>
+                <Image
                     source={{ uri: merchant.image ? merchant.image : images.restaurant }}
                     resizeMode="contain"
                     style={{
-                        opacity: 0.8,
                         height: HEADER_HEIGHT + 55,
                         width: "200%",
-                        transform: [
-                            {
-                                translateY: scrollY.interpolate({
-                                    inputRange: [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-                                    outputRange: [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75]
-                                })
-                            },
-                            {
-                                scale: scrollY.interpolate({
-                                    inputRange: [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-                                    outputRange: [2, 1, 1]
-                                })
-                            }
-                        ]
                     }}
                 />
-                <Animated.View style={{
+                <View style={{
                     position: "absolute",
                     backgroundColor: COLORS.transparent,
                     bottom: 0,
                     width: "100%",
                     height: HEADER_HEIGHT + 55,
                     padding: 20,
-                    opacity: scrollY.interpolate({
-                        inputRange: [0, 310, 310],
-                        outputRange: [1, 0, -1],
-                    }),
-                    transform: [
-                        {
-                            translateY: scrollY.interpolate({
-                                inputRange: [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-                                outputRange: [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75]
-                            })
-                        },
-                        {
-                            scale: scrollY.interpolate({
-                                inputRange: [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-                                outputRange: [2, 1, 1]
-                            })
-                        }
-                    ]
                 }} />
-                <Animated.View style={{
+                <View style={{
                     position: "absolute",
-                    bottom: 0,
+                    bottom: '15%',
                     width: "100%",
                     height: '50%',
                     padding: 20,
-                    opacity: scrollY.interpolate({
-                        inputRange: [0, 300, 300],
-                        outputRange: [1, 0, -1],
-                    }),
-                    transform: [
-                        {
-                            translateY: scrollY.interpolate({
-                                inputRange: [0, 320, 320],
-                                outputRange: [0, 0, 100],
-                                extrapolate: 'clamp'
-                            })
-                        }
-                    ]
                 }}>
                     <Text style={{ fontSize: 22, fontWeight: '700', color: COLORS.white }}>{merchant.name}</Text>
                     <View style={{ flexDirection: 'row', flex: 1, marginTop: 15 }}>
-                        <View style={{ height: '100%', width: '25%', backgroundColor: COLORS.transparentBlack, marginEnd: 10, borderRadius: SIZES.radius, alignItems: 'center', justifyContent: 'space-around', padding: 10 }}>
+                        <View style={{ height: '100%', width: '25%', backgroundColor: COLORS.transparentBlack, marginEnd: 10, borderRadius: SIZES.radius, alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 6 }}>
                             <Image
                                 source={icons.time}
                                 style={{ height: 35, width: 35, tintColor: COLORS.primary }}
                             />
-                            <Text style={{ marginStart: 10, fontSize: 14, color: COLORS.white }}>Open till: 00:00</Text>
+                            <Text style={{ fontSize: 14, color: COLORS.white }}>Open untill: 00:00</Text>
                         </View>
                         <View style={{ height: '100%', width: '35%' }}>
                             <View style={{ height: '45%', width: '100%', backgroundColor: COLORS.transparentBlack, marginBottom: 10, borderRadius: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 10 }}>
@@ -145,143 +96,60 @@ const MerchantInfoScreen = () => {
                             </View>
                         </View>
                     </View>
-                </Animated.View>
-            </View>
-        )
-    }
-
-    function renderHearderBar() {
-        return (
-            <View
-                style={{
-                    position: 'absolute',
-                    top: 10,
-                    left: 0,
-                    right: 0,
-                    height: 90,
-                    flexDirection: 'row',
-                    alignItems: "flex-end",
-                    justifyContent: "space-between",
-                    paddingHorizontal: 20,
-                    paddingBottom: 10
-                }}>
-                {/* Screen Overlay */}
-                <Animated.View
-                    style={{
-                        position: 'absolute',
-                        top: -20,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: COLORS.secondary,
-                        opacity: scrollY.interpolate({
-                            inputRange: [HEADER_HEIGHT - 80, HEADER_HEIGHT - 50],
-                            outputRange: [0, 1],
-                        })
-                    }}
-                />
-
-                {/* Header Bar Title */}
-                <Animated.View
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        alignItems: "center",
-                        justifyContent: "flex-end",
-                        paddingBottom: 20,
-                        opacity: scrollY.interpolate({
-                            inputRange: [HEADER_HEIGHT - 60, HEADER_HEIGHT - 40],
-                            outputRange: [0, 1],
-                        }),
-                        transform: [
-                            {
-                                translateY: scrollY.interpolate({
-                                    inputRange: [HEADER_HEIGHT - 60, HEADER_HEIGHT - 50],
-                                    outputRange: [0, 1],
-                                    extrapolate: "clamp"
-                                })
-                            }
-                        ]
-                    }}
-                >
-                    <Text style={{ fontSize: 16, fontWeight: "600" }}>{merchant.name}</Text>
-                </Animated.View>
-
-                <TopButtons back={goBack} item={merchant} />
-            </View>
-        )
-    }
-
-    function RenderMenuHeader() {
-        return (
-            <>
-                <View
-                    style={{
-                        flexDirection: "row",
-                        paddingHorizontal: 30,
-                        paddingBottom: 10,
-                        marginTop: 20,
-                        marginBottom: 10,
-                        borderBottomWidth: 1,
-                        borderBottomColor: COLORS.lightGray
-                    }}>
-
-                    <Text style={{ flex: 1, fontSize: 26 }}>Menu</Text>
-                    <Text style={{ color: COLORS.dark, fontSize: 16, marginTop: 5 }}>
-                        {dishes?.length} items
-                    </Text>
-
                 </View>
-            </>
+                <View style={{
+                    position: "absolute",
+                    bottom: '95%',
+                    width: "100%",
+                }}>
+                    <TopButtons back={goBack} item={merchant} />
+                </View>
+            </View>
         )
     }
 
-    const RenderMenuItems = () => {
+    function RenderFooter() {
         return (
-            <View style={{
-                alignItems: 'center'
-            }}>
-                <FlatList
-                    data={dishes}
-                    scrollEventThrottle={32}
-                    pagingEnabled
-                    numColumns={2}
-                    snapToAlignment={'center'}
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={item => item.id}
-                    renderItem={({ item }) => {
-                        return (
-                            <>
-                                <DishCard dish={item} />
-                            </>
-                        )
-                    }}
-                />
-            </View>
-        )
+            <FooterButton
+                label="Go To Cart"
+                footerStyle={{
+                    position: "absolute",
+                    justifyContent: "space-between",
+                    padding: 20,
+                    alignItems: "center",
+                    bottom: 40,
+                    right: 0,
+                    left: 0,
+                    height: 60,
+                    backgroundColor: COLORS.primary,
+                    borderRadius: 18
+                }}
+                leftComponent={
+                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> 10 items</Text>
+                }
+                rightComponent={
+                    <Text style={{ fontSize: 18, color: COLORS.light, fontWeight: "500" }}> ₽ 1500</Text>
+                }
+            />
+        );
     }
 
     return (
         <View style={styles.container}>
-            <Animated.FlatList
-                showsVerticalScrollIndicator={false}
-                scrollEventThrottle={16}
-                onScroll={Animated.event([
-                    { nativeEvent: { contentOffset: { y: scrollY } } }
-                ], { useNativeDriver: true })}
-                ListHeaderComponent={
-                    <View style={{ opacity: modalVisible ? 0.5 : 1 }}>
-                        {/* Header */}
-                        {renderMerchantCardHeader()}
-                        {RenderMenuHeader()}
-                        <RenderMenuItems />
-                    </View>
-                }
-            />
-            {renderHearderBar()}
+            {/* <MerchantMenu /> */}
+            {RenderHeader()}
+            <View style={{
+                flex: 1,
+                backgroundColor: COLORS.background,
+                borderTopEndRadius: SIZES.radius * 2,
+                borderTopStartRadius: SIZES.radius * 2,
+                marginTop: -35,
+                paddingHorizontal: 20
+            }}>
+                {/* {RenderMenuHeader()} */}
+                <MerchantMenu />
+            </View>
+            {RenderFooter()}
             <MerchantInfo setModalVisible={setModalVisible} merchant={merchant} modalVisible={modalVisible} />
         </View>
     );
