@@ -10,6 +10,7 @@ import Onboarding from "../screens/Onboarding/Onboarding";
 import { useAuthContext } from "../contexts/AuthContext";
 import Loading from "../screens/Onboarding/Loading";
 import MerchantInfoScreen from "../screens/MerchantsScreen/MerchantInfoScreen";
+import DishInfoScreen from "../screens/MerchantsScreen/DishInfoScreen";
 
 const RootStack = createNativeStackNavigator();
 
@@ -98,6 +99,10 @@ const MerchantStackNavigator = () => {
             <MerchantStack.Screen
                 name="MerchantInfo"
                 component={MerchantInfoScreen}
+            />
+            <MerchantStack.Screen
+                name="DishInfo"
+                component={DishInfoScreen}
             />
         </MerchantStack.Navigator>
     );

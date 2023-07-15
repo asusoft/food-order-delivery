@@ -5,9 +5,9 @@ import icons from '../../assets/constants/icons';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 
 // create a component
-const TopButtons = ({ back, item }) => {
+const TopButtons = ({ back, item, containerStyle }) => {
     return (
-        <View style={styles.container}>
+        <View style={{ ...styles.container, ...containerStyle }}>
             {/* Back Button */}
             <Pressable
                 style={{
@@ -63,15 +63,11 @@ const TopButtons = ({ back, item }) => {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
         height: 90,
         flexDirection: 'row',
         alignItems: "flex-end",
         justifyContent: "space-between",
         paddingHorizontal: 20,
-        paddingBottom: 10
     },
 });
 

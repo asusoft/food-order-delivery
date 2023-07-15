@@ -9,7 +9,7 @@ import { COLORS } from '../../assets/constants/theme';
 
 
 // create a component
-const MerchantMenu = () => {
+const MerchantMenu = ({ onPress }) => {
     const listRef = useRef()
     const dishes = dummyData.Dishes;
 
@@ -84,7 +84,7 @@ const MerchantMenu = () => {
                 renderItem={({ item }) => {
                     return (
                         <>
-                            <DishCard dish={item} />
+                            <DishCard dish={item} onPress={onPress} />
                         </>
                     )
                 }}

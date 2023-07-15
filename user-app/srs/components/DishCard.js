@@ -1,12 +1,12 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 
 // create a component
-const DishCard = ({ dish }) => {
+const DishCard = ({ dish, onPress }) => {
     return (
-        <View style={styles.container}>
+        <Pressable onPress={onPress} style={styles.container}>
             <View style={{ height: '55%', backgroundColor: COLORS.secondary, borderTopEndRadius: SIZES.radius, borderTopStartRadius: SIZES.radius, }}>
                 <Image
                     source={{
@@ -21,7 +21,7 @@ const DishCard = ({ dish }) => {
             <View style={{ height: '20%', backgroundColor: COLORS.secondary, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
                 <Text style={{ fontSize: 18, fontWeight: '700' }}>₦ {dish.price}</Text>
             </View>
-        </View>
+        </Pressable>
     );
 };
 

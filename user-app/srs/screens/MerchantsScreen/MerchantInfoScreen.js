@@ -4,7 +4,6 @@ import { View, Text, StyleSheet, Animated, FlatList, Image, SectionList, Touchab
 import { COLORS, SIZES } from '../../../assets/constants/theme';
 import dummyData from '../../../assets/constants/dummyData';
 import MerchantInfo from '../../components/MerchantInfo';
-import DishCard from '../../components/DishCard';
 import TopButtons from '../../components/TopButtons';
 import { useNavigation } from '@react-navigation/native';
 import icons from '../../../assets/constants/icons';
@@ -99,7 +98,7 @@ const MerchantInfoScreen = () => {
                 </View>
                 <View style={{
                     position: "absolute",
-                    bottom: '95%',
+                    bottom: '70%',
                     width: "100%",
                 }}>
                     <TopButtons back={goBack} item={merchant} />
@@ -134,6 +133,10 @@ const MerchantInfoScreen = () => {
         );
     }
 
+    const goToDishInfo = () => {
+        navigation.navigate("DishInfo")
+    }
+
     return (
         <View style={styles.container}>
             {/* <MerchantMenu /> */}
@@ -147,7 +150,7 @@ const MerchantInfoScreen = () => {
                 paddingHorizontal: 20
             }}>
                 {/* {RenderMenuHeader()} */}
-                <MerchantMenu />
+                <MerchantMenu onPress={() => goToDishInfo()} />
             </View>
             {RenderFooter()}
             <MerchantInfo setModalVisible={setModalVisible} merchant={merchant} modalVisible={modalVisible} />
