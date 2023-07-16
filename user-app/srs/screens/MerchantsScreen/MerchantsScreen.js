@@ -19,27 +19,21 @@ import { useMerchantContext } from '../../contexts/MerchantContext';
 // create a component
 const MerchantsScreen = () => {
     const navigation = useNavigation()
-    const { getMerchants } = useMerchantContext();
+    const { merchants } = useMerchantContext();
 
-    const [merchants, setMerchants] = useState([])
     const [loading, setLoading] = useState(true)
     const [modalVisible, setModalVisible] = useState(false);
 
-
-
     React.useEffect(() => {
         async function fetchData() {
-            try {
-                const merchantsList = await getMerchants();
-                setMerchants(merchantsList);
-                setLoading(false);
-            } catch (error) {
-                setLoading(false);
-                console.error(error);
+            if (merchants) {
+                setLoading(false)
+            } else {
+                setLoading(true)
             }
         }
         fetchData();
-    }, [])
+    }, [merchants])
 
     const categories = dummyData.Categories;
 

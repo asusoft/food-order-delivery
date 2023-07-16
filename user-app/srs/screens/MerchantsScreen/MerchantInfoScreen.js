@@ -2,7 +2,6 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, Animated, FlatList, Image, SectionList, TouchableOpacity, Pressable } from 'react-native';
 import { COLORS, SIZES } from '../../../assets/constants/theme';
-import dummyData from '../../../assets/constants/dummyData';
 import MerchantInfo from '../../components/MerchantInfo';
 import TopButtons from '../../components/TopButtons';
 import icons from '../../../assets/constants/icons';
@@ -17,24 +16,25 @@ const HEADER_HEIGHT = 290;
 // create a component
 const MerchantInfoScreen = ({ navigation, route }) => {
 
-    const merchants = dummyData.Merchants[0];
+    const { merchant_ID } = route.params;
 
     const dummyImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfUoQbNCD6YgZ2ruZ7vH48CIg3zgYnWShQStmDz8g5BT-ERLuFy1Td-bs7C7wxYBF4MRw&usqp=CAU"
 
-    const [merchant, setMerchant] = useState({})
     const [modalVisible, setModalVisible] = useState(false);
 
-    const { getMerchantByID } = useMerchantContext();
+    const { toggleFavorite, setMerchantID, merchant, favorite } = useMerchantContext();
 
-    const { merchant_ID } = route.params;
+    const [isLoading, setIsLoading] = useState(false)
 
 
+    React.useEffect(() => {
+        merchant ? setIsLoading(false) : setIsLoading(true)
+    }, [merchant, merchant_ID])
 
     React.useEffect(() => {
         async function fetchData() {
             try {
-                const mercha = await getMerchantByID(merchant_ID);
-                setMerchant(mercha);
+                setMerchantID(merchant_ID)
             } catch (error) {
                 console.error(error);
             }
@@ -44,6 +44,7 @@ const MerchantInfoScreen = ({ navigation, route }) => {
 
     const goBack = () => {
         navigation.goBack();
+        setMerchantID(null)
     }
 
     function RenderHeader() {
@@ -81,14 +82,14 @@ const MerchantInfoScreen = ({ navigation, route }) => {
                     height: '50%',
                     padding: 20,
                 }}>
-                    <Text style={{ fontSize: 22, fontWeight: '700', color: COLORS.white }}>{merchant.name}</Text>
+                    <Text style={{ fontSize: 22, fontWeight: '700', color: COLORS.white }}>{merchant?.name}</Text>
                     <View style={{ flexDirection: 'row', flex: 1, marginTop: 15 }}>
                         <View style={{ height: '100%', width: '25%', backgroundColor: COLORS.transparentBlack, marginEnd: 10, borderRadius: SIZES.radius, alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 6 }}>
                             <Image
                                 source={icons.time}
                                 style={{ height: 35, width: 35, tintColor: COLORS.primary }}
                             />
-                            <Text style={{ fontSize: 14, color: COLORS.white }}>Open untill: {merchant.closingTime}</Text>
+                            <Text style={{ fontSize: 14, color: COLORS.white }}>Open untill: {merchant?.closingTime}</Text>
                         </View>
                         <View style={{ height: '100%', width: '35%' }}>
                             <View style={{ height: '45%', width: '100%', backgroundColor: COLORS.transparentBlack, marginBottom: 10, borderRadius: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', paddingHorizontal: 10 }}>
@@ -97,7 +98,7 @@ const MerchantInfoScreen = ({ navigation, route }) => {
                                     style={{ height: 30, width: 30, tintColor: COLORS.primary }}
                                 />
                                 <View>
-                                    <Text style={{ fontSize: 16, color: COLORS.white }}>{merchant.minDeliveryTime}-{merchant.maxDeliveryTime}</Text>
+                                    <Text style={{ fontSize: 16, color: COLORS.white }}>{merchant?.minDeliveryTime}-{merchant?.maxDeliveryTime}</Text>
                                     <Text style={{ fontSize: 14, opacity: 0.5, color: COLORS.white }}>min</Text>
                                 </View>
                             </View>
@@ -107,7 +108,7 @@ const MerchantInfoScreen = ({ navigation, route }) => {
                                         source={icons.star}
                                         style={{ height: 25, width: 25, }}
                                     />
-                                    <Text style={{ marginStart: 10, fontSize: 18, color: COLORS.white }}>{merchant.rating}</Text>
+                                    <Text style={{ marginStart: 10, fontSize: 18, color: COLORS.white }}>{merchant?.rating}</Text>
                                 </View>
                                 <TouchableOpacity onPress={() => setModalVisible(true)} style={{ height: '100%', flex: 1, backgroundColor: COLORS.transparentBlack, borderRadius: 16, alignItems: 'center', justifyContent: 'center' }}>
                                     <Image
@@ -124,7 +125,7 @@ const MerchantInfoScreen = ({ navigation, route }) => {
                     bottom: '70%',
                     width: "100%",
                 }}>
-                    <TopButtons back={goBack} item={merchant} />
+                    <TopButtons back={goBack} item={merchant} isFav={favorite} like={() => toggleFavorite(merchant_ID)} />
                 </View>
             </View>
         )
@@ -160,26 +161,32 @@ const MerchantInfoScreen = ({ navigation, route }) => {
         navigation.navigate("DishInfo")
     }
 
-    return (
-        <View style={styles.container}>
-            {/* <MerchantMenu /> */}
-            {RenderHeader()}
-            <View style={{
-                flex: 1,
-                backgroundColor: COLORS.background,
-                borderTopEndRadius: SIZES.radius * 2,
-                borderTopStartRadius: SIZES.radius * 2,
-                marginTop: -35,
-                paddingHorizontal: 20,
-                opacity: modalVisible ? 0.6 : 1
-            }}>
-                {/* {RenderMenuHeader()} */}
-                <MerchantMenu onPress={() => goToDishInfo()} />
+    if (isLoading) {
+        return (
+            <Text> Loading...</Text>
+        )
+    } else {
+        return (
+            <View style={styles.container}>
+                {/* <MerchantMenu /> */}
+                {RenderHeader()}
+                <View style={{
+                    flex: 1,
+                    backgroundColor: COLORS.background,
+                    borderTopEndRadius: SIZES.radius * 2,
+                    borderTopStartRadius: SIZES.radius * 2,
+                    marginTop: -35,
+                    paddingHorizontal: 20,
+                    opacity: modalVisible ? 0.6 : 1
+                }}>
+                    {/* {RenderMenuHeader()} */}
+                    <MerchantMenu onPress={() => goToDishInfo()} />
+                </View>
+                {RenderFooter()}
+                <MerchantInfo setModalVisible={setModalVisible} merchant={merchant} modalVisible={modalVisible} />
             </View>
-            {RenderFooter()}
-            <MerchantInfo setModalVisible={setModalVisible} merchant={merchant} modalVisible={modalVisible} />
-        </View>
-    );
+        );
+    }
 };
 
 // define your styles

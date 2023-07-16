@@ -5,7 +5,7 @@ import icons from '../../assets/constants/icons';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 
 // create a component
-const TopButtons = ({ back, item, containerStyle }) => {
+const TopButtons = ({ back, item, containerStyle, isFav, like }) => {
     return (
         <View style={{ ...styles.container, ...containerStyle }}>
             {/* Back Button */}
@@ -44,10 +44,10 @@ const TopButtons = ({ back, item, containerStyle }) => {
                     borderColor: COLORS.lightGray,
                     backgroundColor: COLORS.transparentBlack
                 }}
-                onPress={back}
+                onPress={like}
             >
                 <Image
-                    source={item?.isFavorite ? icons.heartFilled : icons.heart}
+                    source={isFav ? icons.heartFilled : icons.heart}
                     style={{
                         width: 30,
                         height: 30,
