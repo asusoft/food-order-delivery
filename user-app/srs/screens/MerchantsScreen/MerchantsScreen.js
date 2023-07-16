@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native';
 import Category from '../../components/Category';
 import icons from '../../../assets/constants/icons';
 import MerchantsSkeleton from '../../skeletons/MerchantsScreenSkeleton';
+import SearchMerchant from './SearchMerchant';
 import { useNavigation } from '@react-navigation/native';
 
 import { useMerchantContext } from '../../contexts/MerchantContext';
@@ -19,9 +20,12 @@ import { useMerchantContext } from '../../contexts/MerchantContext';
 const MerchantsScreen = () => {
     const navigation = useNavigation()
     const { getMerchants } = useMerchantContext();
-    const [merchants, setMerchants] = useState([])
 
+    const [merchants, setMerchants] = useState([])
     const [loading, setLoading] = useState(true)
+    const [modalVisible, setModalVisible] = useState(false);
+
+
 
     React.useEffect(() => {
         async function fetchData() {
@@ -44,44 +48,53 @@ const MerchantsScreen = () => {
             <MerchantsSkeleton />
         )
     } else {
-        return (
-            <SafeAreaView style={styles.container}>
-                <FlatList
-                    showsVerticalScrollIndicator={false}
-                    ListHeaderComponent={() => (
-                        <>
-                            <Header />
-                            <SearchBar />
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: 15, marginBottom: 5, flexDirection: "row" }}>
-                                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                                    <Pressable onPress={() => navigation.goBack()} style={styles.filter}>
-                                        <Image source={icons.filter} style={{ width: 25, height: 25, tintColor: COLORS.black }} />
-                                    </Pressable>
-                                    <Text style={{ fontSize: 12 }}>Filters</Text>
-                                </View>
+        if (modalVisible) {
+            return (
+                <SearchMerchant setModalVisible={setModalVisible} modalVisible={modalVisible} />
+            )
+        } else {
+            return (
+                <SafeAreaView style={styles.container}>
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        ListHeaderComponent={() => (
+                            <>
+                                <Header />
+                                <Pressable onPress={() => setModalVisible(true)} style={styles.SearchBar}>
+                                    <Image source={icons.search} style={{ height: 25, width: 25 }} />
+                                    <Text style={{ marginStart: 10, fontSize: 16 }}>Search</Text>
+                                </Pressable>
+                                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: 15, marginBottom: 5, flexDirection: "row" }}>
+                                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                                        <Pressable onPress={() => navigation.goBack()} style={styles.filter}>
+                                            <Image source={icons.filter} style={{ width: 25, height: 25, tintColor: COLORS.black }} />
+                                        </Pressable>
+                                        <Text style={{ fontSize: 12 }}>Filters</Text>
+                                    </View>
 
-                                <FlatList
-                                    data={categories}
-                                    horizontal={true}
-                                    showsHorizontalScrollIndicator={false}
-                                    renderItem={({ item }) => {
-                                        return (
-                                            <Category category={item} />
-                                        );
-                                    }}
-                                />
-                            </ScrollView>
-                            <View style={{ marginTop: 20, marginHorizontal: 25 }}>
-                                <FlatList data={merchants}
-                                    renderItem={({ item }) => <MerchantCard merchant={item} onPress={() => navigation.navigate('MerchantInfo', { merchant_ID: item.id })} />}
-                                    showsVerticalScrollIndicator={false}
-                                />
-                            </View>
-                        </>
-                    )}
-                />
-            </SafeAreaView>
-        );
+                                    <FlatList
+                                        data={categories}
+                                        horizontal={true}
+                                        showsHorizontalScrollIndicator={false}
+                                        renderItem={({ item }) => {
+                                            return (
+                                                <Category category={item} />
+                                            );
+                                        }}
+                                    />
+                                </ScrollView>
+                                <View style={{ marginTop: 20, marginHorizontal: 25 }}>
+                                    <FlatList data={merchants}
+                                        renderItem={({ item }) => <MerchantCard merchant={item} onPress={() => navigation.navigate('MerchantInfo', { merchant_ID: item.id })} />}
+                                        showsVerticalScrollIndicator={false}
+                                    />
+                                </View>
+                            </>
+                        )}
+                    />
+                </SafeAreaView>
+            );
+        }
     }
 };
 
@@ -100,6 +113,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: "center",
         padding: 15
+    },
+    SearchBar: {
+        marginHorizontal: 20,
+        marginVertical: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: 'center',
+        padding: 10,
+        height: 45,
+        borderRadius: 15,
+        backgroundColor: COLORS.secondary,
     },
 });
 

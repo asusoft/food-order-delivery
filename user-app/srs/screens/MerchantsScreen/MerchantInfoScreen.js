@@ -58,7 +58,7 @@ const MerchantInfoScreen = ({ navigation, route }) => {
                 opacity: modalVisible ? 0.3 : 1
             }}>
                 <Image
-                    source={{ uri: merchant.image ? merchant.image : dummyImage }}
+                    source={{ uri: merchant?.image ? merchant?.image : dummyImage }}
                     resizeMode="contain"
                     style={{
                         height: HEADER_HEIGHT + 55,

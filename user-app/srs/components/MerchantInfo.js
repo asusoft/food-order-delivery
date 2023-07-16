@@ -22,7 +22,7 @@ const MerchantInfo = ({ merchant, modalVisible, setModalVisible }) => {
                     <View style={{ marginBottom: 20, }}>
                         <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 12 }}>{merchant.name}</Text>
                         <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 3 }}>{merchant.address}</Text>
-                        <Text style={{ fontSize: 16, opacity: 0.8 }}>We're open untill 00:00</Text>
+                        <Text style={{ fontSize: 16, opacity: 0.8 }}>We're open untill {merchant.closingTime}</Text>
                     </View>
                     <View style={{ marginBottom: 20, paddingVertical: 10, flexDirection: 'row', borderWidth: 0.5, borderColor: COLORS.white, borderTopColor: COLORS.grey, borderBottomColor: COLORS.grey }}>
                         <Text style={{ fontSize: 16 }}>Breakfast - </Text>

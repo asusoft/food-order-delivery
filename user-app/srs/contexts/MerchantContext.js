@@ -26,7 +26,7 @@ const MerchantContextProvider = ({ children }) => {
 
     const getMerchantByID = async (id) => {
         try {
-            const doc = await firestore().collection('Merchants').doc(id).get();
+            const doc = await db.collection('Merchants').doc(id).get();
             if (doc.exists) {
                 return doc.data();
             } else {
@@ -39,10 +39,28 @@ const MerchantContextProvider = ({ children }) => {
         }
     };
 
+    const getMerchantByName = async (name) => {
+        try {
+            if (name !== "") {
+                const merchantsList = await getMerchants();
+                const searchTerm = name.toLowerCase();
+                const matchedMerchants = merchantsList.filter((merchant) =>
+                    merchant.name.toLowerCase().startsWith(searchTerm)
+                );
+                return matchedMerchants
+            }
+            return null
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <MerchantContext.Provider value={{
             getMerchants,
             getMerchantByID,
+            getMerchantByName
         }}>
             {children}
         </MerchantContext.Provider>

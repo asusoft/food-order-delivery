@@ -11,6 +11,7 @@ import { useAuthContext } from "../contexts/AuthContext";
 import Loading from "../screens/Onboarding/Loading";
 import MerchantInfoScreen from "../screens/MerchantsScreen/MerchantInfoScreen";
 import DishInfoScreen from "../screens/MerchantsScreen/DishInfoScreen";
+import SearchMerchant from "../screens/MerchantsScreen/SearchMerchant";
 
 const RootStack = createNativeStackNavigator();
 
@@ -104,6 +105,7 @@ const MerchantStackNavigator = () => {
                 name="DishInfo"
                 component={DishInfoScreen}
             />
+
         </MerchantStack.Navigator>
     );
 };
