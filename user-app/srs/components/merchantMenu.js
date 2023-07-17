@@ -7,74 +7,14 @@ import dummyData from '../../assets/constants/dummyData';
 import DishCard from './DishCard';
 import { COLORS } from '../../assets/constants/theme';
 
+import { useDishContext } from '../contexts/DishContext';
+
 
 // create a component
 const MerchantMenu = ({ onPress }) => {
     const listRef = useRef()
-    const dishes = dummyData.Dishes;
 
-    const DATA = [
-        {
-            id: 1,
-            title: 'Main dishes',
-            data: [
-                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-            ],
-        },
-        {
-            id: 2,
-            title: 'Sides',
-            data: [
-                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-
-            ],
-        },
-        {
-            id: 3,
-            title: 'Drinks',
-            data: [
-                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-
-            ],
-        },
-        {
-            id: 4,
-            title: 'Desserts',
-            data: [
-                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-
-            ],
-        },
-        {
-            id: 5,
-            title: 'BreakFast',
-            data: [
-                dishes[0], dishes[1], dishes[2], dishes[0], dishes[1], dishes[2]
-
-            ],
-        },
-    ];
-
-    const RenderMenuItems = ({ item }) => {
-        return (
-            <FlatList
-                data={item}
-                scrollEventThrottle={32}
-                pagingEnabled
-                numColumns={2}
-                snapToAlignment={'center'}
-                showsVerticalScrollIndicator={false}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => {
-                    return (
-                        <>
-                            <DishCard dish={item} onPress={onPress} />
-                        </>
-                    )
-                }}
-            />
-        )
-    }
+    const { DATA } = useDishContext();
 
     const onPressTitle = useCallback((index) => {
         if (!!listRef?.current) {

@@ -9,6 +9,7 @@ import FooterButton from '../../components/FooterButton';
 import MerchantMenu from '../../components/merchantMenu';
 
 import { useMerchantContext } from '../../contexts/MerchantContext';
+import { useDishContext } from '../../contexts/DishContext';
 
 
 const HEADER_HEIGHT = 290;
@@ -23,18 +24,24 @@ const MerchantInfoScreen = ({ navigation, route }) => {
     const [modalVisible, setModalVisible] = useState(false);
 
     const { toggleFavorite, setMerchantID, merchant, favorite } = useMerchantContext();
+    const { setMerchant_ID } = useDishContext();
 
     const [isLoading, setIsLoading] = useState(false)
 
 
     React.useEffect(() => {
-        merchant ? setIsLoading(false) : setIsLoading(true)
+        if (merchant) {
+            setIsLoading(false);
+        } else {
+            setIsLoading(true)
+        }
     }, [merchant, merchant_ID])
 
     React.useEffect(() => {
         async function fetchData() {
             try {
                 setMerchantID(merchant_ID)
+                setMerchant_ID(merchant_ID)
             } catch (error) {
                 console.error(error);
             }
