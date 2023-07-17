@@ -34,12 +34,12 @@ const Categories = [
     {
         id: 3,
         name: "Breakfast",
-        icon: "https://toppng.com/uploads/preview/big-burger-11562902444grmy1oetg2.png"
+        icon: "https://www.pngall.com/wp-content/uploads/7/Dessert-PNG-Photo.png"
     },
     {
         id: 4,
         name: "Drink",
-        icon: "https://www.pngall.com/wp-content/uploads/7/Dessert-PNG-Photo.png"
+        icon: "https://www.pngall.com/wp-content/uploads/5/Summer-Cocktail-PNG.png"
     },
     {
         id: 5,
@@ -58,7 +58,7 @@ const Merchants = [
     {
         "id": 1,
         "name": "El Cabo Coffe Bar Tres De Mayo",
-        "deliveryFee": 35,
+        "deliveryFee": 305,
         "minDeliveryTime": 20,
         "maxDeliveryTime": 30,
         "rating": 4.5,
@@ -70,7 +70,7 @@ const Merchants = [
     {
         "id": 2,
         "name": "Tony Roma's - C.C. Meridiano",
-        "deliveryFee": 40,
+        "deliveryFee": 110,
         "address": "PO Box 96439",
         "minDeliveryTime": 15,
         "maxDeliveryTime": 35,
@@ -82,7 +82,7 @@ const Merchants = [
         "id": 3,
         "name": "Brothers Barbecue",
         "address": "Apt 299",
-        "deliveryFee": 30,
+        "deliveryFee": 160,
         "minDeliveryTime": 20,
         "maxDeliveryTime": 30,
         "rating": 4.3,
@@ -93,7 +93,7 @@ const Merchants = [
         "id": 4,
         "name": "Hamburguesa Nostra La Salle",
         "address": "19th Floor",
-        "deliveryFee": 50,
+        "deliveryFee": 150,
         "minDeliveryTime": 30,
         "maxDeliveryTime": 40,
         "rating": 4.5,
@@ -256,6 +256,120 @@ const Dishes = [
         "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
         "price": 750,
         "rating": 3.8,
+    },
+    {
+        "id": "6",
+        "name": "Cheese Tequeños",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 690,
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg",
+        categories: [1, 2],
+        isFavorite: true,
+        "rating": 3.5,
+    },
+    {
+        "id": "7",
+        "name": "Hamburger La Super Cabo Burger",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 1010,
+        categories: [1, 3],
+        isFavorite: false,
+        "rating": 4.5,
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg",
+    },
+    {
+        id: "8",
+        categories: [6],
+        isFavorite: false,
+        "rating": 4.5,
+        "name": "U.S.A. Burger",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 430,
+        "image": "https://www.pngall.com/wp-content/uploads/5/Summer-Cocktail-PNG.png",
+    },
+    {
+        id: "9",
+        categories: [3, 5],
+        isFavorite: true,
+        "name": "Slices of Llanero Cheese",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 500,
+        "rating": 2.5,
+    },
+    {
+        id: "10",
+        categories: [2, 3, 6],
+        isFavorite: false,
+        "name": "Papas Locas El Cabo",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 750,
+        "rating": 3.8,
+    },
+    {
+        "id": "11",
+        "name": "Cheese Tequeños",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 690,
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant1.jpeg",
+        categories: [1, 2],
+        isFavorite: true,
+        "rating": 3.5,
+    },
+    {
+        "id": "12",
+        "name": "Hamburger La Super Cabo Burger",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 1010,
+        categories: [1, 3],
+        isFavorite: false,
+        "rating": 4.5,
+        "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/uber-eats/restaurant3.jpeg",
+    },
+    {
+        id: "13",
+        categories: [6],
+        isFavorite: false,
+        "rating": 4.5,
+        "name": "U.S.A. Burger",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 430,
+        "image": "https://www.pngall.com/wp-content/uploads/5/Summer-Cocktail-PNG.png",
+    },
+    {
+        id: "14",
+        categories: [3, 5],
+        isFavorite: true,
+        "name": "Slices of Llanero Cheese",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 500,
+        "rating": 2.5,
+    },
+    {
+        id: "15",
+        categories: [2, 3, 6],
+        isFavorite: false,
+        "name": "Papas Locas El Cabo",
+        "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
+        "price": 750,
+        "rating": 3.8,
+    }
+]
+
+const Sizes = [
+    {
+        id: 1,
+        name: 'Small',
+        price: '750',
+    },
+    {
+        id: 2,
+        name: 'medium',
+        price: '1050',
+    },
+    {
+        id: 3,
+        name: 'Large',
+        price: '1250'
     }
 ]
 
@@ -266,5 +380,6 @@ export default {
     Merchants,
     Offers,
     Stories,
-    Dishes
+    Dishes,
+    Sizes
 }
