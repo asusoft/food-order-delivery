@@ -7,19 +7,19 @@ import { COLORS, SIZES } from '../../assets/constants/theme';
 import { useMerchantContext } from '../contexts/MerchantContext';
 
 // create a component
-const TopButtons = ({ back, containerStyle, merchantID, like }) => {
+const TopButtons = ({ back, containerStyle, merchantID, like, isFavorite }) => {
 
-    const [isFavorite, setIsFavorite] = useState(false)
+    // const [isFavorite, setIsFavorite] = useState(false)
 
-    const { isFavoriteMerchant, favoriteMerchants } = useMerchantContext()
+    // const { isFavoriteMerchant, favoriteMerchants } = useMerchantContext()
 
-    React.useEffect(() => {
-        async function fetchData() {
-            const isFav = await isFavoriteMerchant(merchantID)
-            setIsFavorite(isFav)
-        }
-        fetchData()
-    }, [merchantID, favoriteMerchants])
+    // React.useEffect(() => {
+    //     async function fetchData() {
+    //         const isFav = await isFavoriteMerchant(merchantID)
+    //         setIsFavorite(isFav)
+    //     }
+    //     fetchData()
+    // }, [merchantID, favoriteMerchants])
     return (
         <View style={{ ...styles.container, ...containerStyle }}>
             {/* Back Button */}

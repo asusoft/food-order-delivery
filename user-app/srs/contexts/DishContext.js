@@ -10,39 +10,86 @@ const DishContextProvider = ({ children }) => {
     const dbUserID = dbUser?.id
 
     const [merchantID, setMerchant_ID] = useState()
+    const [dish, setDish] = useState({});
+    const [dishID, setDishID] = useState()
+    const [favorite, setFavorite] = useState(false);
+    const [favoriteDishes, setFavoriteDishes] = useState([])
+
     const [DATA, setData] = useState([])
 
+    React.useEffect(() => {
+        async function fetchData() {
+            const result = await getDishByID(dishID);
+            setDish(result);
+        }
+        if (merchantID) {
+            fetchData();
+        } else {
+            setDish(null);
+        }
+    }, [dishID])
+
     React, useEffect(() => {
-        const fetchData = async () => {
-            const categoriesList = [];
+        async function fetchData() {
+            if (merchantID) {
+                db.collection("DishCategories")
+                    .where("merchantID", "==", merchantID)
+                    .onSnapshot((querySnapshot) => {
+                        const categoriesList = [];
+                        querySnapshot.forEach(async (doc) => {
+                            const categoryID = doc.id;
+                            const category = doc.data()
 
-            const categoriesSnapshot = await db.collection("DishCategories")
-                .where("merchantID", "==", merchantID)
-                .get();
+                            const dishSnapshot = await db.collection("Dishes")
+                                .where("categoryID", "==", categoryID)
+                                .get();
 
-            for (const categoryDoc of categoriesSnapshot.docs) {
-                const categoryID = categoryDoc.id;
-                const category = categoryDoc.data();
-                const dishList = [];
-
-                const dishesSnapshot = await db.collection("Dishes")
-                    .where("categoryID", "==", categoryID)
-                    .get();
-
-                dishesSnapshot.forEach((dishDoc) => {
-                    dishList.push({
-                        ...dishDoc.data(),
-                        id: dishDoc.id,
+                            if (!dishSnapshot.empty) {
+                                const dishList = dishSnapshot.docs.map((dishDoc) => ({
+                                    ...dishDoc.data(),
+                                    id: dishDoc.id,
+                                }));
+                                categoriesList.push({ ...category, id: categoryID.toString(), data: dishList });
+                            }
+                        });
+                        setData(categoriesList);
                     });
-                });
-
-                categoriesList.push({ ...category, id: categoryID.toString(), data: dishList });
             }
-
-            setData(categoriesList);
-        };
+        }
         fetchData()
     }, [merchantID])
+
+    React.useEffect(() => {
+        async function fetchData() {
+            const isFav = await isFavoriteDish(dishID);
+            setFavorite(isFav);
+        }
+        fetchData();
+    }, [dishID, favoriteDishes])
+
+    React.useEffect(() => {
+        async function fetchData() {
+            await getFavoriteDishes()
+        }
+        fetchData()
+    }, [dbUserID])
+
+    const getDishByID = async (dishID) => {
+        try {
+            const doc = await db.collection('Dishes').doc(dishID).get();
+            if (doc.exists) {
+                const dishData = doc.data()
+                const dishObject = { ...dishData, id: dishID };
+                return dishObject;
+            } else {
+                console.log('No such merchant!');
+                return null;
+            }
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
 
     const getDishes = async (categoryID) => {
         return new Promise((resolve, reject) => {
@@ -62,10 +109,73 @@ const DishContextProvider = ({ children }) => {
 
     }
 
+    const getFavoriteDishes = async () => {
+        try {
+            if (dbUserID) {
+                return new Promise((resolve, reject) => {
+                    db.collection("FavoriteDishes")
+                        .where("userID", "==", dbUserID)
+                        .onSnapshot((querySnapshot) => {
+                            const favoriteList = [];
+                            querySnapshot.forEach((doc) => {
+                                const itemID = doc.id;
+                                const item = doc.data();
+                                favoriteList.push({ ...item, id: itemID.toString() });
+                            });
+                            setFavoriteDishes(favoriteList);
+                        }, reject);
+                });
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const isFavoriteDish = async (dishID) => {
+        const result = favoriteDishes.some((dish) => dish.dishID === dishID);
+        return result
+    }
+
+    const toggleFavorite = async (dishID) => {
+        await isFavoriteDish(dishID) ? removeFavoriteDish(dishID) : addFavoriteDish(dishID)
+    }
+
+    const removeFavoriteDish = (dishID) => {
+        db.collection("FavoriteDishes")
+            .doc(dishID)
+            .delete()
+            .then(() => {
+                setFavorite(false);
+            })
+            .catch((error) => {
+                console.error("Error removing document: ", error);
+            });
+    }
+
+    const addFavoriteDish = (dishID) => {
+        db.collection("FavoriteDishes")
+            .doc(dishID)
+            .set({
+                dishID: dishID,
+                userID: dbUserID,
+            })
+            .then(() => {
+                setFavorite(true);
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+    }
+
     return (
         <DishContext.Provider value={{
             setMerchant_ID,
-            DATA
+            setDishID,
+            toggleFavorite,
+            dish,
+            DATA,
+            favorite,
+            favoriteDishes,
         }}>
             {children}
         </DishContext.Provider>

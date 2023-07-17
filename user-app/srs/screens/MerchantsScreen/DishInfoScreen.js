@@ -1,5 +1,5 @@
 //import liraries
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Pressable, FlatList } from 'react-native';
 import { COLORS, SIZES } from '../../../assets/constants/theme';
 import dummyData from '../../../assets/constants/dummyData';
@@ -7,17 +7,46 @@ import TopButtons from '../../components/TopButtons';
 import { SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Rating from '../../components/Rating';
-import icons from '../../../assets/constants/icons';
 import FooterButton from '../../components/FooterButton';
 import QuantityButton from '../../components/QuantityButton';
+
+import { useDishContext } from '../../contexts/DishContext';
 
 const HEADER_HEIGHT = 250;
 
 // create a component
-const DishInfoScreen = () => {
+const DishInfoScreen = ({ route }) => {
+    const dummyImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfUoQbNCD6YgZ2ruZ7vH48CIg3zgYnWShQStmDz8g5BT-ERLuFy1Td-bs7C7wxYBF4MRw&usqp=CAU"
+
+
+    const { dish_ID } = route.params;
+
+    const { dish, setDishID, toggleFavorite, favorite } = useDishContext();
+
     const navigation = useNavigation();
-    const dish = dummyData.Dishes[0]
     const sizes = dummyData.Sizes;
+
+    const [isLoading, setIsLoading] = useState(false)
+
+
+    React.useEffect(() => {
+        if (dish) {
+            setIsLoading(false);
+        } else {
+            setIsLoading(true)
+        }
+    }, [dish, dish_ID])
+
+    React.useEffect(() => {
+        async function fetchData() {
+            try {
+                setDishID(dish_ID)
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchData();
+    }, [dish_ID])
 
     const goBack = () => {
         navigation.goBack();
@@ -29,7 +58,7 @@ const DishInfoScreen = () => {
                 <View style={{
                     marginTop: -30
                 }}>
-                    <TopButtons back={goBack} item={dish} />
+                    <TopButtons back={goBack} like={() => toggleFavorite(dish_ID)} isFavorite={favorite} />
 
                     <View style={{
                         alignItems: "center",
@@ -42,7 +71,7 @@ const DishInfoScreen = () => {
                     }}>
 
                         <Image
-                            source={{ uri: dish.image ? dish.image : [] }}
+                            source={{ uri: dish?.image ? dish?.image : dummyImage }}
                             resizeMode="contain"
                             style={{
                                 height: HEADER_HEIGHT + 55,
@@ -60,10 +89,10 @@ const DishInfoScreen = () => {
                 <View style={{
                     marginTop: 20
                 }}>
-                    <Text style={{ fontSize: 20, fontWeight: '700' }}>{dish.name}</Text>
-                    <Rating rating={dish.rating} showText={true} size={16} color={COLORS.primary} containerStyle={{ marginVertical: 10 }} />
+                    <Text style={{ fontSize: 20, fontWeight: '700' }}>{dish?.name}</Text>
+                    <Rating rating={dish?.rating} showText={true} size={16} color={COLORS.primary} containerStyle={{ marginVertical: 10 }} />
                     <Text style={{ fontSize: 18, marginVertical: 10 }}>Description</Text>
-                    <Text style={{ fontSize: 14 }}>{dish.description}</Text>
+                    <Text style={{ fontSize: 14 }}>{dish?.description}</Text>
                 </View>
             </View>
         )
@@ -134,14 +163,18 @@ const DishInfoScreen = () => {
     }
     return (
         <SafeAreaView style={styles.container}>
-
             {RenderHeader()}
-            <View style={{ marginHorizontal: 20 }}>
-                {RenderInfo()}
-                {RenderSizes()}
-            </View>
-            {RenderFooter()}
-
+            {
+                dish && (
+                    <>
+                        <View style={{ marginHorizontal: 20 }}>
+                            {RenderInfo()}
+                            {RenderSizes()}
+                        </View>
+                        {RenderFooter()}
+                    </>
+                )
+            }
         </SafeAreaView>
     );
 };

@@ -137,7 +137,7 @@ const MerchantInfoScreen = ({ navigation, route }) => {
                     bottom: '70%',
                     width: "100%",
                 }}>
-                    <TopButtons back={goBack} item={merchant} merchantID={merchant?.id} like={() => toggleFavorite(merchant_ID)} />
+                    <TopButtons back={goBack} like={() => toggleFavorite(merchant_ID)} isFavorite={favorite} />
                 </View>
             </View>
         )

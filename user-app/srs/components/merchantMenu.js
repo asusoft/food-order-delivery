@@ -1,9 +1,8 @@
 //import liraries
 import React, { useRef, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import SectionList from 'react-native-tabs-section-list';
 import sectionListGetitemLayout from 'react-native-section-list-get-item-layout';
-import dummyData from '../../assets/constants/dummyData';
 import DishCard from './DishCard';
 import { COLORS } from '../../assets/constants/theme';
 
