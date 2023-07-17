@@ -12,7 +12,6 @@ const MerchantContextProvider = ({ children }) => {
     const [favorite, setFavorite] = useState(false);
     const [favoriteMerchants, setFavoriteMerchants] = useState([])
     const [merchant, setMerchant] = useState({});
-    const [merchants, setMerchants] = useState([]);
     const [merchantID, setMerchantID] = useState();
 
     React.useEffect(() => {
@@ -37,18 +36,10 @@ const MerchantContextProvider = ({ children }) => {
 
     React.useEffect(() => {
         async function fetchData() {
-            await getMerchants()
-        }
-
-        fetchData()
-    }, [])
-
-    React.useEffect(() => {
-        async function fetchData() {
-            await getfavoriteMerchants()
+            await getFavoriteMerchants()
         }
         fetchData()
-    }, [])
+    }, [dbUserID])
 
     const getMerchants = async () => {
         try {
@@ -62,7 +53,7 @@ const MerchantContextProvider = ({ children }) => {
                                 id: doc.id,
                             });
                         });
-                        setMerchants(merchantsList);
+                        resolve(merchantsList);
                     }, reject);
             });
         } catch (error) {
@@ -105,7 +96,7 @@ const MerchantContextProvider = ({ children }) => {
         }
     };
 
-    const getfavoriteMerchants = async () => {
+    const getFavoriteMerchants = async () => {
         try {
             if (dbUserID) {
                 return new Promise((resolve, reject) => {
@@ -128,10 +119,8 @@ const MerchantContextProvider = ({ children }) => {
     }
 
     const isFavoriteMerchant = async (merchant_ID) => {
-        //const result = await getfavoriteMerchants();
-        const out = favoriteMerchants.some((merchant) => merchant.merchantID === merchant_ID);
-
-        return out
+        const result = favoriteMerchants.some((merchant) => merchant.merchantID === merchant_ID);
+        return result
     }
 
     const toggleFavorite = async (merchant_ID) => {
@@ -140,41 +129,43 @@ const MerchantContextProvider = ({ children }) => {
 
     const removeFavoriteMerchant = (merchant_ID) => {
         db.collection("FavoriteMerchants")
-            .where("merchantID", "==", merchant_ID)
-            .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    doc.ref.delete()
-                    setFavorite(false);
-                });
-            }).catch((error) => {
-                console.error("Error retrieving document: ", error);
+            .doc(merchant_ID)
+            .delete()
+            .then(() => {
+                setFavorite(false);
+            })
+            .catch((error) => {
+                console.error("Error removing document: ", error);
             });
     }
 
     const addFavoriteMerchant = (merchant_ID) => {
         db.collection("FavoriteMerchants")
-            .add({
+            .doc(merchant_ID)
+            .set({
                 merchantID: merchant_ID,
-                userID: dbUserID
+                userID: dbUserID,
             })
             .then(() => {
                 setFavorite(true);
-            }).catch((error) => {
-                console.error("Error retrieving document: ", error);
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
             });
     }
 
     return (
         <MerchantContext.Provider value={{
             getMerchants,
+            getMerchantByID,
             getMerchantByName,
-            getfavoriteMerchants,
+            getFavoriteMerchants,
             toggleFavorite,
             setMerchantID,
+            isFavoriteMerchant,
             favorite,
             merchant,
-            merchants
+            favoriteMerchants
         }}>
             {children}
         </MerchantContext.Provider>

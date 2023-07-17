@@ -1,11 +1,25 @@
 //import liraries
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import icons from '../../assets/constants/icons';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 
+import { useMerchantContext } from '../contexts/MerchantContext';
+
 // create a component
-const TopButtons = ({ back, item, containerStyle, isFav, like }) => {
+const TopButtons = ({ back, containerStyle, merchantID, like }) => {
+
+    const [isFavorite, setIsFavorite] = useState(false)
+
+    const { isFavoriteMerchant, favoriteMerchants } = useMerchantContext()
+
+    React.useEffect(() => {
+        async function fetchData() {
+            const isFav = await isFavoriteMerchant(merchantID)
+            setIsFavorite(isFav)
+        }
+        fetchData()
+    }, [merchantID, favoriteMerchants])
     return (
         <View style={{ ...styles.container, ...containerStyle }}>
             {/* Back Button */}
@@ -47,7 +61,7 @@ const TopButtons = ({ back, item, containerStyle, isFav, like }) => {
                 onPress={like}
             >
                 <Image
-                    source={isFav ? icons.heartFilled : icons.heart}
+                    source={isFavorite ? icons.heartFilled : icons.heart}
                     style={{
                         width: 30,
                         height: 30,

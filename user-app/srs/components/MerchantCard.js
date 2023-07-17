@@ -1,14 +1,22 @@
+import React, { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { COLORS, SIZES } from '../../assets/constants/theme';
 import icons from '../../assets/constants/icons';
+import { useMerchantContext } from '../contexts/MerchantContext';
 
 
 const MerchantCard = ({ merchant, onPress }) => {
-    const navigation = useNavigation();
-    const route = useRoute();
-    const routeName = route.name;
+    const [isFavorite, setIsFavorite] = useState(false)
 
+    const { isFavoriteMerchant, toggleFavorite, favoriteMerchants } = useMerchantContext()
+
+    React.useEffect(() => {
+        async function fetchData() {
+            const isFav = await isFavoriteMerchant(merchant.id)
+            setIsFavorite(isFav)
+        }
+        fetchData()
+    }, [merchant, favoriteMerchants])
 
     return (
         <Pressable onPress={onPress} style={styles.MerchantItem}>
@@ -16,23 +24,23 @@ const MerchantCard = ({ merchant, onPress }) => {
                 <Image
                     style={styles.MerchantImage}
                     source={{
-                        uri: merchant.image,
+                        uri: merchant?.image,
                     }}
                 />
-                <View style={styles.Like}>
-                    <Image source={merchant?.isFavorite ? icons.heartFilled : icons.heart} style={{ height: 30, width: 30, tintColor: merchant?.isFavorite ? COLORS.red : COLORS.white }} />
-                </View>
+                <Pressable onPress={() => toggleFavorite(merchant.id)} style={styles.Like}>
+                    <Image source={isFavorite ? icons.heartFilled : icons.heart} style={{ height: 30, width: 30, tintColor: isFavorite ? COLORS.red : COLORS.white }} />
+                </Pressable>
             </View>
             <View style={styles.ItemInfo}>
-                <Text style={styles.ItemName}>{merchant.name}</Text>
-                <Text style={styles.ItemDescription}>{merchant.address}</Text>
+                <Text style={styles.ItemName}>{merchant?.name} {isFavorite}</Text>
+                <Text style={styles.ItemDescription}>{merchant?.address}</Text>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                     <Image style={styles.InfoIcon} source={icons.star} />
-                    <Text style={styles.InfoText}>{merchant.rating.toFixed(1)}</Text>
+                    <Text style={styles.InfoText}>{merchant?.rating?.toFixed(1)}</Text>
                     <Image style={styles.InfoIcon} source={icons.delivery} />
-                    <Text style={styles.InfoText}>₦ {merchant.deliveryFee}</Text>
+                    <Text style={styles.InfoText}>₦ {merchant?.deliveryFee}</Text>
                     <Image style={styles.InfoIcon} source={icons.time} />
-                    <Text style={styles.InfoText}>{merchant.minDeliveryTime.toFixed(0)} - {merchant.maxDeliveryTime.toFixed(0)} mins</Text>
+                    <Text style={styles.InfoText}>{merchant?.minDeliveryTime?.toFixed(0)} - {merchant?.maxDeliveryTime?.toFixed(0)} mins</Text>
                 </View>
             </View>
         </Pressable>

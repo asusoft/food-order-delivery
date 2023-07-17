@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, Image, ScrollView } from 'react-native';
 import Header from '../../components/Header';
-import SearchBar from '../../components/SearchBar';
 import MerchantCard from '../../components/MerchantCard';
 import dummyData from '../../../assets/constants/dummyData'
 import { COLORS, SIZES } from '../../../assets/constants/theme';
@@ -12,30 +11,38 @@ import icons from '../../../assets/constants/icons';
 import MerchantsSkeleton from '../../skeletons/MerchantsScreenSkeleton';
 import SearchMerchant from './SearchMerchant';
 import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 import { useMerchantContext } from '../../contexts/MerchantContext';
 
 
 // create a component
 const MerchantsScreen = () => {
+    const db = firestore();
     const navigation = useNavigation()
-    const { merchants } = useMerchantContext();
+    const categories = dummyData.Categories;
+
+    const [merchants, setMerchants] = useState([])
 
     const [loading, setLoading] = useState(true)
     const [modalVisible, setModalVisible] = useState(false);
 
     React.useEffect(() => {
-        async function fetchData() {
-            if (merchants) {
-                setLoading(false)
-            } else {
-                setLoading(true)
-            }
-        }
-        fetchData();
-    }, [merchants])
+        db.collection("Merchants")
+            .onSnapshot((querySnapshot) => {
+                const merchantsList = [];
+                querySnapshot.forEach((doc) => {
+                    const mecID = doc.id;
+                    const merchant = doc.data()
+                    merchantsList.push({ ...merchant, id: mecID.toString() });
+                });
+                setMerchants(merchantsList);
+            });
+    }, []);
 
-    const categories = dummyData.Categories;
+    React.useEffect(() => {
+        setLoading(!merchants);
+    }, [])
 
     if (loading) {
         return (
