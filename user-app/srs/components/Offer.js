@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
 import images from '../../assets/constants/images';
-import { COLORS, SIZES } from '../../assets/constants/theme';
+import { COLORS } from '../../assets/constants/theme';
 
 // create a component
 const Offer = ({ item }) => {
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     container: {
         width: 318,
         height: 118,
-        borderRadius: SIZES.radius,
+        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
         margin: 10,

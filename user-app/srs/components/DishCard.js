@@ -1,45 +1,56 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
-import { COLORS, SIZES } from '../../assets/constants/theme';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import { COLORS } from '../../assets/constants/theme';
+import icons from '../../assets/constants/icons';
+import dummyData from '../../assets/constants/dummyData';
+import Rating from './Rating'
 
 // create a component
-const DishCard = ({ dish, onPress }) => {
+const DishCard = ({ dish }) => {
     return (
-        <Pressable onPress={onPress} style={styles.container}>
-            <View style={{ height: '100%', width: '40%', overflow: 'hidden' }}>
+        <View style={{ margin: 5, width: 125 }}>
+            <View style={styles.container}>
                 <Image
-                    source={{ uri: dish.image ? dish.image : [] }}
-                    style={{
-                        flex: 1
+                    source={{
+                        uri: dish.image,
+                    }}
+                    style={{ height: 90, width: 90, borderRadius: 50, alignSelf: 'center', marginVertical: 5 }}
+                />
+                <View style={{ padding: 8 }}>
+                    <Text numberOfLines={1} style={{ fontSize: 15 }}>{dish.name}</Text>
+                    <Text style={{ marginTop: 5, fontSize: 15, fontWeight: '500' }}>₦ {dish.price}</Text>
+                </View>
+                <Rating
+                    rating={dish.rating.toFixed(1)}
+                    showText={false}
+                    size={12}
+                    containerStyle={{
+                        marginLeft: 8,
+                        marginTop: -5
                     }}
                 />
+                <Image source={dish?.isFavorite ? icons.heartFilled : icons.heart} style={{ ...styles.Like, tintColor: dish?.isFavorite ? COLORS.red : COLORS.grey }} />
             </View>
-            <View style={{ flex: 1, marginHorizontal: 20, }}>
-                <Text style={{ fontSize: 16, fontWeight: '600', marginBottom: 8 }}>{dish.name}</Text>
-                <Text numberOfLines={4}>{dish.description}</Text>
-                <View style={{ opacity: 0.7, backgroundColor: COLORS.lightPrimary, marginTop: 10, borderRadius: 12, alignItems: 'center', justifyContent: 'center', padding: 8 }}>
-                    <Text style={{ opacity: 1, fontSize: 16, color: COLORS.darkPrimary, fontWeight: '700' }}>From ₦ 750</Text>
-                </View>
-            </View>
-        </Pressable>
+
+        </View>
     );
 };
 
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 8,
-        marginVertical: 5,
-        height: 175,
-        paddingVertical: 20,
-        borderRadius: SIZES.radius,
-        flexDirection: 'row'
+        padding: 5,
+        width: 125,
+        height: 180,
+        borderRadius: 10,
+        borderRadius: 10,
+        backgroundColor: COLORS.secondary,
     },
     Like: {
         position: "absolute",
-        top: 5,
-        right: 5,
+        top: 2,
+        right: 2,
         height: 20,
         width: 25,
     },

@@ -5,13 +5,10 @@ import SignUp from "../screens/AuthScreens/SignUp";
 import SignIn from "../screens/AuthScreens/SignIn";
 import OTP from "../screens/AuthScreens/OTP";
 import ResetPassword from "../screens/AuthScreens/ResetPassword";
-import MerchantsScreen from "../screens/MerchantsScreen/MerchantsScreen";
 import Onboarding from "../screens/Onboarding/Onboarding";
+import TempScreen from "../screens/Temp/TempScreen";
 import { useAuthContext } from "../contexts/AuthContext";
 import Loading from "../screens/Onboarding/Loading";
-import MerchantInfoScreen from "../screens/MerchantsScreen/MerchantInfoScreen";
-import DishInfoScreen from "../screens/MerchantsScreen/DishInfoScreen";
-import SearchMerchant from "../screens/MerchantsScreen/SearchMerchant";
 
 const RootStack = createNativeStackNavigator();
 
@@ -38,7 +35,7 @@ const RootNavigator = () => {
             <RootStack.Navigator screenOptions={{ headerShown: false }}>
                 {
                     dbUser ?
-                        <RootStack.Screen name="Landing" component={MerchantStackNavigator} />
+                        <RootStack.Screen name="Home" component={HomeScreen} />
                         :
                         (
                             <>
@@ -78,35 +75,6 @@ const AuthStackNavigator = () => {
                 component={ResetPassword}
             />
         </AuthStack.Navigator>
-    );
-};
-
-const MerchantStack = createNativeStackNavigator();
-
-const MerchantStackNavigator = () => {
-    return (
-        <MerchantStack.Navigator
-            screenOptions={{ headerShown: false }}
-            initialRouteName="Home"
-        >
-            <MerchantStack.Screen
-                name="Home"
-                component={HomeScreen}
-            />
-            <MerchantStack.Screen
-                name="Merchants"
-                component={MerchantsScreen}
-            />
-            <MerchantStack.Screen
-                name="MerchantInfo"
-                component={MerchantInfoScreen}
-            />
-            <MerchantStack.Screen
-                name="DishInfo"
-                component={DishInfoScreen}
-            />
-
-        </MerchantStack.Navigator>
     );
 };
 

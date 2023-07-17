@@ -11,8 +11,7 @@ export const COLORS = {
   lightGray: '#DDDDDD',
   lightGray2: '#ededed',
   background: '#FAF0E6',
-  transparentBlack: "rgba(0, 0, 0, 0.6)",
-  transparent: "rgba(0, 0, 0, 0.4)",
+  transparentBlack: "rgba(0, 0, 0, 0.7)",
   red: '#ff4545',
   green: '#00FF00',
   brown: '#5C4033',
@@ -21,9 +20,7 @@ export const COLORS = {
   oldPrimary: '#ff9248',
   potPrimary: '#EBB668',
   darkPrimary: "#592D00",
-  darkSecondary: "#EAE4DF",
-  skeleton: "#D3D3D3",
-  lightPrimary: '#FCD299'
+  skeleton: "#E0E0E0"
 };
 
 
@@ -31,7 +28,7 @@ export const SIZES = {
   // global sizes
   base: 8,
   font: 14,
-  radius: 20,
+  radius: 12,
   padding: 24,
 
   // font sizes

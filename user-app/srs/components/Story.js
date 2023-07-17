@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { COLORS, SIZES } from '../../assets/constants/theme';
+import { COLORS } from '../../assets/constants/theme';
 import dummyData from '../../assets/constants/dummyData';
 
 // create a component
@@ -10,6 +10,10 @@ const Story = ({ item, setStory, setModalVisible }) => {
     const merchant = merchants.find(merchant => merchant.id === item.merchantID);
     const image = { uri: item.image };
 
+    const handleStoryPress = ({ story }) => {
+        setStory(story)
+        setModalVisible(true)
+    }
     return (
         <View style={{ margin: 5, width: 100 }}>
             <TouchableOpacity onPress={() => {
@@ -18,12 +22,12 @@ const Story = ({ item, setStory, setModalVisible }) => {
             }}
                 style={styles.container}
             >
-                <Image source={image} style={{ height: '100%', width: '100%', borderRadius: 12 }} />
+                <Image source={image} style={{ height: '100%', width: '100%', borderRadius: 10 }} />
                 <View style={{
                     flex: 1,
                     height: '100%',
                     width: '100%',
-                    position: 'absolute', color: COLORS.secondary, fontWeight: '700', fontSize: 12, borderRadius: 12,
+                    position: 'absolute', color: COLORS.secondary, fontWeight: '700', fontSize: 12, borderRadius: 10,
                     backgroundColor: 'rgba(0, 0, 0, 0.3)', paddingHorizontal: 10, paddingVertical: 5
                 }}>
                     <Text style={{
@@ -43,11 +47,12 @@ const styles = StyleSheet.create({
         padding: 1,
         width: 100,
         height: 120,
-        borderRadius: 12,
+        borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 2,
         borderColor: COLORS.darkPrimary,
+        borderRadius: 10,
         backgroundColor: COLORS.secondary,
     },
 });
