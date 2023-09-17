@@ -8,56 +8,22 @@ const DishContextProvider = ({ children }) => {
     const db = firestore();
     const { dbUser } = useAuthContext();
     const dbUserID = dbUser?.id
-
-    const [merchantID, setMerchant_ID] = useState()
     const [dish, setDish] = useState({});
     const [dishID, setDishID] = useState()
     const [favorite, setFavorite] = useState(false);
     const [favoriteDishes, setFavoriteDishes] = useState([])
-
-    const [DATA, setData] = useState([])
 
     React.useEffect(() => {
         async function fetchData() {
             const result = await getDishByID(dishID);
             setDish(result);
         }
-        if (merchantID) {
+        if (dishID) {
             fetchData();
         } else {
             setDish(null);
         }
     }, [dishID])
-
-    React, useEffect(() => {
-        async function fetchData() {
-            if (merchantID) {
-                db.collection("DishCategories")
-                    .where("merchantID", "==", merchantID)
-                    .onSnapshot((querySnapshot) => {
-                        const categoriesList = [];
-                        querySnapshot.forEach(async (doc) => {
-                            const categoryID = doc.id;
-                            const category = doc.data()
-
-                            const dishSnapshot = await db.collection("Dishes")
-                                .where("categoryID", "==", categoryID)
-                                .get();
-
-                            if (!dishSnapshot.empty) {
-                                const dishList = dishSnapshot.docs.map((dishDoc) => ({
-                                    ...dishDoc.data(),
-                                    id: dishDoc.id,
-                                }));
-                                categoriesList.push({ ...category, id: categoryID.toString(), data: dishList });
-                            }
-                        });
-                        setData(categoriesList);
-                    });
-            }
-        }
-        fetchData()
-    }, [merchantID])
 
     React.useEffect(() => {
         async function fetchData() {
@@ -169,11 +135,9 @@ const DishContextProvider = ({ children }) => {
 
     return (
         <DishContext.Provider value={{
-            setMerchant_ID,
             setDishID,
             toggleFavorite,
             dish,
-            DATA,
             favorite,
             favoriteDishes,
         }}>

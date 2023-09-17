@@ -3,17 +3,43 @@ import React, { useRef, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import SectionList from 'react-native-tabs-section-list';
 import sectionListGetitemLayout from 'react-native-section-list-get-item-layout';
+import firestore from '@react-native-firebase/firestore';
 import DishCard from './DishCard';
 import { COLORS } from '../../assets/constants/theme';
 
-import { useDishContext } from '../contexts/DishContext';
-
-
 // create a component
-const MerchantMenu = ({ onPress }) => {
+const MerchantMenu = ({ onPress, merchantID }) => {
+    const db = firestore();
     const listRef = useRef()
+    const [isLoading, setIsLoading] = useState(true)
 
-    const { DATA } = useDishContext();
+    const [DATA, setData] = useState([])
+
+    React.useEffect(() => {
+        db.collection("DishCategories")
+            .where("merchantID", "==", merchantID)
+            .onSnapshot((querySnapshot) => {
+                const categoriesList = [];
+                querySnapshot.forEach(async (doc) => {
+                    const categoryID = doc.id;
+                    const category = doc.data()
+
+                    const dishSnapshot = await db.collection("Dishes")
+                        .where("categoryID", "==", categoryID)
+                        .get();
+
+                    if (!dishSnapshot.empty) {
+                        const dishList = dishSnapshot.docs.map((dishDoc) => ({
+                            ...dishDoc.data(),
+                            id: dishDoc.id,
+                        }));
+                        categoriesList.push({ ...category, id: categoryID.toString(), data: dishList });
+                    }
+                });
+                setData(categoriesList)
+                setIsLoading(false)
+            });
+    }, [merchantID])
 
     const onPressTitle = useCallback((index) => {
         if (!!listRef?.current) {
@@ -73,26 +99,37 @@ const MerchantMenu = ({ onPress }) => {
         )
     }, [DATA])
 
-    return (
-        <View style={{
-            flex: 1,
-            paddingTop: 30,
-        }}>
-            <SectionList
-                stickySectionHeadersEnabled={false}
-                ref={listRef}
-                showsVerticalScrollIndicator={false}
-                sections={DATA}
-                renderTab={renderSectionTab}
-                renderItem={renderItem}
-                keyExtractor={(_, index) => index.toString()}
-                renderSectionHeader={renderSectionHeader}
-                renderSectionFooter={() => <View style={{ height: 30 }} />}
-                getItemLayout={getItemLayout}
-                ItemSeparatorComponent={itemSeparatorComponent}
-            />
-        </View>
-    )
+    if (isLoading) {
+        return (
+            <View style={{
+                flex: 1,
+                paddingTop: 30,
+            }}>
+                <Text>Loading...</Text>
+            </View>
+        )
+    } else {
+        return (
+            <View style={{
+                flex: 1,
+                paddingTop: 30,
+            }}>
+                <SectionList
+                    stickySectionHeadersEnabled={false}
+                    ref={listRef}
+                    showsVerticalScrollIndicator={false}
+                    sections={DATA}
+                    renderTab={renderSectionTab}
+                    renderItem={renderItem}
+                    keyExtractor={(_, index) => index.toString()}
+                    renderSectionHeader={renderSectionHeader}
+                    renderSectionFooter={() => <View style={{ height: 30 }} />}
+                    getItemLayout={getItemLayout}
+                    ItemSeparatorComponent={itemSeparatorComponent}
+                />
+            </View>
+        )
+    }
 };
 
 // define your styles

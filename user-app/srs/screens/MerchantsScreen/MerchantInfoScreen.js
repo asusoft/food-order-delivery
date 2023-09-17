@@ -9,7 +9,6 @@ import FooterButton from '../../components/FooterButton';
 import MerchantMenu from '../../components/merchantMenu';
 
 import { useMerchantContext } from '../../contexts/MerchantContext';
-import { useDishContext } from '../../contexts/DishContext';
 
 
 const HEADER_HEIGHT = 290;
@@ -24,7 +23,6 @@ const MerchantInfoScreen = ({ navigation, route }) => {
     const [modalVisible, setModalVisible] = useState(false);
 
     const { toggleFavorite, setMerchantID, merchant, favorite } = useMerchantContext();
-    const { setMerchant_ID } = useDishContext();
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -41,7 +39,6 @@ const MerchantInfoScreen = ({ navigation, route }) => {
         async function fetchData() {
             try {
                 setMerchantID(merchant_ID)
-                setMerchant_ID(merchant_ID)
             } catch (error) {
                 console.error(error);
             }
@@ -187,7 +184,7 @@ const MerchantInfoScreen = ({ navigation, route }) => {
                 opacity: modalVisible ? 0.6 : 1
             }}>
                 {/* {RenderMenuHeader()} */}
-                <MerchantMenu onPress={() => goToDishInfo()} />
+                <MerchantMenu onPress={() => goToDishInfo()} merchantID={merchant_ID} />
             </View>
             {RenderFooter()}
             <MerchantInfo setModalVisible={setModalVisible} merchant={merchant} modalVisible={modalVisible} />

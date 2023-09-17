@@ -169,7 +169,9 @@ const DishInfoScreen = ({ route }) => {
                     <>
                         <View style={{ marginHorizontal: 20 }}>
                             {RenderInfo()}
-                            {RenderSizes()}
+                            {
+                                dish.hasSizes ? RenderSizes() : []
+                            }
                         </View>
                         {RenderFooter()}
                     </>
